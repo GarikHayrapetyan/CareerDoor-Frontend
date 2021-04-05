@@ -1,18 +1,17 @@
-import React from 'react';
-import { Container } from 'semantic-ui-react';
-import GetTogetherDashboard from '../../features/gettogethers/GetTogetherDashboard';
-
-
+import React from "react";
+import { Container } from "semantic-ui-react";
+import GetTogetherDashboard from "../../features/gettogethers/GetTogetherDashboard";
+import NavBar from "./NavBar";
 
 function App() {
-
   return (
-    <Container style={{marginTop:'7em'}}>
+    <>
+      <NavBar />
+      <Container style={{ marginTop: "7em" }}>
         <GetTogetherDashboard />
-    </Container>
-     
+      </Container>
+    </>
   );
 }
-
 
 export default App;
