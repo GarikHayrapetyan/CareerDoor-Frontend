@@ -1,23 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import agent from '../api/agent';
-import GetTogether from '../models/GetTogether';
+import React from 'react';
+import { Container } from 'semantic-ui-react';
+import GetTogetherDashboard from '../../features/gettogethers/GetTogetherDashboard';
+
+
 
 function App() {
 
-  const [meetings, setMeetings] = useState<GetTogether[]>([]);
- 
-  useEffect(()=>{  
-    agent.GetTogethers.list.then(response=>{
-      setMeetings(response);  
-      console.log("ings:"+meetings);    
-      
-    });
-  },[meetings]);
-
-
-
   return (
-    <div>CareerDoor!!!</div>
+    <Container style={{marginTop:'7em'}}>
+        <GetTogetherDashboard />
+    </Container>
+     
   );
 }
 
