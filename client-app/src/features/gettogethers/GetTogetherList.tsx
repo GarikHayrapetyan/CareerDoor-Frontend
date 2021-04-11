@@ -13,7 +13,7 @@ export default observer(function GetTogetherList() {
                 <Fragment key={group}>
                     <Header as='h4' content={group} color='teal'/>
                     {getTogethers.map((getTogether)=>(
-                        <GetTogetherListItem getTogether={getTogether}/>
+                        <GetTogetherListItem key={getTogether.id} getTogether={getTogether}/>
                     ))}
                 </Fragment>
                
