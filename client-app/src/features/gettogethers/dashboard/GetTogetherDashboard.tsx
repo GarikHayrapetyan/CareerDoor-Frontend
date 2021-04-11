@@ -2,8 +2,8 @@ import React, { useEffect } from 'react'
 import { Grid, GridColumn } from 'semantic-ui-react'
 import GetTogetherList from './GetTogetherList'
 import GetTogetherFilter from './GetTogetherFilter'
-import { useStore } from '../../app/store/store'
 import { observer } from 'mobx-react-lite'
+import { useStore } from '../../../app/store/store'
 
 export default observer(function GetTogetherDashboard (){
     const {getTogetherStore} = useStore()

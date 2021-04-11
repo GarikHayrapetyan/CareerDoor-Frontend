@@ -1,6 +1,6 @@
 import React from "react";
 import { Container } from "semantic-ui-react";
-import GetTogetherDashboard from "../../features/gettogethers/GetTogetherDashboard";
+import GetTogetherDashboard from "../../features/gettogethers/dashboard/GetTogetherDashboard";
 import GetTogetherDetails from '../../features/gettogethers/details/GetTogetherDetails';
 import NavBar from "./NavBar";
 
@@ -18,8 +18,8 @@ function App() {
     <>
       <NavBar />
       <Container style={{ marginTop: "7em" }}>
-        <GetTogetherDashboard />
-        {/* <GetTogetherDetails meeting={defaultValue}/> */}
+         <GetTogetherDashboard /> 
+         {/* <GetTogetherDetails meeting={defaultValue}/> */}
       </Container>
     </>
   );
