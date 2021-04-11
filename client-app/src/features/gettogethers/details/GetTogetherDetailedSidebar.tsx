@@ -27,7 +27,7 @@ function GetTogetherDetailedSidebar() {
                         <Image size='tiny' src={'/assets/user.png'} />
                         <Item.Content verticalAlign='middle'>
                             <Item.Header as='h3'>
-                                <h2 >Bob</h2 >
+                                <span >Bob</span >
                             </Item.Header>
                             <Item.Extra style={{ color: 'orange' }}>Following</Item.Extra>
                         </Item.Content>
@@ -37,7 +37,7 @@ function GetTogetherDetailedSidebar() {
                         <Image size='tiny' src={'/assets/user.png'} />
                         <Item.Content verticalAlign='middle'>
                             <Item.Header as='h3'>
-                                <h2>Tom</h2>
+                                <span>Tom</span>
                             </Item.Header>
                             <Item.Extra style={{ color: 'orange' }}>Following</Item.Extra>
                         </Item.Content>
@@ -47,7 +47,7 @@ function GetTogetherDetailedSidebar() {
                         <Image size='tiny' src={'/assets/user.png'} />
                         <Item.Content verticalAlign='middle'>
                             <Item.Header as='h3'>
-                                <h2>Sally</h2>
+                                <span>Sally</span>
                             </Item.Header>
                         </Item.Content>
                     </Item>
