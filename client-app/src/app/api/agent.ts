@@ -2,7 +2,8 @@ import axios, { AxiosResponse } from 'axios';
 import GetTogether from '../models/GetTogether';
 
 
-axios.defaults.baseURL="http://localhost:23050/api";
+axios.defaults.baseURL ="http://localhost:23050/api";
+// https://cors-anywhere.herokuapp.com/
 
 const responseBody = <T>(response:AxiosResponse<T>)=>response.data;
 

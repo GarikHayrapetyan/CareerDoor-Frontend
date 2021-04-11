@@ -14,6 +14,7 @@ export default observer(function GetTogetherDashboard (){
             loadingGetTogethers()
         }
                 
+        console.log(loadingGetTogethers)
     },[loadingGetTogethers,getTogetherRegistry])
     return(
             <Grid>
