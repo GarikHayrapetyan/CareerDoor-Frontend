@@ -1,6 +1,6 @@
 import React from 'react'
 import { Icon, Item, Segment } from 'semantic-ui-react'
-import GetTogether from '../../app/models/GetTogether'
+import GetTogether from '../../../app/models/GetTogether'
 
 interface Props{
     getTogether:GetTogether

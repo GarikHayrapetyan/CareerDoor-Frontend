@@ -18,8 +18,8 @@ function App() {
     <>
       <NavBar />
       <Container style={{ marginTop: "7em" }}>
-         <GetTogetherDashboard /> 
-         {/* <GetTogetherDetails meeting={defaultValue}/> */}
+          <GetTogetherDashboard />  
+          {/* <GetTogetherDetails meeting={defaultValue}/>  */}
       </Container>
     </>
   );
