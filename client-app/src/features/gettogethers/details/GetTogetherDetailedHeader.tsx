@@ -16,7 +16,7 @@ const activityImageTextStyle = {
 };
 
 interface Props {
-    meeting: GetTogether;
+    meeting: GetTogether | null;
 }
 
 function GetTogetherDetailedHeader({ meeting }: Props) {
@@ -30,10 +30,10 @@ function GetTogetherDetailedHeader({ meeting }: Props) {
                             <Item.Content>
                                 <Header
                                     size="huge"
-                                    content={meeting.title}
+                                    content={meeting!.title}
                                     style={{ color: 'white' }}
                                 />
-                                <p>{meeting.date}</p>
+                                <p>{meeting!.date}</p>
                                 <p>
                                     Hosted by <strong>Bob</strong>
                                 </p>
