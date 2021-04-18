@@ -5,6 +5,7 @@ import { Container } from "semantic-ui-react";
 // import GetTogetherDashboard from "../../features/gettogethers/dashboard/GetTogetherDashboard";
 // import GetTogetherDetails from "../../features/gettogethers/details/GetTogetherDetails";
 import TestErrors from "../../features/gettogethers/errors/TestErrors";
+import GetTogetherForm from "../../features/gettogethers/form/GetTogetherForm";
 import HomePage from "../../features/home/HomePage";
 import NavBar from "./NavBar";
 
@@ -30,6 +31,7 @@ function App() {
               {/* <GetTogetherDashboard />   */}
               {/* <GetTogetherDetails meeting={defaultValue}/>  */}
               <Route exact path="/testerrors" component={TestErrors} />
+              <Route exact path='/gettogetherform' component={GetTogetherForm} />
             </Container>
           </>
         )}
