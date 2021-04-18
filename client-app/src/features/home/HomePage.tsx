@@ -8,7 +8,7 @@ export default function HomePage() {
                 <Header as='h1' inverted>
                     <h1>CareerDoor</h1>
                 </Header>
-                <Header as='h2' inverted content='Welcome to reactivities' />
+                <Header as='h2' inverted content='Welcome to CareerDoor' />
                 <Button size='huge' inverted>
                     Take me to the GetTogethers!
                 </Button>
