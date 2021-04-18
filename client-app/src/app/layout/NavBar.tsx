@@ -4,12 +4,11 @@ import { Button, Container, Menu } from "semantic-ui-react";
 export default function NavBar() {
   return (
     <Menu inverted fixed="top">
+      <Container>
       <Menu.Item
         name="CareerDoor"
-        style={{ marginLeft: "8em", marginRight: "0px", fontSize: "22px" }}
+        style={{ marginLeft: "2em", marginRight: "0px", fontSize: "22px" }}
       />
-      <Container>
-        <Menu.Item name="Home" />
         <Menu.Item name="Jobs" />
         <Menu.Item name="Events" />
         <Menu.Item>
