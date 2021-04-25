@@ -4,7 +4,7 @@ import GetTogether from '../models/GetTogether';
 
 export default class GetTogetherStore {
 	getTogetherRegistry = new Map<string, GetTogether>();
-	selectedGetTogether: GetTogether | null = null;
+	selectedGetTogether: GetTogether | undefined = undefined;
 
 	constructor() {
 		makeAutoObservable(this);

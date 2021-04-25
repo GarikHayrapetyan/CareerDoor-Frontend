@@ -3,10 +3,11 @@ import { Segment, Grid, Icon } from 'semantic-ui-react';
 import GetTogether from '../../../app/models/GetTogether';
 
 interface Props {
-	meeting: GetTogether | null;
+	meeting: GetTogether | undefined;
 }
 
 function GetTogetherDetailedInfo({ meeting }: Props) {
+	// if(!meeting) return;
 	return (
 		<Segment.Group>
 			<Segment attached="top">
@@ -15,7 +16,7 @@ function GetTogetherDetailedInfo({ meeting }: Props) {
 						<Icon size="large" color="teal" name="info" />
 					</Grid.Column>
 					<Grid.Column width={15}>
-						<p>{meeting!.description}</p>
+						<p>{meeting?.description}</p>
 					</Grid.Column>
 				</Grid>
 			</Segment>
@@ -25,7 +26,7 @@ function GetTogetherDetailedInfo({ meeting }: Props) {
 						<Icon name="calendar" size="large" color="teal" />
 					</Grid.Column>
 					<Grid.Column width={15}>
-						<span>{meeting!.date}</span>
+						<span>{meeting?.date.split('T')[0]}</span>
 					</Grid.Column>
 				</Grid>
 			</Segment>
@@ -35,9 +36,17 @@ function GetTogetherDetailedInfo({ meeting }: Props) {
 						<Icon name="at" size="large" color="teal" />
 					</Grid.Column>
 					<Grid.Column width={11}>
-						<span>
-							Link: {meeting!.link}, PassCode: {meeting!.passCode}
-						</span>
+						<span>PassCode: {meeting?.passCode}</span>
+					</Grid.Column>
+				</Grid>
+			</Segment>
+			<Segment attached>
+				<Grid verticalAlign="middle">
+					<Grid.Column width={1}>
+						<Icon name="at" size="large" color="teal" />
+					</Grid.Column>
+					<Grid.Column width={11}>
+						<span>Link: {meeting?.link}</span>
 					</Grid.Column>
 				</Grid>
 			</Segment>
