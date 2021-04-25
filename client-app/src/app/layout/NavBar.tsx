@@ -8,6 +8,8 @@ export default function NavBar() {
 			<Container>
 				<Menu.Item
 					name="CareerDoor"
+					as={NavLink}
+					to="/"
 					style={{
 						marginLeft: '2em',
 						marginRight: '0px',
