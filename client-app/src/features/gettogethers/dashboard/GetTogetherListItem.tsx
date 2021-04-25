@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Icon, Item, Segment } from 'semantic-ui-react';
 import GetTogether from '../../../app/models/GetTogether';
 
@@ -10,7 +11,7 @@ export default function GetTogetherListItem({ getTogether }: Props) {
 	return (
 		<Segment.Group size="tiny">
 			<Segment>
-				<Item.Group>
+				<Item.Group as={Link} to={`/meetings/${getTogether.id}`}>
 					<Item>
 						<Icon
 							name="save outline"
