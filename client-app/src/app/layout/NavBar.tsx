@@ -10,6 +10,7 @@ export default function NavBar() {
 					name="CareerDoor"
 					as={NavLink}
 					to="/"
+					exact
 					style={{
 						marginLeft: '2em',
 						marginRight: '0px',
