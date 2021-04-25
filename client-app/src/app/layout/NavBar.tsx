@@ -20,7 +20,13 @@ export default function NavBar() {
 				<Menu.Item name="Jobs" />
 				<Menu.Item name="Events" as={NavLink} to="meetings" />
 				<Menu.Item>
-					<Button positive content="Create event" floated="right" />
+					<Button
+						as={NavLink}
+						to="gettogetherform"
+						positive
+						content="Create event"
+						floated="right"
+					/>
 				</Menu.Item>
 			</Container>
 		</Menu>
