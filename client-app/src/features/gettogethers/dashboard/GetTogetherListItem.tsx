@@ -5,14 +5,14 @@ import GetTogether from '../../../app/models/GetTogether';
 import { format } from 'date-fns'
 
 interface Props {
-	getTogether: GetTogether;
+	meeting: GetTogether;
 }
 
-export default function GetTogetherListItem({ getTogether }: Props) {
+export default function GetTogetherListItem({ meeting }: Props) {
 	return (
 		<Segment.Group size="tiny">
 			<Segment>
-				<Item.Group as={Link} to={`/gettogethers/${getTogether.id}c`}>
+				<Item.Group as={Link} to={`/meetings/${meeting.id}`}>
 					<Item>
 						<Icon
 							name="save outline"
@@ -26,9 +26,9 @@ export default function GetTogetherListItem({ getTogether }: Props) {
 						/>
 						<Item.Content>
 							<Item.Description content="User Name" />
-							<Item.Header content={getTogether.title} />
+							<Item.Header content={meeting.title} />
 							<Item.Description>
-								{getTogether.description}
+								{meeting.description}
 							</Item.Description>
 						</Item.Content>
 					</Item>
@@ -37,7 +37,7 @@ export default function GetTogetherListItem({ getTogether }: Props) {
 			<Segment>
 				<span>
 					<Icon name="calendar alternate outline" />{' '}
-					{format(getTogether.date!, 'dd MMM yyyy h:mm aa')}
+					{format(meeting.date!, 'dd MMM yyyy h:mm aa')}
 					<Icon
 						name="clock outline"
 						style={{ marginLeft: '5px' }}

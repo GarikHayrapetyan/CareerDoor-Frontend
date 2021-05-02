@@ -11,12 +11,12 @@ export default observer(function GetTogetherList() {
 
     return(
         <>
-            {groupedGetTogethers.map(([group,getTogethers])=>(
+            {groupedGetTogethers.map(([group, getTogethers]) => (
                 <Fragment key={group}>
                     <Header as='h4' content={group} color='teal'/>
-                    {getTogethers.map((getTogether)=>(
+                    {getTogethers.map((getTogether) => (
                         <GetTogetherListItem 
-                            key={getTogether.id} 
+                            // key={getTogether.id} 
                             getTogether={getTogether}/>
                     ))}
                 </Fragment>
