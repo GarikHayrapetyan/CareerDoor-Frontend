@@ -3,7 +3,6 @@ import React, { useEffect } from 'react';
 import { useParams } from 'react-router';
 import { Grid } from 'semantic-ui-react';
 import LoadingComponent from '../../../app/layout/LoadingComponent';
-import GetTogether from '../../../app/models/GetTogether';
 import { useStore } from '../../../app/store/store';
 import GetTogetherDetailedChat from './GetTogetherDetailedChat';
 import GetTogetherDetailedHeader from './GetTogetherDetailedHeader';

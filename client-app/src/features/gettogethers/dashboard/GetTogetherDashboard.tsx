@@ -20,7 +20,7 @@ export default observer(function GetTogetherDashboard() {
 
 	return (
 		<Grid>
-			<GridColumn width={8} style={{ marginRight: '10em' }}>
+			<GridColumn width={8} style={{ marginRight: '4em' }}>
 				<GetTogetherList />
 			</GridColumn>
 			<GridColumn width={6}>

@@ -38,11 +38,6 @@ export default function GetTogetherListItem({ meeting }: Props) {
 				<span>
 					<Icon name="calendar alternate outline" />{' '}
 					{format(meeting.date!, 'dd MMM yyyy h:mm aa')}
-					<Icon
-						name="clock outline"
-						style={{ marginLeft: '5px' }}
-					/>{' '}
-					19:30
 				</span>
 			</Segment>
 			<Segment secondary>Attendances...</Segment>

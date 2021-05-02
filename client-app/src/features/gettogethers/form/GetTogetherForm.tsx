@@ -28,8 +28,8 @@ export default function GetTogetherForm() {
     });
 
     const validationSchema = Yup.object({
-        title: Yup.string().required('The getTogether title is required'),
-        description: Yup.string().required('The getTogether description is required'),
+        title: Yup.string().required(),
+        description: Yup.string().required(),
         date: Yup.string().required('date is a required field').nullable(),
         link: Yup.string().required(),
         passCode: Yup.string().required()
@@ -47,7 +47,7 @@ export default function GetTogetherForm() {
             };
             createGetTogether(newMeeting).then(() => history.push(`/meetings/${newMeeting.id}`))
         } else {
-            updateGetTogether(meeting).then(() => history.push(`/meeting/${meeting.id}`))
+            updateGetTogether(meeting).then(() => history.push(`/meetings/${meeting.id}`))
         }
     }
 
@@ -55,7 +55,7 @@ export default function GetTogetherForm() {
 
     return (
         <Segment clearing>
-            <Header content='GetTogether Details' sub color='teal' />
+            <Header content='Meeting Details' sub color='teal' />
             <Formik
                 validationSchema={validationSchema}
                 enableReinitialize
@@ -72,7 +72,7 @@ export default function GetTogetherForm() {
                             timeCaption='Time'
                             dateFormat='MMMM d, yyyy h:mm aa' />
                         <MyTextInput name='link' placeholder='Link' />
-                        <MyTextInput name='passcode' placeholder='Passcode' />
+                        <MyTextInput name='passCode' placeholder='Passcode' />
                         <Button
                             disabled={isSubmitting || !dirty || !isValid}
                             loading={loading}
