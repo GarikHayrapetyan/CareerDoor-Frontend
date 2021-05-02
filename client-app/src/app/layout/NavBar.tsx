@@ -18,14 +18,14 @@ export default function NavBar() {
 					}}
 				/>
 				<Menu.Item name="Jobs" />
-				<Menu.Item name="Events" as={NavLink} to="/meetings" />
+				<Menu.Item exact as={NavLink} to='/gettogethers' name="gettogethers" />
+				<Menu.Item exact as={NavLink} to='/errors' name='errors' />
 				<Menu.Item>
 					<Button
 						as={NavLink}
-						to="/meetingform"
+						to="/creategettogether"
 						positive
-						content="Create event"
-						floated="right"
+						content="Create GetTogether"
 					/>
 				</Menu.Item>
 			</Container>

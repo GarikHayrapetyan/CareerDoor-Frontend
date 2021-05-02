@@ -47,6 +47,7 @@ export default class GetTogetherStore {
 	};
 
 	loadGetTogether = async (id: string) => {
+		this.setLoadingInitial(false);
 		let getTogether = this.getGetTogether(id);
 		if (getTogether) {
 			this.selectedGetTogether = getTogether;

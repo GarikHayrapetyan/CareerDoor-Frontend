@@ -2,6 +2,7 @@ import { observer } from 'mobx-react-lite';
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router';
 import { Grid } from 'semantic-ui-react';
+import LoadingComponent from '../../../app/layout/LoadingComponent';
 import GetTogether from '../../../app/models/GetTogether';
 import { useStore } from '../../../app/store/store';
 import GetTogetherDetailedChat from './GetTogetherDetailedChat';
@@ -11,29 +12,29 @@ import GetTogetherDetailedSidebar from './GetTogetherDetailedSidebar';
 
 function GetTogetherDetails() {
 	const { getTogetherStore } = useStore();
-	const { loadGetTogether, selectedGetTogether } = getTogetherStore;
+	const { loadGetTogether, selectedGetTogether: getTogether, loadingInitial } = getTogetherStore;
 	const { id } = useParams<{ id: string }>();
 
 	useEffect(
 		() => {
 			if (id) loadGetTogether(id);
 		},
-		[ id, loadGetTogether ]
+		[id, loadGetTogether]
 	);
 
+	if (loadingInitial || !getTogether) return <LoadingComponent />;
+
 	return (
-		<div>
-			<Grid style={{ margin: 10 }}>
-				<Grid.Column width={10}>
-					<GetTogetherDetailedHeader meeting={selectedGetTogether} />
-					<GetTogetherDetailedInfo meeting={selectedGetTogether} />
-				</Grid.Column>
-				<Grid.Column width={6}>
-					<GetTogetherDetailedSidebar />
-					<GetTogetherDetailedChat />
-				</Grid.Column>
-			</Grid>
-		</div>
+		<Grid style={{ margin: 10 }}>
+			<Grid.Column width={10}>
+				<GetTogetherDetailedHeader meeting={getTogether} />
+				<GetTogetherDetailedInfo meeting={getTogether} />
+			</Grid.Column>
+			<Grid.Column width={6}>
+				<GetTogetherDetailedSidebar />
+				<GetTogetherDetailedChat />
+			</Grid.Column>
+		</Grid>
 	);
 }
 

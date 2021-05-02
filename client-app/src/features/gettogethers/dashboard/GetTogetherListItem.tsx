@@ -12,7 +12,7 @@ export default function GetTogetherListItem({ getTogether }: Props) {
 	return (
 		<Segment.Group size="tiny">
 			<Segment>
-				<Item.Group as={Link} to={`/meetings/${getTogether.id}`}>
+				<Item.Group as={Link} to={`/gettogethers/${getTogether.id}c`}>
 					<Item>
 						<Icon
 							name="save outline"

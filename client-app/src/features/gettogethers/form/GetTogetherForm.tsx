@@ -10,6 +10,7 @@ import MyTextInput from '../../../app/common/form/MyTextInput';
 import MyTextArea from '../../../app/common/form/MyTextArea';
 import MyDateInput from '../../../app/common/form/MyDateInput';
 import { Link } from 'react-router-dom';
+import LoadingComponent from '../../../app/layout/LoadingComponent';
 
 export default function GetTogetherForm() {
     let history = useHistory();
@@ -36,7 +37,7 @@ export default function GetTogetherForm() {
 
     useEffect(() => {
         if (id) loadGetTogether(id).then(getTogether => setGetTogether(getTogether!));
-    }, [id, getTogether])
+    }, [id, loadGetTogether])
 
     function handleFormSubmit(getTogether: GetTogether) {
         if (getTogether.id.length === 0) {

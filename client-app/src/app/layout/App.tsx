@@ -1,40 +1,33 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { Route, Switch, useLocation } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { Container } from "semantic-ui-react";
 import GetTogetherDashboard from "../../features/gettogethers/dashboard/GetTogetherDashboard";
 import GetTogetherDetails from "../../features/gettogethers/details/GetTogetherDetails";
-// import GetTogetherDashboard from "../../features/gettogethers/dashboard/GetTogetherDashboard";
-// import GetTogetherDetails from "../../features/gettogethers/details/GetTogetherDetails";
 import TestErrors from "../../features/gettogethers/errors/TestErrors";
 import GetTogetherForm from "../../features/gettogethers/form/GetTogetherForm";
 import HomePage from "../../features/home/HomePage";
 import NavBar from "./NavBar";
 
 function App() {
-
-  // const defaultValue = {
-  //   id: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-  //   title: "Work Shop",
-  //   description: "This meeting is about Web Development",
-  //   date: "2021-04-05",
-  //   link: "zoom.com",
-  //   passCode: "SHJ65E",
-  // };
+  const location = useLocation();
+  
   return (
     <>
+      <ToastContainer hideProgressBar />
       <Route exact path="/" component={HomePage} />
       <Route
         path="/(.+)"
         render={() => (
           <>
-            <ToastContainer hideProgressBar />
             <NavBar />
             <Container style={{ marginTop: "7em" }}>
-               <Route exact path="/meetings" component={GetTogetherDashboard} />
-              <Route exact path="/meetings/:id" component={GetTogetherDetails} />
-              <Route exact path="/testerrors" component={TestErrors} />
-              <Route exact path='/meetingform' component={GetTogetherForm} />
+              <Switch>
+                <Route exact path="/gettogethers" component={GetTogetherDashboard} />
+                <Route exact path="/gettogethers/:id" component={GetTogetherDetails} />
+                <Route exact key={location.key} path={["/creategettogether", "/manage/:id"]} component={GetTogetherForm} />
+                <Route exact path="/errors" component={TestErrors} />
+              </Switch>
             </Container>
           </>
         )}

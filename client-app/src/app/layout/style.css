@@ -17,6 +17,12 @@ body {
 	box-shadow: 0 1px 2px 0 rgb(34 36 38 / 15%);
 }
 
+.react-datepicker-wrapper {
+	width: 100%;
+}
+
+/*home page styles*/
+
 .masthead {
 	display: flex;
 	align-items: center;
@@ -43,3 +49,5 @@ body {
 	font-size: 1.7em;
 	font-weight: normal;
 }
+
+/*end home page styles*/
