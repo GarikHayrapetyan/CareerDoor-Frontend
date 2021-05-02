@@ -2,6 +2,8 @@ import React from "react";
 import { Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { Container } from "semantic-ui-react";
+import GetTogetherDashboard from "../../features/gettogethers/dashboard/GetTogetherDashboard";
+import GetTogetherDetails from "../../features/gettogethers/details/GetTogetherDetails";
 // import GetTogetherDashboard from "../../features/gettogethers/dashboard/GetTogetherDashboard";
 // import GetTogetherDetails from "../../features/gettogethers/details/GetTogetherDetails";
 import TestErrors from "../../features/gettogethers/errors/TestErrors";
@@ -29,10 +31,10 @@ function App() {
             <ToastContainer hideProgressBar />
             <NavBar />
             <Container style={{ marginTop: "7em" }}>
-              {/* <GetTogetherDashboard />   */}
-              {/* <GetTogetherDetails meeting={defaultValue}/>  */}
+               <Route exact path="/meetings" component={GetTogetherDashboard} />
+              <Route exact path="/meetings/:id" component={GetTogetherDetails} />
               <Route exact path="/testerrors" component={TestErrors} />
-              <Route exact path='/gettogetherform' component={GetTogetherForm} />
+              <Route exact path='/meetingform' component={GetTogetherForm} />
             </Container>
           </>
         )}

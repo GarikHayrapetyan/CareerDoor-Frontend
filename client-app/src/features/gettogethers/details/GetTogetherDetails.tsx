@@ -1,5 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import React, { useEffect } from 'react';
+import { useParams } from 'react-router';
 import { Grid } from 'semantic-ui-react';
 import GetTogether from '../../../app/models/GetTogether';
 import { useStore } from '../../../app/store/store';
@@ -11,23 +12,13 @@ import GetTogetherDetailedSidebar from './GetTogetherDetailedSidebar';
 function GetTogetherDetails() {
 	const { getTogetherStore } = useStore();
 	const { loadGetTogether, selectedGetTogether } = getTogetherStore;
-
-	const meeting = {
-		id: '6ff0e545-3e54-4ec7-364b-08d8fd0ecba2',
-		title: 'Workshop IT',
-		description: 'Finding a new job',
-		date: '2021-06-11T19:25:25.9512617',
-		link:
-			'https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/compiler-messages/cs0234?f1url=%3FappId%3Droslyn%26k%3Dk(CS0234)',
-		passCode: 'axc14sd'
-	};
+	const { id } = useParams<{ id: string }>();
 
 	useEffect(
 		() => {
-			const id = '6ff0e545-3e54-4ec7-364b-08d8fd0ecba2';
 			if (id) loadGetTogether(id);
 		},
-		[ loadGetTogether ]
+		[ id, loadGetTogether ]
 	);
 
 	return (
