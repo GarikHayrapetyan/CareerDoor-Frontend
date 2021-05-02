@@ -7,10 +7,9 @@ export default function GetTogetherForm() {
             <Form>
                 <Form.Input placeholder='Title' />
                 <Form.TextArea placeholder='Description' />
-                <Form.Input placeholder='Category' />
                 <Form.Input placeholder='Date' />
-                <Form.Input placeholder='City' />
-                <Form.Input placeholder='Venue' />
+                <Form.Input placeholder='Link' />
+                <Form.Input placeholder='Passcode' />
                 <Button floated='right' positive type='submit' content='Submit' />
                 <Button floated='right' type='submit' content='Cancel' />
             </Form>
