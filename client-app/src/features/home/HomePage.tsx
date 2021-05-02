@@ -7,10 +7,10 @@ export default function HomePage() {
 		<Segment inverted textAlign="center" vertical className="masthead">
 			<Container text>
 				<Header as="h1" inverted>
-					<h1>CareerDoor</h1>
+					CareerDoor
 				</Header>
 				<Header as="h2" inverted content="Welcome to CareerDoor" />
-				<Button size="huge" inverted as={NavLink} to="/gettogethers">
+				<Button size="huge" inverted as={NavLink} to="/meetings">
 					Take me to the Meetings!
 				</Button>
 			</Container>

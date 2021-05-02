@@ -17,7 +17,7 @@ export default observer(function GetTogetherList() {
                     {getTogethers.map((getTogether) => (
                         <GetTogetherListItem 
                             // key={getTogether.id} 
-                            getTogether={getTogether}/>
+                            meeting={getTogether}/>
                     ))}
                 </Fragment>
                

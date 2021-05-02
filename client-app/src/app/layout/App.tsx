@@ -25,7 +25,7 @@ function App() {
               <Switch>
                 <Route exact path="/meetings" component={GetTogetherDashboard} />
                 <Route exact path="/meetings/:id" component={GetTogetherDetails} />
-                <Route exact key={location.key} path={["/createMeetings", "/manage/:id"]} component={GetTogetherForm} />
+                <Route exact key={location.key} path={["/createmeeting", "/manage/:id"]} component={GetTogetherForm} />
                 <Route exact path="/errors" component={TestErrors} />
               </Switch>
             </Container>

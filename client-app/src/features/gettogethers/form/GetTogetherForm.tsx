@@ -18,7 +18,7 @@ export default function GetTogetherForm() {
     const { createGetTogether, updateGetTogether, loading, loadGetTogether, loadingInitial } = getTogetherStore;
     const { id } = useParams<{ id: string }>();
 
-    const [getTogether, setGetTogether] = useState<GetTogether>({
+    const [meeting, setMeeting] = useState<GetTogether>({
         id: '',
         title: '',
         description: '',
@@ -36,22 +36,22 @@ export default function GetTogetherForm() {
     })
 
     useEffect(() => {
-        if (id) loadGetTogether(id).then(getTogether => setGetTogether(getTogether!));
+        if (id) loadGetTogether(id).then(meeting => setMeeting(meeting!));
     }, [id, loadGetTogether])
 
-    function handleFormSubmit(getTogether: GetTogether) {
-        if (getTogether.id.length === 0) {
-            let newGetTogether = {
-                ...getTogether,
+    function handleFormSubmit(meeting: GetTogether) {
+        if (meeting.id.length === 0) {
+            let newMeeting = {
+                ...meeting,
                 id: uuid()
             };
-            createGetTogether(newGetTogether).then(() => history.push(`/getTogethers/${newGetTogether.id}`))
+            createGetTogether(newMeeting).then(() => history.push(`/meetings/${newMeeting.id}`))
         } else {
-            updateGetTogether(getTogether).then(() => history.push(`/getTogether/${getTogether.id}`))
+            updateGetTogether(meeting).then(() => history.push(`/meeting/${meeting.id}`))
         }
     }
 
-    if (loadingInitial) return <LoadingComponent content='Loading activity...' />
+    if (loadingInitial) return <LoadingComponent content='Loading meeting...' />
 
     return (
         <Segment clearing>
@@ -59,7 +59,7 @@ export default function GetTogetherForm() {
             <Formik
                 validationSchema={validationSchema}
                 enableReinitialize
-                initialValues={getTogether}
+                initialValues={meeting}
                 onSubmit={values => handleFormSubmit(values)} >
                 {({ handleSubmit, isValid, isSubmitting, dirty }) => (
                     <Form className='ui form' onSubmit={handleSubmit} autoComplete='off' >
@@ -79,7 +79,7 @@ export default function GetTogetherForm() {
                             floated='right'
                             positive type='submit'
                             content='Submit' />
-                        <Button as={Link} to={`/getTogethers/${getTogether.id}`} floated='right' type='button' content='Cancel' />
+                        <Button as={Link} to={`/meetings/${meeting.id}`} floated='right' type='button' content='Cancel' />
                     </Form>
                 )}
             </Formik>
