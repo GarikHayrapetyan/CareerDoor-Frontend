@@ -17,7 +17,6 @@ export default class GetTogetherStore {
 	get getTogethersByDate() {
 		return Array.from(this.getTogetherRegistry.values()).sort(
 			(a, b) => a.date!.getTime() - b.date!.getTime());
-		);
 	}
 
 	get groupedGetTogethers() {
