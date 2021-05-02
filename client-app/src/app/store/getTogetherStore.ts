@@ -95,7 +95,7 @@ export default class GetTogetherStore {
 		}
 	}
 
-	updateActivity = async (getTogether: GetTogether) => {
+	updateGetTogether = async (getTogether: GetTogether) => {
         this.loading = true;
         try {
             await agent.GetTogethers.update(getTogether);
@@ -115,7 +115,7 @@ export default class GetTogetherStore {
         }
     };
 
-	deleteActivity = async (id: string) => {
+	deleteGetTogether = async (id: string) => {
         this.loading = true;
         try {
             await agent.GetTogethers.delete(id);
