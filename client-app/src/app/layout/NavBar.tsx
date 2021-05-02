@@ -11,6 +11,7 @@ export default function NavBar() {
 					as={NavLink}
 					to="/"
 					exact
+					toheader
 					style={{
 						marginLeft: '2em',
 						marginRight: '0px',
@@ -18,14 +19,14 @@ export default function NavBar() {
 					}}
 				/>
 				<Menu.Item name="Jobs" />
-				<Menu.Item exact as={NavLink} to='/gettogethers' name="gettogethers" />
-				<Menu.Item exact as={NavLink} to='/errors' name='errors' />
+				<Menu.Item exact as={NavLink} to='/meetings' name="Meetings" />
+				<Menu.Item exact as={NavLink} to='/errors' name='Errors' />
 				<Menu.Item>
 					<Button
 						as={NavLink}
-						to="/creategettogether"
+						to="/createMeeting"
 						positive
-						content="Create GetTogether"
+						content="Create Meeting"
 					/>
 				</Menu.Item>
 			</Container>

@@ -47,12 +47,12 @@ export default class GetTogetherStore {
 	};
 
 	loadGetTogether = async (id: string) => {
-		this.setLoadingInitial(false);
 		let getTogether = this.getGetTogether(id);
 		if (getTogether) {
 			this.selectedGetTogether = getTogether;
 			return getTogether;
 		} else {
+			this.loadingInitial = true;
 			try {
 				getTogether = await agent.GetTogethers.details(id);
 				this.setGetTogether(getTogether);
@@ -78,7 +78,7 @@ export default class GetTogetherStore {
 	};
 
 	setLoadingInitial = (state: boolean) => {
-		this.loadingInitial = true;
+		this.loadingInitial = state;
 	}
 
 	createGetTogether = async (getTogether: GetTogether) => {

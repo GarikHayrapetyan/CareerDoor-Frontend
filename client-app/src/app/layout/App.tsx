@@ -23,9 +23,9 @@ function App() {
             <NavBar />
             <Container style={{ marginTop: "7em" }}>
               <Switch>
-                <Route exact path="/gettogethers" component={GetTogetherDashboard} />
-                <Route exact path="/gettogethers/:id" component={GetTogetherDetails} />
-                <Route exact key={location.key} path={["/creategettogether", "/manage/:id"]} component={GetTogetherForm} />
+                <Route exact path="/meetings" component={GetTogetherDashboard} />
+                <Route exact path="/meetings/:id" component={GetTogetherDetails} />
+                <Route exact key={location.key} path={["/createMeetings", "/manage/:id"]} component={GetTogetherForm} />
                 <Route exact path="/errors" component={TestErrors} />
               </Switch>
             </Container>

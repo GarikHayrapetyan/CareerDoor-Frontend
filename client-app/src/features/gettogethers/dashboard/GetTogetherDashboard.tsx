@@ -4,6 +4,7 @@ import GetTogetherList from './GetTogetherList';
 import GetTogetherFilter from './GetTogetherFilter';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../app/store/store';
+import LoadingComponent from '../../../app/layout/LoadingComponent';
 
 export default observer(function GetTogetherDashboard() {
 	const { getTogetherStore } = useStore();
@@ -11,14 +12,12 @@ export default observer(function GetTogetherDashboard() {
 
 	useEffect(
 		() => {
-			if (getTogetherRegistry.size <= 1) {
-				loadingGetTogethers();
-			}
-
-			console.log(loadingGetTogethers);
-		},
-		[ loadingGetTogethers, getTogetherRegistry ]
+			if (getTogetherRegistry.size <= 1) loadingGetTogethers();
+		}, [ loadingGetTogethers, getTogetherRegistry ]
 	);
+
+	if (getTogetherStore.loadingInitial) return <LoadingComponent content='Loading App' />
+
 	return (
 		<Grid>
 			<GridColumn width={8} style={{ marginRight: '10em' }}>
