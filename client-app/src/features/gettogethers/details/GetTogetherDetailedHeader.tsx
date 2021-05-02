@@ -2,6 +2,8 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { Button, Header, Item, Segment, Image } from 'semantic-ui-react';
 import GetTogether from '../../../app/models/GetTogether';
+import { format} from 'date-fns'
+import { Link } from 'react-router-dom';
 
 const activityImageStyle = {
 	filter: 'brightness(30%)'
@@ -17,7 +19,7 @@ const activityImageTextStyle = {
 };
 
 interface Props {
-	meeting: GetTogether | undefined;
+	meeting: GetTogether;
 }
 
 function GetTogetherDetailedHeader({ meeting }: Props) {
@@ -43,7 +45,7 @@ function GetTogetherDetailedHeader({ meeting }: Props) {
 									content={meeting?.title}
 									style={{ color: 'white' }}
 								/>
-								<p>{meeting?.date}</p>
+								<p>{format(meeting.date!, 'dd MMM yyyy')}</p>
 								<p>
 									Hosted by <strong>Bob</strong>
 								</p>
@@ -55,7 +57,7 @@ function GetTogetherDetailedHeader({ meeting }: Props) {
 			<Segment clearing attached="bottom">
 				<Button color="teal">Join Meeting</Button>
 				<Button>Cancel attendance</Button>
-				<Button color="orange" floated="right">
+				<Button as={Link} to={`/manage/${meeting.id}`} color="orange" floated="right">
 					Manage Event
 				</Button>
 			</Segment>

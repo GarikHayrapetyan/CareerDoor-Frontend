@@ -1,9 +1,10 @@
 import React from 'react';
 import { Segment, Grid, Icon } from 'semantic-ui-react';
 import GetTogether from '../../../app/models/GetTogether';
+import { format } from 'date-fns'
 
 interface Props {
-	meeting: GetTogether | undefined;
+	meeting: GetTogether;
 }
 
 function GetTogetherDetailedInfo({ meeting }: Props) {
@@ -26,7 +27,9 @@ function GetTogetherDetailedInfo({ meeting }: Props) {
 						<Icon name="calendar" size="large" color="teal" />
 					</Grid.Column>
 					<Grid.Column width={15}>
-						<span>{meeting?.date.split('T')[0]}</span>
+						<span>
+						{format(meeting.date!, 'dd MMM yyyy h:mm aa')}
+						</span>
 					</Grid.Column>
 				</Grid>
 			</Segment>
