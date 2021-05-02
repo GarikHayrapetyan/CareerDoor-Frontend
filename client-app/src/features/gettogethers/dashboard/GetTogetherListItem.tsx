@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Icon, Item, Segment } from 'semantic-ui-react';
 import GetTogether from '../../../app/models/GetTogether';
+import { format } from 'date-fns'
 
 interface Props {
 	getTogether: GetTogether;
@@ -36,7 +37,7 @@ export default function GetTogetherListItem({ getTogether }: Props) {
 			<Segment>
 				<span>
 					<Icon name="calendar alternate outline" />{' '}
-					{getTogether.date}
+					{format(getTogether.date!, 'dd MMM yyyy h:mm aa')}
 					<Icon
 						name="clock outline"
 						style={{ marginLeft: '5px' }}
