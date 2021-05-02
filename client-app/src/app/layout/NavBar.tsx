@@ -24,7 +24,7 @@ export default function NavBar() {
 				<Menu.Item>
 					<Button
 						as={NavLink}
-						to="/createMeeting"
+						to="/createmeeting"
 						positive
 						content="Create Meeting"
 					/>
