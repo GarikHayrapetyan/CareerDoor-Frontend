@@ -10,8 +10,8 @@ export default function HomePage() {
 					CareerDoor
 				</Header>
 				<Header as="h2" inverted content="Welcome to CareerDoor" />
-				<Button size="huge" inverted as={NavLink} to="/meetings">
-					Take me to the Meetings!
+				<Button size="huge" inverted as={NavLink} to="/login">
+					Login
 				</Button>
 			</Container>
 		</Segment>

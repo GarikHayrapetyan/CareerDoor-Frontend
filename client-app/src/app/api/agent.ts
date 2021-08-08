@@ -1,6 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { toast } from 'react-toastify';
 import GetTogether from '../models/GetTogether';
+import { User, UserFormValues } from '../models/User';
 
 axios.defaults.baseURL = '/api';
 // https://cors-anywhere.herokuapp.com/
@@ -62,9 +63,9 @@ const responseBody = <T>(response: AxiosResponse<T>) => response.data;
 
 const requests = {
 	get: <T>(url: string) => axios.get<T>(url).then(responseBody),
-	post: (url: string, body: {}) => axios.post(url, body).then(responseBody),
-	put: (url: string, body: {}) => axios.put(url, body).then(responseBody),
-	del: (url: string) => axios.delete(url).then(responseBody)
+	post: <T>(url: string, body: {}) => axios.post<T>(url, body).then(responseBody),
+	put: <T>(url: string, body: {}) => axios.put<T>(url, body).then(responseBody),
+	del: <T>(url: string) => axios.delete<T>(url).then(responseBody)
 };
 
 const GetTogethers = {
@@ -76,8 +77,15 @@ const GetTogethers = {
 	delete: (id: string) => requests.del(`/gettogether/${id}`)
 };
 
+const Account = {
+	current: ()=>requests.get<User>('/account'),
+	login: (user: UserFormValues) => requests.post<User>('/account/login',user),
+	register: (user: UserFormValues) => requests.post<User>('/account/register',user)
+	
+}
 const agent = {
-	GetTogethers
+	GetTogethers,
+	Account
 };
 
 export default agent;
