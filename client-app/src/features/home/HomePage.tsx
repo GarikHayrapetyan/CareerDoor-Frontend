@@ -3,9 +3,10 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Button, Container, Header, Segment } from 'semantic-ui-react';
 import { useStore } from '../../app/store/store';
+import LoginForm from '../users/LoginForm';
 
 export default observer(function HomePage() {
-	const { userStore } = useStore();
+	const { userStore, modalStore } = useStore();
 
 	return (
 		<Segment inverted textAlign="center" vertical className="masthead">
@@ -22,9 +23,14 @@ export default observer(function HomePage() {
 							</Button>
 						</>
 					) : (
-						<Button size="huge" inverted as={NavLink} to="/login">
+						<>
+						<Button onClick={()=>modalStore.openModal(<LoginForm/>)} size="huge" inverted>
 							Login
 						</Button>
+						<Button onClick={()=>modalStore.openModal(<h1>Register</h1>)} size="huge" inverted>
+							Register
+						</Button>
+						</>
 					)
 				}
 

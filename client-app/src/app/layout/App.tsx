@@ -8,6 +8,7 @@ import TestErrors from "../../features/gettogethers/errors/TestErrors";
 import GetTogetherForm from "../../features/gettogethers/form/GetTogetherForm";
 import HomePage from "../../features/home/HomePage";
 import LoginForm from "../../features/users/LoginForm";
+import ModalContainer from "../common/modals/ModalContainer";
 import { useStore } from "../store/store";
 import LoadingComponent from "./LoadingComponent";
 import NavBar from "./NavBar";
@@ -24,11 +25,12 @@ function App() {
     }
   },[commonStore,userStore])
 
-  if(!commonStore.appLoaded) return <LoadingComponent content='Loading app ...'/>
+ // if(!commonStore.appLoaded) return <LoadingComponent content='Loading app ...'/>
   
   return (
     <>
       <ToastContainer hideProgressBar />
+      <ModalContainer/>
       <Route exact path="/" component={HomePage} />
       <Route
         path="/(.+)"
