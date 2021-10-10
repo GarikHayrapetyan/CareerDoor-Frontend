@@ -16,7 +16,7 @@ export default observer(function GetTogetherDashboard() {
 		}, [ loadingGetTogethers, getTogetherRegistry ]
 	);
 
-	if (getTogetherStore.loadingInitial) return <LoadingComponent content='Loading App' />
+	if (getTogetherStore.loadingInitial) return <LoadingComponent content='Loading content ...' />
 
 	return (
 		<Grid>

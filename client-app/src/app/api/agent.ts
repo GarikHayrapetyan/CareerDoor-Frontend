@@ -2,9 +2,17 @@ import axios, { AxiosError, AxiosResponse } from 'axios';
 import { toast } from 'react-toastify';
 import GetTogether from '../models/GetTogether';
 import { User, UserFormValues } from '../models/User';
+import { store } from '../store/store';
 
 axios.defaults.baseURL = '/api';
 // https://cors-anywhere.herokuapp.com/
+
+axios.interceptors.request.use( config =>{
+	const token = store.commonStore.token;
+	if (token) config.headers.Authorization = `Bearer ${token}`
+
+	return config;
+})
 
 const sleep = (delay: number) => {
 	return new Promise((resolve) => {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Route, Switch, useLocation } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { Container } from "semantic-ui-react";
@@ -8,10 +8,23 @@ import TestErrors from "../../features/gettogethers/errors/TestErrors";
 import GetTogetherForm from "../../features/gettogethers/form/GetTogetherForm";
 import HomePage from "../../features/home/HomePage";
 import LoginForm from "../../features/users/LoginForm";
+import { useStore } from "../store/store";
+import LoadingComponent from "./LoadingComponent";
 import NavBar from "./NavBar";
 
 function App() {
   const location = useLocation();
+  const {commonStore,userStore} = useStore();
+  
+  useEffect(()=>{
+    if(commonStore.token){
+      userStore.getUser().finally(()=>commonStore.setAppLoaded());
+    }else{
+      commonStore.setAppLoaded();
+    }
+  },[commonStore,userStore])
+
+  if(!commonStore.appLoaded) return <LoadingComponent content='Loading app ...'/>
   
   return (
     <>
