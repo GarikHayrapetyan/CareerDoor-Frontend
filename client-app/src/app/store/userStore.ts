@@ -21,8 +21,7 @@ export default class UserStore {
             store.commonStore.setToken(user.token);
             runInAction(()=>this.user = user);
             history.push('/meetings');
-            store.modalStore.closeModal();
-            console.log(user);            
+            store.modalStore.closeModal();           
         } catch (error) {
             throw error;
         }
@@ -44,4 +43,17 @@ export default class UserStore {
             
         }
     }
+
+    register = async (creds: UserFormValues)=>{
+        try {
+            const user = await agent.Account.register(creds);
+            store.commonStore.setToken(user.token);
+            runInAction(()=>this.user = user);
+            history.push('/meetings');
+            store.modalStore.closeModal();          
+        } catch (error) {
+            throw error;
+        }
+    }
 }
+
