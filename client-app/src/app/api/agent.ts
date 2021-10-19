@@ -82,7 +82,8 @@ const GetTogethers = {
 	create: (meeting: GetTogether) => requests.post('/gettogether', meeting),
 	update: (meeting: GetTogether) =>
 		requests.put(`/gettogether/${meeting.id}`, meeting),
-	delete: (id: string) => requests.del(`/gettogether/${id}`)
+	delete: (id: string) => requests.del(`/gettogether/${id}`),
+	attend: (id: string) => requests.post<void>(`/gettogether/${id}/attend`, {})
 };
 
 const Account = {

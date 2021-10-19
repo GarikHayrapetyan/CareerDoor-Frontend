@@ -4,6 +4,7 @@ import { Button, Header, Item, Segment, Image } from 'semantic-ui-react';
 import GetTogether from '../../../app/models/GetTogether';
 import { format} from 'date-fns'
 import { Link } from 'react-router-dom';
+import { useStore } from '../../../app/store/store';
 
 const activityImageStyle = {
 	filter: 'brightness(30%)'
@@ -23,7 +24,8 @@ interface Props {
 }
 
 function GetTogetherDetailedHeader({ meeting }: Props) {
-	// if(!meeting) return;
+	const {getTogetherStore: {updateAttence, loading}} = useStore();
+
 	return (
 		<Segment.Group>
 			<Segment
@@ -60,9 +62,9 @@ function GetTogetherDetailedHeader({ meeting }: Props) {
 					Manage Event
 					</Button>
 				) : meeting.isGoing ? (
-					<Button>Cancel attendance</Button>
+					<Button loading={loading} onClick={updateAttence}>Cancel attendance</Button>
 					) : 
-					(<Button color="teal">Join Meeting</Button>)
+					(<Button loading={loading} onClick={updateAttence} color="teal">Join Meeting</Button>)
 				}
 			</Segment>
 		</Segment.Group>

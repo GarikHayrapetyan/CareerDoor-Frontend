@@ -1,4 +1,5 @@
-import { Profile } from './Profile';
+import { Profile } from './userProfile';
+
 export default interface GetTogether {
 	id: string;
 	title: string;
@@ -6,10 +7,11 @@ export default interface GetTogether {
 	date: Date | null;
 	link: string;
 	passCode: string;
-	hostUsername?: string;
-	isCancelled?: boolean;
-	isGoing?: boolean;
-	isHost?: boolean;
+	hostUsername: string;
+	isCancelled: boolean;
+	isGoing: boolean;
+	isHost: boolean;
 	host?: Profile;
-	attendees?: Profile[];
+	attendees: Profile[];
 };
+

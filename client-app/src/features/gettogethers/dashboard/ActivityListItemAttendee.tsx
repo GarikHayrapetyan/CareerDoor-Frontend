@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import { List, Image } from 'semantic-ui-react';
 import React from 'react';
-import { Profile } from '../../../app/models/Profile';
+import { Profile } from '../../../app/models/userProfile';
 import { Link } from 'react-router-dom';
 
 interface Props {

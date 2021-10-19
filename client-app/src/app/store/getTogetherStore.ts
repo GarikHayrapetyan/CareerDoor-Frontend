@@ -3,6 +3,7 @@ import agent from '../api/agent';
 import GetTogether from '../models/GetTogether';
 import { format } from 'date-fns';
 import { store } from './store';
+import { Profile } from '../models/userProfile';
 
 export default class GetTogetherStore {
 	getTogetherRegistry = new Map<string, GetTogether>();
@@ -143,4 +144,29 @@ export default class GetTogetherStore {
 			});
 		}
 	};
+
+	updateAttence = async () => {
+		const user = store.userStore.user;
+		this.loading = true;
+		try {
+			await agent.GetTogethers.attend(this.selectedGetTogether!.id);
+			runInAction(() => {
+				if(this.selectedGetTogether?.isGoing) {
+					this.selectedGetTogether.attendees = 
+						this.selectedGetTogether.attendees?.filter(a => a.username !== user?.username);
+						this.selectedGetTogether.isGoing = false;
+				} else {
+					const attendee = new Profile(user!);
+					//const attendee = new Profile(user!);
+					this.selectedGetTogether?.attendees?.push(attendee);
+					this.selectedGetTogether!.isGoing = true;
+				}
+				this.getTogetherRegistry.set(this.selectedGetTogether!.id, this.selectedGetTogether!)
+			})
+		} catch(error) {
+			console.log(error);
+		} finally {
+			runInAction(()=> this.loading = false);
+		}
+	}
 }
