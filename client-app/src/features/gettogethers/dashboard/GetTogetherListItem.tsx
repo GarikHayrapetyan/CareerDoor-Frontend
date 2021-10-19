@@ -2,7 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Icon, Item, Segment } from 'semantic-ui-react';
 import GetTogether from '../../../app/models/GetTogether';
-import { format } from 'date-fns'
+import { format } from 'date-fns';
+import ActivityListItemAttendee from './ActivityListItemAttendee';
 
 interface Props {
 	meeting: GetTogether;
@@ -40,7 +41,9 @@ export default function GetTogetherListItem({ meeting }: Props) {
 					{format(meeting.date!, 'dd MMM yyyy h:mm aa')}
 				</span>
 			</Segment>
-			<Segment secondary>Attendances...</Segment>
+			<Segment secondary>
+				<ActivityListItemAttendee attendees={meeting.attendees!} />
+			</Segment>
 		</Segment.Group>
 	);
 }
