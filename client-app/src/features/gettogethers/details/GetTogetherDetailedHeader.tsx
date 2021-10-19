@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import React from 'react';
-import { Button, Header, Item, Segment, Image } from 'semantic-ui-react';
+import { Button, Header, Item, Segment, Image, Label } from 'semantic-ui-react';
 import {GetTogether} from '../../../app/models/GetTogether';
 import { format} from 'date-fns'
 import { Link } from 'react-router-dom';
@@ -24,7 +24,7 @@ interface Props {
 }
 
 function GetTogetherDetailedHeader({ meeting }: Props) {
-	const {getTogetherStore: {updateAttence, loading}} = useStore();
+	const {getTogetherStore: {updateAttence, loading, cancelGetTogetherToggle}} = useStore();
 
 	return (
 		<Segment.Group>
@@ -33,6 +33,10 @@ function GetTogetherDetailedHeader({ meeting }: Props) {
 				attached="top"
 				style={{ padding: '0', width: '55vw', height: '30vh' }}
 			>
+				{meeting.isCancelled && 
+					<Label style={{position: 'absolute', zIndex: 1000, left: -14, top: 20}}
+						ribbon color="red" content='Canceled' />
+				}
 				<Image
 					src={`/assets/meeting.jpeg`}
 					fluid
@@ -58,13 +62,35 @@ function GetTogetherDetailedHeader({ meeting }: Props) {
 			</Segment>
 			<Segment clearing attached="bottom">
 				{meeting.isHost ? (
-					<Button as={Link} to={`/manage/${meeting.id}`} color="orange" floated="right">
-					Manage Event
-					</Button>
+					<>
+						<Button 
+							color={meeting.isCancelled ? 'green' : 'red'}
+							floated='left'
+							basic
+							content={meeting.isCancelled ? 'Re-activate Meeting' : 'Cancel Meeting'}
+							onClick={cancelGetTogetherToggle}
+							loading={loading}
+						/>
+						<Button 
+							disabled={meeting.isCancelled}
+							as={Link} 
+							to={`/manage/${meeting.id}`} 
+							color="orange" 
+							floated="right"
+						>
+						Manage Event
+						</Button>
+					</>
 				) : meeting.isGoing ? (
 					<Button loading={loading} onClick={updateAttence}>Cancel attendance</Button>
 					) : 
-					(<Button loading={loading} onClick={updateAttence} color="teal">Join Meeting</Button>)
+					(<Button
+						disabled={meeting.isCancelled}
+						loading={loading} 
+						onClick={updateAttence} 
+						color="teal">
+							Join Meeting
+					</Button>)
 				}
 			</Segment>
 		</Segment.Group>

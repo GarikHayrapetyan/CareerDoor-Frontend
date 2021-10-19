@@ -166,4 +166,17 @@ export default class GetTogetherStore {
 			runInAction(()=> this.loading = false);
 		}
 	}
+	
+	cancelGetTogetherToggle = async () => {
+		this.loading = true;
+		await agent.GetTogethers.attend(this.selectedGetTogether!.id);
+		try {
+			this.selectedGetTogether!.isCancelled = !this.selectedGetTogether?.isCancelled;
+			this.getTogetherRegistry.set(this.selectedGetTogether!.id, this.selectedGetTogether!);
+		} catch(error) {
+			console.log(error);
+		} finally {
+			runInAction(() => this.loading = false);
+		}
+	}
 }
