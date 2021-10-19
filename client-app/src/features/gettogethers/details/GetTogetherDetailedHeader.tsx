@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { Button, Header, Item, Segment, Image } from 'semantic-ui-react';
-import GetTogether from '../../../app/models/GetTogether';
+import {GetTogether} from '../../../app/models/GetTogether';
 import { format} from 'date-fns'
 import { Link } from 'react-router-dom';
 import { useStore } from '../../../app/store/store';

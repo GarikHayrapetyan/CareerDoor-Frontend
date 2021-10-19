@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Icon, Item, Segment, Label } from 'semantic-ui-react';
-import GetTogether from '../../../app/models/GetTogether';
+import {GetTogether} from '../../../app/models/GetTogether';
 import { format } from 'date-fns';
 import ActivityListItemAttendee from './ActivityListItemAttendee';
 

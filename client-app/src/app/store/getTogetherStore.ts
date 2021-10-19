@@ -1,6 +1,6 @@
 import { makeAutoObservable, runInAction } from 'mobx';
 import agent from '../api/agent';
-import GetTogether from '../models/GetTogether';
+import {GetTogether, GetTogetherFormValues} from '../models/GetTogether';
 import { format } from 'date-fns';
 import { store } from './store';
 import { Profile } from '../models/userProfile';
@@ -94,38 +94,35 @@ export default class GetTogetherStore {
 		this.loadingInitial = state;
 	};
 
-	createGetTogether = async (getTogether: GetTogether) => {
-		this.loading = true;
+	createGetTogether = async (getTogether: GetTogetherFormValues) => {
+		const user = store.userStore.user;
+		const attendee = new Profile(user!);
 		try {
 			await agent.GetTogethers.create(getTogether);
+			const newGetTogether = new GetTogether(getTogether);
+			newGetTogether.hostUsername = user!.username;
+			newGetTogether.attendees = [attendee];
+			this.setGetTogether(newGetTogether);
 			runInAction(() => {
-				this.getTogetherRegistry.set(getTogether.id, getTogether);
-				this.selectedGetTogether = getTogether;
-				this.editMode = false;
-				this.loading = false;
+				this.selectedGetTogether = newGetTogether;
 			});
 		} catch (error) {
 			console.log(error);
 		}
 	};
 
-	updateGetTogether = async (getTogether: GetTogether) => {
-		this.loading = true;
+	updateGetTogether = async (getTogether: GetTogetherFormValues) => {
 		try {
 			await agent.GetTogethers.update(getTogether);
 			runInAction(() => {
-				this.getTogetherRegistry.set(getTogether.id, getTogether);
-				this.selectedGetTogether = getTogether;
-				this.editMode = false;
-				this.loading = false;
+				if(getTogether.id) {
+					 let updatedGetTogether = {...this.getGetTogether(getTogether.id), ...getTogether}
+					 this.getTogetherRegistry.set(getTogether.id, updatedGetTogether as GetTogether);
+					 this.selectedGetTogether = updatedGetTogether as GetTogether;
+				}
 			});
 		} catch (error) {
 			console.log(error);
-			try {
-				this.loading = false;
-			} catch (error) {
-				console.log(error);
-			}
 		}
 	};
 

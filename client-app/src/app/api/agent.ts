@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { toast } from 'react-toastify';
-import GetTogether from '../models/GetTogether';
+import  { GetTogetherFormValues, GetTogether } from '../models/GetTogether';
 import { User, UserFormValues } from '../models/User';
 import { store } from '../store/store';
 
@@ -79,8 +79,8 @@ const requests = {
 const GetTogethers = {
 	list: requests.get<GetTogether[]>('/gettogether'),
 	details: (id: string) => requests.get<GetTogether>(`/gettogether/${id}`),
-	create: (meeting: GetTogether) => requests.post('/gettogether', meeting),
-	update: (meeting: GetTogether) =>
+	create: (meeting: GetTogetherFormValues) => requests.post('/gettogether', meeting),
+	update: (meeting: GetTogetherFormValues) =>
 		requests.put(`/gettogether/${meeting.id}`, meeting),
 	delete: (id: string) => requests.del(`/gettogether/${id}`),
 	attend: (id: string) => requests.post<void>(`/gettogether/${id}/attend`, {})

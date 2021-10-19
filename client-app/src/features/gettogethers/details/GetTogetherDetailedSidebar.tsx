@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 import { Segment, List, Label, Item, Image } from 'semantic-ui-react'
-import GetTogether from '../../../app/models/GetTogether';
+import {GetTogether} from '../../../app/models/GetTogether';
 
 interface Props {
     getTogether: GetTogether;
