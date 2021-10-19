@@ -34,7 +34,7 @@ function GetTogetherDetails() {
 				<GetTogetherDetailedInfo meeting={getTogether} />
 			</Grid.Column>
 			<Grid.Column width={6}>
-				<GetTogetherDetailedSidebar attendees={getTogether.attendees!} />
+				<GetTogetherDetailedSidebar getTogether={getTogether} />
 				<GetTogetherDetailedChat />
 			</Grid.Column>
 		</Grid>

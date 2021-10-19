@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Icon, Item, Segment } from 'semantic-ui-react';
+import { Icon, Item, Segment, Label } from 'semantic-ui-react';
 import GetTogether from '../../../app/models/GetTogether';
 import { format } from 'date-fns';
 import ActivityListItemAttendee from './ActivityListItemAttendee';
@@ -29,8 +29,18 @@ export default function GetTogetherListItem({ meeting }: Props) {
 							<Item.Description content="User Name" />
 							<Item.Header content={meeting.title} />
 							<Item.Description>
-								{meeting.description}
+								Hosted by {meeting.host?.displayName}
 							</Item.Description>
+							{meeting.isHost && (
+								<Item.Description>
+									<Label basic color='orange'>You are hosting this meeting</Label>
+								</Item.Description>
+							)}
+							{meeting.isGoing && !meeting.isHost && (
+								<Item.Description>
+									<Label basic color='green'>You are going to this meeting</Label>
+								</Item.Description>
+							)}
 						</Item.Content>
 					</Item>
 				</Item.Group>

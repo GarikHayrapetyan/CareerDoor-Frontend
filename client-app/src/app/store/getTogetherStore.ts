@@ -1,14 +1,15 @@
 import { makeAutoObservable, runInAction } from 'mobx';
 import agent from '../api/agent';
 import GetTogether from '../models/GetTogether';
-import { format } from 'date-fns'
+import { format } from 'date-fns';
+import { store } from './store';
 
 export default class GetTogetherStore {
 	getTogetherRegistry = new Map<string, GetTogether>();
 	selectedGetTogether: GetTogether | undefined = undefined;
 	editMode = false;
-    loading = false;
-    loadingInitial = false;
+	loading = false;
+	loadingInitial = false;
 
 	constructor() {
 		makeAutoObservable(this);
@@ -16,18 +17,21 @@ export default class GetTogetherStore {
 
 	get getTogethersByDate() {
 		return Array.from(this.getTogetherRegistry.values()).sort(
-			(a, b) => a.date!.getTime() - b.date!.getTime());
+			(a, b) => a.date!.getTime() - b.date!.getTime()
+		);
 	}
 
 	get groupedGetTogethers() {
 		return Object.entries(
-			this.getTogethersByDate.reduce((getTogethers, getTogether) => {
+			this.getTogethersByDate.reduce(
+				(getTogethers, getTogether) => {
 					const date = format(getTogether.date!, 'dd MMM yyyy');
 					getTogethers[date] = getTogethers[date]
 						? [ ...getTogethers[date], getTogether ]
 						: [ getTogether ];
 					return getTogethers;
-				}, {} as { [key: string]: GetTogether[] }
+				},
+				{} as { [key: string]: GetTogether[] }
 			)
 		);
 	}
@@ -58,7 +62,7 @@ export default class GetTogetherStore {
 				this.setGetTogether(getTogether);
 				runInAction(() => {
 					this.selectedGetTogether = getTogether;
-				})
+				});
 				this.setLoadingInitial(false);
 				return getTogether;
 			} catch (error) {
@@ -69,9 +73,17 @@ export default class GetTogetherStore {
 	};
 
 	private setGetTogether = (getTogether: GetTogether) => {
+		const user = store.userStore.user;
+		if (user) {
+			getTogether.isGoing = getTogether.attendees!.some(
+				(a) => a.username === user.username
+			);
+			getTogether.isHost = getTogether.hostUsername === user.username;
+			getTogether.host = getTogether.attendees?.find(x => x.username === getTogether.hostUsername);
+		}
 		getTogether.date = new Date(getTogether.date!);
 		this.getTogetherRegistry.set(getTogether.id, getTogether);
-	}
+	};
 
 	private getGetTogether = (id: string) => {
 		return this.getTogetherRegistry.get(id);
@@ -79,56 +91,56 @@ export default class GetTogetherStore {
 
 	setLoadingInitial = (state: boolean) => {
 		this.loadingInitial = state;
-	}
+	};
 
 	createGetTogether = async (getTogether: GetTogether) => {
 		this.loading = true;
 		try {
-			await agent.GetTogethers.create(getTogether); 
+			await agent.GetTogethers.create(getTogether);
 			runInAction(() => {
-                this.getTogetherRegistry.set(getTogether.id, getTogether);
-                this.selectedGetTogether = getTogether;
-                this.editMode = false;
-                this.loading = false;
-            });
+				this.getTogetherRegistry.set(getTogether.id, getTogether);
+				this.selectedGetTogether = getTogether;
+				this.editMode = false;
+				this.loading = false;
+			});
 		} catch (error) {
 			console.log(error);
 		}
-	}
+	};
 
 	updateGetTogether = async (getTogether: GetTogether) => {
-        this.loading = true;
-        try {
-            await agent.GetTogethers.update(getTogether);
-            runInAction(() => {
-                this.getTogetherRegistry.set(getTogether.id, getTogether);
-                this.selectedGetTogether = getTogether;
-                this.editMode = false;
-                this.loading = false;
-            });
-        } catch (error) {
-            console.log(error);
-            try {
-                this.loading = false;
-            } catch (error) {
-                console.log(error);
-            }
-        }
-    };
+		this.loading = true;
+		try {
+			await agent.GetTogethers.update(getTogether);
+			runInAction(() => {
+				this.getTogetherRegistry.set(getTogether.id, getTogether);
+				this.selectedGetTogether = getTogether;
+				this.editMode = false;
+				this.loading = false;
+			});
+		} catch (error) {
+			console.log(error);
+			try {
+				this.loading = false;
+			} catch (error) {
+				console.log(error);
+			}
+		}
+	};
 
 	deleteGetTogether = async (id: string) => {
-        this.loading = true;
-        try {
-            await agent.GetTogethers.delete(id);
-            runInAction(() => {
-                this.getTogetherRegistry.delete(id);
-                this.loading = false;
-            });
-        } catch (error) {
-            console.log(error);
-            runInAction(() => {
-                this.loading = false;
-            });
-        }
-    };
+		this.loading = true;
+		try {
+			await agent.GetTogethers.delete(id);
+			runInAction(() => {
+				this.getTogetherRegistry.delete(id);
+				this.loading = false;
+			});
+		} catch (error) {
+			console.log(error);
+			runInAction(() => {
+				this.loading = false;
+			});
+		}
+	};
 }

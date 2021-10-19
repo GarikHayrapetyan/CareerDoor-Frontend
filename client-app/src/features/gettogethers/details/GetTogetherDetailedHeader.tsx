@@ -47,7 +47,7 @@ function GetTogetherDetailedHeader({ meeting }: Props) {
 								/>
 								<p>{format(meeting.date!, 'dd MMM yyyy')}</p>
 								<p>
-									Hosted by <strong>Bob</strong>
+									Hosted by <strong><Link to={`/profiles/${meeting.host?.username}`}>{meeting.host?.displayName}</Link></strong>
 								</p>
 							</Item.Content>
 						</Item>
@@ -55,11 +55,15 @@ function GetTogetherDetailedHeader({ meeting }: Props) {
 				</Segment>
 			</Segment>
 			<Segment clearing attached="bottom">
-				<Button color="teal">Join Meeting</Button>
-				<Button>Cancel attendance</Button>
-				<Button as={Link} to={`/manage/${meeting.id}`} color="orange" floated="right">
+				{meeting.isHost ? (
+					<Button as={Link} to={`/manage/${meeting.id}`} color="orange" floated="right">
 					Manage Event
-				</Button>
+					</Button>
+				) : meeting.isGoing ? (
+					<Button>Cancel attendance</Button>
+					) : 
+					(<Button color="teal">Join Meeting</Button>)
+				}
 			</Segment>
 		</Segment.Group>
 	);

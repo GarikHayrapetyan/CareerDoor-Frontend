@@ -6,7 +6,10 @@ export default interface GetTogether {
 	date: Date | null;
 	link: string;
 	passCode: string;
-	hostUsername?: boolean;
+	hostUsername?: string;
 	isCancelled?: boolean;
+	isGoing?: boolean;
+	isHost?: boolean;
+	host?: Profile;
 	attendees?: Profile[];
 };
