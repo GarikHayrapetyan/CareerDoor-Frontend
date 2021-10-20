@@ -10,7 +10,6 @@ import HomePage from "../../features/home/HomePage";
 import LoginForm from "../../features/users/LoginForm";
 import ModalContainer from "../common/modals/ModalContainer";
 import { useStore } from "../store/store";
-import LoadingComponent from "./LoadingComponent";
 import NavBar from "./NavBar";
 
 function App() {

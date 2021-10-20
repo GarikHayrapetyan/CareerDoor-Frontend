@@ -29,6 +29,7 @@ export default function GetTogetherListItem({ meeting }: Props) {
 							size="large"
 						/>
 						<Item.Image
+							style={{marginBottom: 3}}
 							src="/assets/user.png"
 							circular
 							size="tiny"

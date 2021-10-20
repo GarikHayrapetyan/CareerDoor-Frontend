@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router';
 import { Button, Form, Header, Segment } from 'semantic-ui-react';
-import { GetTogether } from '../../../app/models/GetTogether';
 import { useStore } from '../../../app/store/store';
 import * as Yup from 'yup';
 import { v4 as uuid } from 'uuid';
@@ -19,7 +18,6 @@ export default function GetTogetherForm() {
 	const {
 		createGetTogether,
 		updateGetTogether,
-		loading,
 		loadGetTogether,
 		loadingInitial
 	} = getTogetherStore;
