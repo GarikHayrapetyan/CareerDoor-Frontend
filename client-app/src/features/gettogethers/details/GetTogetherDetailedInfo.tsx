@@ -1,6 +1,6 @@
 import React from 'react';
 import { Segment, Grid, Icon } from 'semantic-ui-react';
-import GetTogether from '../../../app/models/GetTogether';
+import {GetTogether} from '../../../app/models/GetTogether';
 import { format } from 'date-fns'
 
 interface Props {

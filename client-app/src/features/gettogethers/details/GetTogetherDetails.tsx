@@ -11,14 +11,18 @@ import GetTogetherDetailedSidebar from './GetTogetherDetailedSidebar';
 
 function GetTogetherDetails() {
 	const { getTogetherStore } = useStore();
-	const { loadGetTogether, selectedGetTogether: getTogether, loadingInitial } = getTogetherStore;
+	const {
+		loadGetTogether,
+		selectedGetTogether: getTogether,
+		loadingInitial
+	} = getTogetherStore;
 	const { id } = useParams<{ id: string }>();
 
 	useEffect(
 		() => {
 			if (id) loadGetTogether(id);
 		},
-		[id, loadGetTogether]
+		[ id, loadGetTogether ]
 	);
 
 	if (loadingInitial || !getTogether) return <LoadingComponent />;
@@ -30,7 +34,7 @@ function GetTogetherDetails() {
 				<GetTogetherDetailedInfo meeting={getTogether} />
 			</Grid.Column>
 			<Grid.Column width={6}>
-				<GetTogetherDetailedSidebar />
+				<GetTogetherDetailedSidebar getTogether={getTogether} />
 				<GetTogetherDetailedChat />
 			</Grid.Column>
 		</Grid>
