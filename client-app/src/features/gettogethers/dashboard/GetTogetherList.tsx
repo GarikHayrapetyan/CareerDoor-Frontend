@@ -6,7 +6,7 @@ import GetTogetherListItem from './GetTogetherListItem'
 
 export default observer(function GetTogetherList() {
     const {getTogetherStore} = useStore()
-    const {groupedGetTogethers} = getTogetherStore
+    const {groupedGetTogethers} = getTogetherStore;
 
     return(
         <>
