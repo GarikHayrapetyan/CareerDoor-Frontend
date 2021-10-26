@@ -46,7 +46,7 @@ export default function GetTogetherForm() {
 	);
 
 	function handleFormSubmit(meeting: GetTogetherFormValues) {
-		if (meeting.id) {
+		if (!meeting.id) {
 			let newMeeting = {
 				...meeting,
 				id: uuid()
