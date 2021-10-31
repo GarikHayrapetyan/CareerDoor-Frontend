@@ -2,7 +2,7 @@ import axios, { AxiosError, AxiosResponse } from 'axios';
 import { toast } from 'react-toastify';
 import  { GetTogetherFormValues, GetTogether } from '../models/GetTogether';
 import { User, UserFormValues } from '../models/User';
-import { Profile } from '../models/userProfile';
+import { Photo, Profile } from '../models/userProfile';
 import { store } from '../store/store';
 
 axios.defaults.baseURL = '/api';
@@ -94,7 +94,14 @@ const Account = {
 	
 }
 const Profiles = {
-	get: (username: string) => requests.get<Profile>(`/profiles/${username}`)
+	get: (username: string) => requests.get<Profile>(`/profiles/${username}`),
+	uploadPhoto: (file: Blob) => {
+		let formData = new FormData();
+		formData.append('File', file);
+		return axios.post<Photo>('photos', formData, {
+			headers: {'Content-type': 'multipart/form-data'}
+		})
+	}
 }
 const agent = {
 	GetTogethers,
