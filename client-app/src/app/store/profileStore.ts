@@ -1,6 +1,7 @@
 import { makeAutoObservable, runInAction } from 'mobx';
 import agent from '../api/agent';
 import { Profile } from '../models/userProfile';
+import { store } from './store';
 
 export default class ProfileStore {
 	profile: Profile | null = null;
@@ -10,6 +11,12 @@ export default class ProfileStore {
 		makeAutoObservable(this);
 	}
 
+	get isCurrentUser () {
+		if(store.userStore && this.profile) {
+			return store.userStore.user?.username === this.profile.username;
+		}
+		return false;
+	}
 	loadProfile = async (username: string) => {
 		this.loadingProfile = true;
 		try {
