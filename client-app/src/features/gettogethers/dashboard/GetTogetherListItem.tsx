@@ -30,7 +30,7 @@ export default function GetTogetherListItem({ meeting }: Props) {
 						/>
 						<Item.Image
 							style={{marginBottom: 3}}
-							src="/assets/user.png"
+							src={meeting.host?.image || "/assets/user.png"}
 							circular
 							size="tiny"
 						/>
@@ -38,7 +38,7 @@ export default function GetTogetherListItem({ meeting }: Props) {
 							<Item.Description content="User Name" />
 							<Item.Header content={meeting.title} />
 							<Item.Description>
-								Hosted by {meeting.host?.displayName}
+								Hosted by <Link to={`/profiles/${meeting.hostUsername}`}>{meeting.host?.displayName}</Link>
 							</Item.Description>
 							{meeting.isHost && (
 								<Item.Description>
