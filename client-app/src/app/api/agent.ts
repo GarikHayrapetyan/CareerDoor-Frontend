@@ -2,6 +2,7 @@ import axios, { AxiosError, AxiosResponse } from 'axios';
 import { toast } from 'react-toastify';
 import  { GetTogetherFormValues, GetTogether } from '../models/GetTogether';
 import { User, UserFormValues } from '../models/User';
+import { Profile } from '../models/userProfile';
 import { store } from '../store/store';
 
 axios.defaults.baseURL = '/api';
@@ -92,9 +93,13 @@ const Account = {
 	register: (user: UserFormValues) => requests.post<User>('/account/register',user)
 	
 }
+const Profiles = {
+	get: (username: string) => requests.get<Profile>(`/profiles/${username}`)
+}
 const agent = {
 	GetTogethers,
-	Account
+	Account,
+	Profiles
 };
 
 export default agent;
