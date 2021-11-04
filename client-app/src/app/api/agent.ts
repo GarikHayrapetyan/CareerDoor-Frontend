@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { toast } from 'react-toastify';
-import  { GetTogetherFormValues, GetTogether } from '../models/GetTogether';
+import { GetTogetherFormValues, GetTogether } from '../models/GetTogether';
 import { User, UserFormValues } from '../models/User';
 import { Photo, Profile } from '../models/userProfile';
 import { store } from '../store/store';
@@ -8,12 +8,12 @@ import { store } from '../store/store';
 axios.defaults.baseURL = '/api';
 // https://cors-anywhere.herokuapp.com/
 
-axios.interceptors.request.use( config =>{
+axios.interceptors.request.use((config) => {
 	const token = store.commonStore.token;
-	if (token) config.headers.Authorization = `Bearer ${token}`
+	if (token) config.headers.Authorization = `Bearer ${token}`;
 
 	return config;
-})
+});
 
 const sleep = (delay: number) => {
 	return new Promise((resolve) => {
@@ -72,15 +72,18 @@ const responseBody = <T>(response: AxiosResponse<T>) => response.data;
 
 const requests = {
 	get: <T>(url: string) => axios.get<T>(url).then(responseBody),
-	post: <T>(url: string, body: {}) => axios.post<T>(url, body).then(responseBody),
-	put: <T>(url: string, body: {}) => axios.put<T>(url, body).then(responseBody),
+	post: <T>(url: string, body: {}) =>
+		axios.post<T>(url, body).then(responseBody),
+	put: <T>(url: string, body: {}) =>
+		axios.put<T>(url, body).then(responseBody),
 	del: <T>(url: string) => axios.delete<T>(url).then(responseBody)
 };
 
 const GetTogethers = {
 	list: requests.get<GetTogether[]>('/gettogether'),
 	details: (id: string) => requests.get<GetTogether>(`/gettogether/${id}`),
-	create: (meeting: GetTogetherFormValues) => requests.post('/gettogether', meeting),
+	create: (meeting: GetTogetherFormValues) =>
+		requests.post('/gettogether', meeting),
 	update: (meeting: GetTogetherFormValues) =>
 		requests.put(`/gettogether/${meeting.id}`, meeting),
 	delete: (id: string) => requests.del(`/gettogether/${id}`),
@@ -88,23 +91,26 @@ const GetTogethers = {
 };
 
 const Account = {
-	current: ()=>requests.get<User>('/account'),
-	login: (user: UserFormValues) => requests.post<User>('/account/login',user),
-	register: (user: UserFormValues) => requests.post<User>('/account/register',user)
-	
-}
+	current: () => requests.get<User>('/account'),
+	login: (user: UserFormValues) =>
+		requests.post<User>('/account/login', user),
+	register: (user: UserFormValues) =>
+		requests.post<User>('/account/register', user)
+};
 const Profiles = {
 	get: (username: string) => requests.get<Profile>(`/profiles/${username}`),
 	uploadPhoto: (file: Blob) => {
 		let formData = new FormData();
 		formData.append('File', file);
 		return axios.post<Photo>('photos', formData, {
-			headers: {'Content-type': 'multipart/form-data'}
-		})
+			headers: { 'Content-type': 'multipart/form-data' }
+		});
 	},
 	setMainPhoto: (id: string) => requests.post(`/photos/${id}/setMain`, {}),
-	deletePhoto: (id: string) => requests.del(`/photos/${id}`)
-}
+	deletePhoto: (id: string) => requests.del(`/photos/${id}`),
+	updateProfile: (profile: Partial<Profile>) =>
+		requests.put(`/profiles`, profile)
+};
 const agent = {
 	GetTogethers,
 	Account,
