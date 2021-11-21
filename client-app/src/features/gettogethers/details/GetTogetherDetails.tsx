@@ -14,15 +14,17 @@ function GetTogetherDetails() {
 	const {
 		loadGetTogether,
 		selectedGetTogether: getTogether,
-		loadingInitial
+		loadingInitial,
+		clearSelectedActivity
 	} = getTogetherStore;
 	const { id } = useParams<{ id: string }>();
 
 	useEffect(
 		() => {
 			if (id) loadGetTogether(id);
+			return () => clearSelectedActivity();
 		},
-		[ id, loadGetTogether ]
+		[ id, loadGetTogether,clearSelectedActivity]
 	);
 
 	if (loadingInitial || !getTogether) return <LoadingComponent />;
@@ -35,7 +37,7 @@ function GetTogetherDetails() {
 			</Grid.Column>
 			<Grid.Column width={6}>
 				<GetTogetherDetailedSidebar getTogether={getTogether} />
-				<GetTogetherDetailedChat />
+				<GetTogetherDetailedChat getTogetherId={getTogether.id}/>
 			</Grid.Column>
 		</Grid>
 	);

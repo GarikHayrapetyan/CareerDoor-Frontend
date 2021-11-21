@@ -179,4 +179,8 @@ export default class GetTogetherStore {
 			runInAction(() => this.loading = false);
 		}
 	}
+
+	clearSelectedActivity = () => {
+        this.selectedGetTogether = undefined;
+    }
 }
