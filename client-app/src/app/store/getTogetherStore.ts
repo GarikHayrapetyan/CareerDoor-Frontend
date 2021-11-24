@@ -180,6 +180,17 @@ export default class GetTogetherStore {
 		}
 	}
 
+	updateAttendeeFollowing = (username: string) => {
+        this.getTogetherRegistry.forEach(getTogether => {
+            getTogether.attendees.forEach(attendee => {
+                if (attendee.username === username) {
+                    attendee.following ? attendee.followersCount-- : attendee.followersCount++;
+                    attendee.following = !attendee.following;
+                }
+            })
+        })
+    }
+
 	clearSelectedGetTogether = () => {
         this.selectedGetTogether = undefined;
     }
