@@ -1,14 +1,14 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 import { Segment, List, Label, Item, Image } from 'semantic-ui-react'
-import {GetTogether} from '../../../app/models/GetTogether';
+import { GetTogether } from '../../../app/models/GetTogether';
 
 interface Props {
     getTogether: GetTogether;
 }
 
-function GetTogetherDetailedSidebar({getTogether: {attendees, host}}: Props) {
-    if(!attendees) return null;
+function GetTogetherDetailedSidebar({ getTogether: { attendees, host } }: Props) {
+    if (!attendees) return null;
     return (
         <>
             <Segment
@@ -25,12 +25,12 @@ function GetTogetherDetailedSidebar({getTogether: {attendees, host}}: Props) {
                 <List relaxed divided>
                     {attendees.map(attendee => (
                         <Item style={{ position: 'relative' }} key={attendee.username}>
-                            {attendee.username === host?.username && 
+                            {attendee.username === host?.username &&
                                 <Label
                                     style={{ position: 'absolute' }}
                                     color='orange'
                                     ribbon='right'
-                                    >
+                                >
                                     Host
                                 </Label>
                             }
@@ -39,9 +39,12 @@ function GetTogetherDetailedSidebar({getTogether: {attendees, host}}: Props) {
                                 <Item.Header as='h3'>
                                     <Link to={`/profiles/${attendee.username}`}>{attendee.displayName}</Link >
                                 </Item.Header>
-                                <Item.Extra style={{ color: 'orange' }}>Following</Item.Extra>
+                                {attendee.followering &&
+                                    <Item.Extra style={{ color: 'orange' }}>Following</Item.Extra>
+                                }
+
                             </Item.Content>
-                         </Item>
+                        </Item>
                     ))}
                 </List>
             </Segment>

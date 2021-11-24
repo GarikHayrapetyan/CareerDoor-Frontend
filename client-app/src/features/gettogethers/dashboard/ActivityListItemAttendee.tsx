@@ -8,9 +8,12 @@ import ProfileCard from '../../profiles/ProfileCard';
 interface Props {
 	attendees: Profile[];
 }
-export default observer(function ActivityListItemAttendee({
-	attendees
-}: Props) {
+export default observer(function ActivityListItemAttendee({attendees}: Props) {
+
+	const styles = {
+		borderColor: 'orange',
+		borderWidth: 2
+	}
 	return (
 		<List horizontal>
 			{attendees.map((attendee) => (
@@ -25,8 +28,9 @@ export default observer(function ActivityListItemAttendee({
 						>
 							<Image
 								size="mini"
-								circular
-								src={attendee.image || '/assets/user.png'}
+								circular src={attendee.image || '/assets/user.png'}
+								bordered
+								style = {attendee.followering? styles:null}
 							/>
 						</List.Item>
 					}

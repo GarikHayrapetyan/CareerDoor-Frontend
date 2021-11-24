@@ -15,16 +15,16 @@ function GetTogetherDetails() {
 		loadGetTogether,
 		selectedGetTogether: getTogether,
 		loadingInitial,
-		clearSelectedActivity
+		clearSelectedGetTogether
 	} = getTogetherStore;
 	const { id } = useParams<{ id: string }>();
 
 	useEffect(
 		() => {
 			if (id) loadGetTogether(id);
-			return () => clearSelectedActivity();
+			return () => clearSelectedGetTogether();
 		},
-		[ id, loadGetTogether,clearSelectedActivity]
+		[ id, loadGetTogether,clearSelectedGetTogether]
 	);
 
 	if (loadingInitial || !getTogether) return <LoadingComponent />;

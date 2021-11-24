@@ -180,7 +180,7 @@ export default class GetTogetherStore {
 		}
 	}
 
-	clearSelectedActivity = () => {
+	clearSelectedGetTogether = () => {
         this.selectedGetTogether = undefined;
     }
 }
