@@ -5,24 +5,24 @@ import { useStore } from '../../../app/store/store'
 import GetTogetherListItem from './GetTogetherListItem'
 
 export default observer(function GetTogetherList() {
-    const {getTogetherStore} = useStore()
-    const {groupedGetTogethers} = getTogetherStore;
+    const { getTogetherStore } = useStore()
+    const { groupedGetTogethers } = getTogetherStore;
 
-    return(
+    return (
         <>
             {groupedGetTogethers.map(([group, getTogethers]) => (
                 <Fragment key={group}>
-                    <Header as='h4' content={group} color='teal'/>
+                    <Header as='h4' content={group} color='teal' />
                     {getTogethers.map((getTogether) => (
-                        <GetTogetherListItem 
-                            meeting={getTogether}/>
+                        <GetTogetherListItem
+                            meeting={getTogether} />
                     ))}
                 </Fragment>
-               
+
             ))}
 
         </>
-    
-      
+
+
     )
 })
