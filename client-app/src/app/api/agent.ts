@@ -1,6 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { toast } from 'react-toastify';
 import { GetTogetherFormValues, GetTogether } from '../models/GetTogether';
+import { PaginatedResult } from '../models/pagination';
 import { User, UserFormValues } from '../models/User';
 import { Photo, Profile } from '../models/userProfile';
 import { store } from '../store/store';
@@ -24,6 +25,14 @@ const sleep = (delay: number) => {
 axios.interceptors.response.use(
 	async (response) => {
 		await sleep(1000);
+		const pagination = response.headers['pagination'];
+		if (pagination) {
+			response.data = new PaginatedResult(
+				response.data,
+				JSON.parse(pagination)
+			);
+			return response as AxiosResponse<PaginatedResult<any>>;
+		}
 		return response;
 	},
 	(error: AxiosError) => {
@@ -80,7 +89,8 @@ const requests = {
 };
 
 const GetTogethers = {
-	list: requests.get<GetTogether[]>('/gettogether'),
+	list: (params: URLSearchParams) => axios.get<PaginatedResult<GetTogether[]>>('/gettogether', { params })
+			.then(responseBody),
 	details: (id: string) => requests.get<GetTogether>(`/gettogether/${id}`),
 	create: (meeting: GetTogetherFormValues) =>
 		requests.post('/gettogether', meeting),
@@ -108,10 +118,12 @@ const Profiles = {
 	},
 	setMainPhoto: (id: string) => requests.post(`/photos/${id}/setMain`, {}),
 	deletePhoto: (id: string) => requests.del(`/photos/${id}`),
-	updateProfile: (profile: Partial<Profile>) => requests.put(`/profiles`, profile),
-	updateFollowing: (username: string) => requests.post(`/follow/${username}`, {}),
-	 listFollowings: (username: string, predicate: string) =>
-        requests.get<Profile[]>(`/follow/${username}?predicate=${predicate}`),
+	updateProfile: (profile: Partial<Profile>) =>
+		requests.put(`/profiles`, profile),
+	updateFollowing: (username: string) =>
+		requests.post(`/follow/${username}`, {}),
+	listFollowings: (username: string, predicate: string) =>
+		requests.get<Profile[]>(`/follow/${username}?predicate=${predicate}`)
 };
 const agent = {
 	GetTogethers,

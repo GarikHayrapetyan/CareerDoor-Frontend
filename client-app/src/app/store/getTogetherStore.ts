@@ -4,6 +4,8 @@ import {GetTogether, GetTogetherFormValues} from '../models/GetTogether';
 import { format } from 'date-fns';
 import { store } from './store';
 import { Profile } from '../models/userProfile';
+import { Pagination, PagingParams } from '../models/pagination';
+import {reaction} from 'mobx'
 
 export default class GetTogetherStore {
 	getTogetherRegistry = new Map<string, GetTogether>();
@@ -11,11 +13,65 @@ export default class GetTogetherStore {
 	editMode = false;
 	loading = false;
 	loadingInitial = false;
+	pagination: Pagination | null = null;
+	pagingParams = new PagingParams();
+	predicate = new Map().set('all', true);
 
 	constructor() {
 		makeAutoObservable(this);
+		
+		reaction(
+			() => this.predicate.keys(),
+			() => {
+				this.pagingParams = new PagingParams();
+				this.getTogetherRegistry.clear();
+				this.loadingGetTogethers();
+			}
+		);
 	}
 
+	setPagingParams = (pagingParams: PagingParams) => {
+		this.pagingParams = pagingParams;
+	}
+
+	setPredicate = (predicate: string, value: string | Date) => {
+		const resetPredicate = () => {
+			this.predicate.forEach((value, key) => {
+				if(key !== 'startDate') this.predicate.delete(key);
+			})
+		}
+		switch(predicate) {
+			case 'all':
+				resetPredicate();
+				this.predicate.set('all', true);
+				break;
+			case 'isGoing':
+				resetPredicate();
+				this.predicate.set('isGoing', true);
+				break;
+			case 'isHost':
+				resetPredicate();
+				this.predicate.set('isHost', true);
+				break;
+			case 'startDate':
+				this.predicate.delete('startDate');
+				this.predicate.set('startDate', value);
+		}
+ 	}	
+ 
+	get axiosParams() {
+		const params = new URLSearchParams();
+		params.append('pageNumber', this.pagingParams.pageNumber.toString());
+		params.append("pageSize", this.pagingParams.pageSize.toString());
+		this.predicate.forEach((value, key) => {
+			if(key === "startDate") {
+				params.append(key, (value as Date).toISOString())
+			} else {
+				params.append(key, value);
+			}
+		})
+		return params;
+	}
 	get getTogethersByDate() {
 		return Array.from(this.getTogetherRegistry.values()).sort(
 			(a, b) => a.date!.getTime() - b.date!.getTime()
@@ -40,16 +96,21 @@ export default class GetTogetherStore {
 	loadingGetTogethers = async () => {
 		this.loadingInitial = true;
 		try {
-			const getTogethers = await agent.GetTogethers.list;
-			getTogethers.forEach((getTogether) =>
+			const results = await agent.GetTogethers.list(this.axiosParams);
+			results.data.forEach((getTogether) =>
 				this.setGetTogether(getTogether)
 			);
+			this.setPagination(results.pagination)
 			this.setLoadingInitial(false);
 		} catch (error) {
 			console.log(error);
 			this.setLoadingInitial(false);
 		}
 	};
+
+	setPagination = (pagination: Pagination) => {
+		this.pagination = pagination;
+	}
 
 	loadGetTogether = async (id: string) => {
 		let getTogether = this.getGetTogether(id);
