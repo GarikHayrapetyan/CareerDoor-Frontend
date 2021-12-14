@@ -24,3 +24,9 @@ export interface Photo {
 	url: string;
 	isMain: boolean;
 }
+
+export interface UserGetTogether {
+	id: string;
+	title: string;
+	date: Date;
+}

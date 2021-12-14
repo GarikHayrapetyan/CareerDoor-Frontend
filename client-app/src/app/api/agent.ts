@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import { GetTogetherFormValues, GetTogether } from '../models/GetTogether';
 import { PaginatedResult } from '../models/pagination';
 import { User, UserFormValues } from '../models/User';
-import { Photo, Profile } from '../models/userProfile';
+import { Photo, Profile, UserGetTogether } from '../models/userProfile';
 import { store } from '../store/store';
 
 axios.defaults.baseURL = '/api';
@@ -123,8 +123,11 @@ const Profiles = {
 	updateFollowing: (username: string) =>
 		requests.post(`/follow/${username}`, {}),
 	listFollowings: (username: string, predicate: string) =>
-		requests.get<Profile[]>(`/follow/${username}?predicate=${predicate}`)
+		requests.get<Profile[]>(`/follow/${username}?predicate=${predicate}`),
+	listActivities: (username: string, predicate: string) =>
+		requests.get<UserGetTogether[]>(`/profiles/${username}/gettogethers?predicate=${predicate}`),
 };
+
 const agent = {
 	GetTogethers,
 	Account,
