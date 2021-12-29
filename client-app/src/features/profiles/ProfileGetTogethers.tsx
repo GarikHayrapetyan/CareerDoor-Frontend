@@ -16,6 +16,7 @@ const panes = [
 
 export default observer(function ProfileGetTogethers() {
     const { profileStore } = useStore();
+    var image:string | undefined=undefined;
     const {
         loadUserGetTogethers,
         profile,
@@ -23,6 +24,7 @@ export default observer(function ProfileGetTogethers() {
         userGetTogethers
     } = profileStore;
     useEffect(() => {
+        image = profile?.image;
         loadUserGetTogethers(profile!.username);
     }, [loadUserGetTogethers, profile]);
     const handleTabChange = (e: SyntheticEvent, data: TabProps) => {
@@ -50,16 +52,16 @@ export default observer(function ProfileGetTogethers() {
                                 to={`/meetings/${getTogether.id}`}
                                 key={getTogether.id}
                             >
-                                {/* { <Image
-                                    src={{getTogether.host?.image || "/assets/user.png"}}
+                                <Image
+                                    src={"/assets/meeting.jpeg"}
                                     style={{
                                         minHeight: 100, objectFit:
                                             'cover'
                                     }}
-                                /> } */}
+                                /> 
                                 <Card.Content>
                                     <Card.Header
-                                        textAlign='center'>{getTogether.title}</Card.Header>
+                                        textAlign='center'>{getTogether.title.substring(0,17)}</Card.Header>
                                     <Card.Meta textAlign='center'>
                                         <div>{format(new Date(getTogether.date),'do LLL')}</div>
                                         <div>{format(new Date(getTogether.date),'h:mm a')}</div>
