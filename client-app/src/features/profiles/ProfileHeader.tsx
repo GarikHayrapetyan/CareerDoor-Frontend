@@ -30,7 +30,9 @@ export default observer(function ProfileHeader({ profile }: Props) {
 								src={profile.image || '/assets/user.png'}
 							/>
 							<Item.Content verticalAlign="middle">
-								<Header as="h1" content={profile.displayName} />
+								<Header as="h1" content={profile.displayName} /><br/><br/>
+								<Header as="h5" content={profile.city}/>,
+								<Header as="h5" content={profile.country}/>
 							</Item.Content>
 						</Item>
 					</Item.Group>

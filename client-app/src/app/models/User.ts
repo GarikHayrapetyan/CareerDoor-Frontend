@@ -3,6 +3,8 @@ export interface User {
     displayName: string;
     token: string;
     image?: string;
+    country:string;
+    city:string;
 }
 
 export interface UserFormValues{

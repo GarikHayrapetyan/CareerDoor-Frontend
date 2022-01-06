@@ -5,6 +5,8 @@ export interface Profile {
 	displayName: string;
 	image?: string;
 	bio?: string;
+	country: string;
+	city: string;
 	followersCount: number;
 	followingCount: number;
 	following: boolean;
@@ -16,6 +18,8 @@ export class Profile implements Profile {
 		this.username = user.username;
 		this.displayName = user.displayName;
 		this.image = user.image;
+		this.country = user.country; 
+		this.city = user.city; 
 	}
 }
 
