@@ -11,6 +11,7 @@ export interface Profile {
 	followingCount: number;
 	following: boolean;
 	photos?: Photo[];
+	resumes?: Resume[];
 }
 
 export class Profile implements Profile {
@@ -27,6 +28,11 @@ export interface Photo {
 	id: string;
 	url: string;
 	isMain: boolean;
+}
+
+export interface Resume {
+	id: string;
+	url: string;
 }
 
 export interface UserGetTogether {
