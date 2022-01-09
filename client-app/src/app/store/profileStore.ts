@@ -1,6 +1,6 @@
 import { makeAutoObservable, reaction, runInAction } from 'mobx';
 import agent from '../api/agent';
-import { Photo, Profile, UserGetTogether } from '../models/userProfile';
+import { Photo, Profile, Resume, UserGetTogether } from '../models/userProfile';
 import { store } from './store';
 
 export default class ProfileStore {
@@ -67,23 +67,6 @@ export default class ProfileStore {
 						store.userStore.setImage(photo.url);
 						this.profile.image = photo.url
 					}
-				}
-				this.uploading = false;
-			})
-		} catch (error) {
-			console.log(error);
-			runInAction(() => this.uploading = false);
-		}
-	}
-
-	uploadDocument = async (file: Blob) => {
-		this.uploading = true;
-		try {
-			const response = await agent.Profiles.uploadDocument(file);
-			const photo = response.data;
-			runInAction(() => {
-				if (this.profile) {
-					this.profile.resumes?.push(photo);
 				}
 				this.uploading = false;
 			})
@@ -203,4 +186,38 @@ export default class ProfileStore {
 			})
 		}
 	}
+
+	uploadDocument = async (file: Blob) => {
+		this.uploading = true;
+		try {
+			const response = await agent.Profiles.uploadDocument(file);
+			const photo = response.data;
+			runInAction(() => {
+				if (this.profile) {
+					this.profile.resumes?.push(photo);
+				}
+				this.uploading = false;
+			})
+		} catch (error) {
+			console.log(error);
+			runInAction(() => this.uploading = false);
+		}
+	}
+	
+	deleteDocument = async (resume: Resume) => {
+		this.loading = true;
+		try {
+			await agent.Profiles.deleteResume(resume.id);
+			runInAction(() => {
+				if (this.profile) {
+					this.profile.resumes = this.profile.resumes?.filter(p => p.id !== resume.id);
+					this.loading = false;
+				}
+			})
+		} catch (error) {
+			runInAction(() => this.loading = false);
+			console.log(error)
+		}
+	}
+
 }

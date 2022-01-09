@@ -1,20 +1,21 @@
-import React, { useState } from "react";
+import React from "react";
 import { Grid, Header } from "semantic-ui-react";
+import LoadingComponent from "../../layout/LoadingComponent";
 import DocumentWidgetDropzone from "./DocumentWidgetDropzone";
 
-export default function DocumentUploadWidget() {
-    const [ isUploaded, setUploaded ] = useState(false);    
+interface Props{
+    uploadDocument: (file: Blob) => void;
+    uploading: boolean
+}
 
+export default function DocumentUploadWidget({uploadDocument, uploading}:Props) {
     return (
-        <>
         <Grid>
             <Grid.Column width={4}>
                 <Header sub color="teal" content="Add Document"/>
-                <DocumentWidgetDropzone setUploaded={setUploaded}/>
+                <DocumentWidgetDropzone uploadDocument={uploadDocument}/>
+                {uploading && <LoadingComponent content="Uploading ..."/>}
             </Grid.Column>              
         </Grid>
-        {isUploaded &&
-                <Header sub color={'teal'}  content="Uploaded"/>}
-        </>
     )
 }

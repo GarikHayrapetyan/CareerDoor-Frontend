@@ -3,12 +3,11 @@ import { useDropzone } from 'react-dropzone';
 import { Header, Icon } from 'semantic-ui-react';
 import { useStore } from '../../store/store';
 
-interface Props {
-	setUploaded:(x:boolean)=>void
+interface Props{
+    uploadDocument: (file: Blob) => void;
 }
 
-export default function DocumentWidgetDropzone({setUploaded}:Props) {
-	const {profileStore:{uploadDocument}} = useStore();
+export default function DocumentWidgetDropzone({uploadDocument}:Props) {
 
 	const dzStyles = {
 		border: 'dashed 3px #eee',
@@ -25,12 +24,9 @@ export default function DocumentWidgetDropzone({setUploaded}:Props) {
 	const onDrop = useCallback(
 		(acceptedFiles) => {			
 			console.log(acceptedFiles);		
-			setUploaded(false);
-			uploadDocument(acceptedFiles[0]).then(()=>{
-				setUploaded(true)
-			});	
+			uploadDocument(acceptedFiles[0])
 		},
-		[setUploaded]
+		[uploadDocument]
 	);
 	const { getRootProps, getInputProps, isDragActive } = useDropzone({onDrop});
 
@@ -38,7 +34,6 @@ export default function DocumentWidgetDropzone({setUploaded}:Props) {
 
 	return (
 		<div {...getRootProps()} style={isDragActive ? { ...dzStyles, ...dzActive } : dzStyles}>
-			{isDragActive && setUploaded(false)}
 			<input {...getInputProps()} accept="application/pdf"/>
 			<Icon name='upload' size='huge' />
             <Header content='Drop file here' />
