@@ -33,6 +33,7 @@ export interface Photo {
 export interface Resume {
 	id: string;
 	url: string;
+	fileName:string;
 }
 
 export interface UserGetTogether {

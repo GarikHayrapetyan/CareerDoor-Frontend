@@ -34,12 +34,6 @@ export default observer(function ProfilePhotos({ profile }: Props) {
         deletePhoto(photo);
     }
 
-    // const onDownload = (url:string) => {
-    //     const link = document.createElement("a");
-    //     link.download = 'hhgek9kstueozk518pcz.png';
-    //     link.href = url;
-    //     link.click();
-    // }
 
 	return (
 		<Tab.Pane>
