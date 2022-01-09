@@ -1,22 +1,9 @@
 import React, { useState } from "react";
-import { Button, Grid, Header } from "semantic-ui-react";
-
+import { Grid, Header } from "semantic-ui-react";
 import DocumentWidgetDropzone from "./DocumentWidgetDropzone";
 
-interface Props {
-    loading: boolean;
-    uploadPhoto: (file: Blob) => void;
-}
-
 export default function DocumentUploadWidget() {
-    const [ isUploaded, setUploaded ] = useState(false);  
-
-    const styles = {
-        marginLeft: 'auto',
-        marginRight: 'auto',   
-        color:'teal'    
-	}
-    
+    const [ isUploaded, setUploaded ] = useState(false);    
 
     return (
         <>
@@ -27,7 +14,7 @@ export default function DocumentUploadWidget() {
             </Grid.Column>              
         </Grid>
         {isUploaded &&
-                <Header sub style={{...styles}}  content="Uploaded"/>}
+                <Header sub color={'teal'}  content="Uploaded"/>}
         </>
     )
 }

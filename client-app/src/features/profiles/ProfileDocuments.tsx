@@ -11,12 +11,8 @@ interface Props {
 
 export default observer(function ProfileDocuments({ profile }: Props) {
 
-    const { profileStore: { isCurrentUser,uploadDocument,uploading } } = useStore();
+    const { profileStore: { isCurrentUser} } = useStore();
     const [addDocumentMode, setAddDocumentMode] = useState(false);
-
-    function handlePhotoUpload(file: Blob) {
-        uploadDocument(file).then(() => setAddDocumentMode(false));
-    }
 
     return (
         <Tab.Pane>
