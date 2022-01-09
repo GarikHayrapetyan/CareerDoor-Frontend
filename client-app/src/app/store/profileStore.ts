@@ -76,6 +76,23 @@ export default class ProfileStore {
 		}
 	}
 
+	uploadDocument = async (file: Blob) => {
+		this.uploading = true;
+		try {
+			const response = await agent.Profiles.uploadDocument(file);
+			const photo = response.data;
+			runInAction(() => {
+				if (this.profile) {
+					this.profile.resumes?.push(photo);
+				}
+				this.uploading = false;
+			})
+		} catch (error) {
+			console.log(error);
+			runInAction(() => this.uploading = false);
+		}
+	}
+
 	setMainPhoto = async (photo: Photo) => {
 		this.loading = true;
 

@@ -4,7 +4,6 @@ import { Button, Card, Grid, Header, Image, Tab } from 'semantic-ui-react';
 import { Photo, Profile } from '../../app/models/userProfile';
 import { useStore } from '../../app/store/store';
 import PhotoUploadWidget from '../../app/common/imageUpload/PhotoUploadWidget';
-import { string } from 'yup/lib/locale';
 
 interface Props {
 	profile: Profile;
@@ -35,18 +34,18 @@ export default observer(function ProfilePhotos({ profile }: Props) {
         deletePhoto(photo);
     }
 
-    const onDownload = (url:string) => {
-        const link = document.createElement("a");
-        link.download = 'hhgek9kstueozk518pcz.png';
-        link.href = url;
-        link.click();
-    }
+    // const onDownload = (url:string) => {
+    //     const link = document.createElement("a");
+    //     link.download = 'hhgek9kstueozk518pcz.png';
+    //     link.href = url;
+    //     link.click();
+    // }
 
 	return (
 		<Tab.Pane>
             <Grid>
                 <Grid.Column width={16}>
-			        <Header icon="image" content="Photos" />
+			        <Header floated='left' icon="image" content="Photos" />
                     {isCurrentUser && (
                         <Button floated='right' basic
                             content={addPhotoMode ? "Cancel" : 'Add Photo'}
@@ -61,10 +60,10 @@ export default observer(function ProfilePhotos({ profile }: Props) {
                             loading={uploading}
                         />
                     ): (
-                    <Card.Group itemsPerRow={7}>
+                    <Card.Group itemsPerRow={5}>
                         {profile.photos?.map(photo => (
                         <Card key={photo.id}>                            
-					        <Image src={photo.url} onClick={onDownload}/>                            
+					        <Image src={photo.url}/>                            
                          {isCurrentUser && (
                             <Button.Group fluid widths={2}>
                                 <Button 

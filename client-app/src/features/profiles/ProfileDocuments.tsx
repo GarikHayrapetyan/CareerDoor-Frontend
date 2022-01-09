@@ -11,17 +11,21 @@ interface Props {
 
 export default observer(function ProfileDocuments({ profile }: Props) {
 
-    const { profileStore: { isCurrentUser } } = useStore();
+    const { profileStore: { isCurrentUser,uploadDocument,uploading } } = useStore();
     const [addDocumentMode, setAddDocumentMode] = useState(false);
+
+    function handlePhotoUpload(file: Blob) {
+        uploadDocument(file).then(() => setAddDocumentMode(false));
+    }
 
     return (
         <Tab.Pane>
             <Grid>
-                <Grid.Column width={16}>
-                    <Header icon="file" content="Documents" />
+                <Grid.Column width='16'>
+                    <Header floated='left' icon="file" content="Documents" />
                     {isCurrentUser && (
                         <Button floated='right' basic
-                            content={addDocumentMode ? "Cancel" : 'Add Photo'}
+                            content={addDocumentMode ? "Cancel" : 'Add Document'}
                             onClick={() => setAddDocumentMode(!addDocumentMode)}
                         />
                     )}
@@ -32,7 +36,7 @@ export default observer(function ProfileDocuments({ profile }: Props) {
                     ) : (
                         <Card.Group itemsPerRow={10}>
                             {profile.resumes?.map(resume => (
-                                <Card>
+                                <Card key={resume.id}>
                                     <Image src={'/assets/file.jpg'} />
                                 </Card>
                             ))}

@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import { GetTogetherFormValues, GetTogether } from '../models/GetTogether';
 import { PaginatedResult } from '../models/pagination';
 import { User, UserFormValues } from '../models/User';
-import { Photo, Profile, UserGetTogether } from '../models/userProfile';
+import { Photo, Profile, Resume, UserGetTogether } from '../models/userProfile';
 import { store } from '../store/store';
 
 axios.defaults.baseURL = '/api';
@@ -113,6 +113,13 @@ const Profiles = {
 		let formData = new FormData();
 		formData.append('File', file);
 		return axios.post<Photo>('photos', formData, {
+			headers: { 'Content-type': 'multipart/form-data' }
+		});
+	},
+	uploadDocument: (file: Blob) => {
+		let formData = new FormData();
+		formData.append('File', file);
+		return axios.post<Resume>('resumes', formData, {
 			headers: { 'Content-type': 'multipart/form-data' }
 		});
 	},
