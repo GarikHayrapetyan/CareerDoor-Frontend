@@ -12,4 +12,6 @@ export interface UserFormValues{
     password:string;
     displayName?:string;
     username?:string;
+    city?:string;
+    country?:string;
 }
