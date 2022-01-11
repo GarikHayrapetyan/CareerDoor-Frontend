@@ -1,29 +1,54 @@
-import React from 'react'
+import React, { SyntheticEvent } from 'react'
 import { Button, Item, Label, Segment } from 'semantic-ui-react'
-import { Job } from '../../app/models/job'
+import { useStore } from '../../app/store/store'
+import { observer } from 'mobx-react-lite';
+import { format } from 'date-fns';
+import { Job } from '../../app/models/job';
 
 interface Props {
-    jobs: Job[];
-    selectJob: (id: number) => void;
+    jobsByDate: Job[];
 }
-function JobList({ jobs, selectJob }: Props) {
+function JobList({ jobsByDate }: Props) {
+    const { jobStore } = useStore();
+    const { selectJob, updateCandidates, loading } = jobStore;
+
     return (
         <Segment>
             <Item.Group divided>
-                {jobs.map(job => (
+                {jobsByDate.map(job => (
                     <Item key={job.id}>
                         <Item.Content>
-                            <Item.Header as="a">
+                            <Item.Header onClick={() => selectJob(job.id)} as="a">
                                 {job.title}
                             </Item.Header>
-                            <Item.Meta>{job.date}</Item.Meta>
+                            <Item.Meta>{format(job.date!, 'dd-MM-yyyy h:m aa')}</Item.Meta>
                             <Item.Description>
-                                <div>{job.companyName}</div>
+                                <div>{job.company}</div>
                                 <div>{job.location}</div>
                             </Item.Description>
                             <Item.Extra>
-                                <Button onClick={() => selectJob(job.id)} floated='right' content="View" color="blue" />
-                                <Label basic content={job.position} />
+                                {job.isEmployeer ? (
+                                    null
+                                ) : job.isGoing ? (
+                                    <Button onClick={updateCandidates} floated='right' content="Cancel apply" color="red" />
+                                ) : (
+                                    <Button onClick={updateCandidates} floated='right' content="Apply" color="green" />
+                                )}
+                                <Label basic content={job.function} />
+                                {job.isEmployeer && (
+                                    <Item.Description style={{ float: 'right' }}>
+                                        <Label basic color='orange'>
+                                            You created this job
+                                        </Label>
+                                    </Item.Description>
+                                )}
+                                {job.isGoing && !job.isEmployeer && (
+                                    <Item.Description style={{ float: 'right' }}>
+                                        <Label basic color='green'>
+                                            You applied for this job
+                                        </Label>
+                                    </Item.Description>
+                                )}
                             </Item.Extra>
                         </Item.Content>
                     </Item>
@@ -33,4 +58,4 @@ function JobList({ jobs, selectJob }: Props) {
     )
 }
 
-export default JobList
+export default observer(JobList);

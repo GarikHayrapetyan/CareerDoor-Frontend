@@ -5,6 +5,8 @@ import { Button, Container, Dropdown, Image, Menu } from 'semantic-ui-react';
 import { useStore } from '../store/store';
 
 export default observer(function NavBar() {
+	const { jobStore } = useStore();
+	const { openForm } = jobStore;
 	const { userStore: { user, logout } } = useStore();
 	return (
 		<Menu inverted fixed="top">
@@ -30,6 +32,13 @@ export default observer(function NavBar() {
 						to="/createmeeting"
 						positive
 						content="Create Meeting"
+					/>
+				</Menu.Item>
+				<Menu.Item>
+					<Button
+						onClick={() => openForm("")}
+						positive
+						content="Create Job"
 					/>
 				</Menu.Item>
 				<Menu.Item>

@@ -1,6 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { toast } from 'react-toastify';
 import { GetTogetherFormValues, GetTogether } from '../models/GetTogether';
+import { Job, JobFormValues } from '../models/job';
 import { PaginatedResult } from '../models/pagination';
 import { User, UserFormValues } from '../models/User';
 import { Photo, Profile, UserGetTogether } from '../models/userProfile';
@@ -89,7 +90,9 @@ const requests = {
 };
 
 const GetTogethers = {
-	list: (params: URLSearchParams) => axios.get<PaginatedResult<GetTogether[]>>('/gettogether', { params })
+	list: (params: URLSearchParams) =>
+		axios
+			.get<PaginatedResult<GetTogether[]>>('/gettogether', { params })
 			.then(responseBody),
 	details: (id: string) => requests.get<GetTogether>(`/gettogether/${id}`),
 	create: (meeting: GetTogetherFormValues) =>
@@ -125,13 +128,24 @@ const Profiles = {
 	listFollowings: (username: string, predicate: string) =>
 		requests.get<Profile[]>(`/follow/${username}?predicate=${predicate}`),
 	listActivities: (username: string, predicate: string) =>
-		requests.get<UserGetTogether[]>(`/profiles/${username}/gettogethers?predicate=${predicate}`),
+		requests.get<UserGetTogether[]>(
+			`/profiles/${username}/gettogethers?predicate=${predicate}`
+		)
+};
+const Jobs = {
+	list: () => requests.get<Job[]>('/job'),
+	details: (id: string) => requests.get<Job>(`/job/${id}`),
+	create: (job: JobFormValues) => requests.post('/job', job),
+	update: (job: JobFormValues) => requests.put(`/job/${job.id}`, job),
+	delete: (id: string) => requests.del(`/job/${id}`),
+	attend: (id: string) => requests.post<void>(`/job/${id}/apply`, {})
 };
 
 const agent = {
 	GetTogethers,
 	Account,
-	Profiles
+	Profiles,
+	Jobs
 };
 
 export default agent;
