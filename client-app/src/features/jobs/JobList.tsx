@@ -1,59 +1,48 @@
 import React, { SyntheticEvent } from 'react'
-import { Button, Item, Label, Segment } from 'semantic-ui-react'
+import { Button, Card, Image, Item, Label, List, Segment } from 'semantic-ui-react'
 import { useStore } from '../../app/store/store'
 import { observer } from 'mobx-react-lite';
 import { format } from 'date-fns';
 import { Job } from '../../app/models/job';
 
-interface Props {
-    jobsByDate: Job[];
-}
-function JobList({ jobsByDate }: Props) {
+
+function JobList() {
     const { jobStore } = useStore();
-    const { selectJob, updateCandidates, loading } = jobStore;
+    const { jobsByDate, selectJob } = jobStore;
 
     return (
         <Segment>
-            <Item.Group divided>
+            <List animated verticalAlign='middle' divided >
                 {jobsByDate.map(job => (
-                    <Item key={job.id}>
-                        <Item.Content>
-                            <Item.Header onClick={() => selectJob(job.id)} as="a">
+                    <List.Item onClick={() => selectJob(job.id)} key={job.id} style={{ margin: '20px 10px', cursor: 'pointer' }}>
+                        <Image avatar src={job.employeer?.image || '/assets/user.png'} />
+                        <List.Content>
+                            <List.Header as="a">
                                 {job.title}
-                            </Item.Header>
-                            <Item.Meta>{format(job.date!, 'dd-MM-yyyy h:m aa')}</Item.Meta>
-                            <Item.Description>
-                                <div>{job.company}</div>
-                                <div>{job.location}</div>
-                            </Item.Description>
-                            <Item.Extra>
-                                {job.isEmployeer ? (
-                                    null
-                                ) : job.isGoing ? (
-                                    <Button onClick={updateCandidates} floated='right' content="Cancel apply" color="red" />
-                                ) : (
-                                    <Button onClick={updateCandidates} floated='right' content="Apply" color="green" />
-                                )}
-                                <Label basic content={job.function} />
-                                {job.isEmployeer && (
-                                    <Item.Description style={{ float: 'right' }}>
-                                        <Label basic color='orange'>
-                                            You created this job
-                                        </Label>
-                                    </Item.Description>
-                                )}
-                                {job.isGoing && !job.isEmployeer && (
-                                    <Item.Description style={{ float: 'right' }}>
-                                        <Label basic color='green'>
-                                            You applied for this job
-                                        </Label>
-                                    </Item.Description>
-                                )}
-                            </Item.Extra>
-                        </Item.Content>
-                    </Item>
+                            </List.Header>
+                        </List.Content>
+                        <List.Content floated='right'>
+                            {job.isEmployeer && (
+                                <Label basic color='orange'>
+                                    You created
+                                </Label>
+                            )}
+                            {job.isGoing && !job.isEmployeer && (
+                                <Label basic color='green'>
+                                    Applied
+                                </Label>
+                            )}
+                        </List.Content>
+                        <List style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+                            <List.Item icon="building outline" content={job.company} />
+                            <List.Item icon="marker" content={job.location} />
+                            <List.Item icon="code branch" content={job.function} />
+                            <List.Content floated='right'> <Card.Meta><span>{format(job.date!, 'dd-MM-yyyy')}</span></Card.Meta></List.Content>
+                        </List>
+
+                    </List.Item>
                 ))}
-            </Item.Group>
+            </List>
         </Segment>
     )
 }

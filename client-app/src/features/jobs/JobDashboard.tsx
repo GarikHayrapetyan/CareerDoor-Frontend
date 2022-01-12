@@ -10,17 +10,17 @@ import JobForm from './JobForm';
 
 function JobDashboard() {
     const { jobStore } = useStore();
-    const { selectedJob, editMode, jobsByDate } = jobStore;
+    const { selectedJob, editMode, loadJobs } = jobStore;
 
     useEffect(() => {
-        jobStore.loadJobs();
-    }, [jobStore])
+        loadJobs();
+    }, [loadJobs])
 
     if (jobStore.loadingInitial) return <LoadingComponent content="Loading jobs" />
     return (
         <Grid>
             <Grid.Column width='8'>
-                <JobList jobsByDate={jobsByDate} />
+                <JobList />
             </Grid.Column>
             <Grid.Column width="8" >
                 {selectedJob && !editMode && <JobDetails />}

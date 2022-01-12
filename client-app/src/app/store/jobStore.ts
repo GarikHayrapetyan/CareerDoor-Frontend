@@ -128,6 +128,7 @@ export default class JobStore {
 		} catch (err) {
 			console.log(err);
 			runInAction(() => {
+				this.closeForm();
 				this.loading = false;
 			});
 		}
