@@ -72,6 +72,7 @@ export default class JobStore {
 	};
 
 	selectJob = (id: string) => {
+		this.closeForm();
 		this.selectedJob = this.jobRegistry.get(id);
 	};
 

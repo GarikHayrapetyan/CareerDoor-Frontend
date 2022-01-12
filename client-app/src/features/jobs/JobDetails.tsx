@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Card, Divider, Item, Label, List, Image, Statistic } from 'semantic-ui-react'
+import { Button, Card, Divider, Item, Label, List, Image, Statistic, Message } from 'semantic-ui-react'
 import LoadingComponent from '../../app/layout/LoadingComponent';
 import { useStore } from '../../app/store/store'
 import { observer } from 'mobx-react-lite';
@@ -31,7 +31,6 @@ function JobDetails() {
                 <Card.Meta>
                 </Card.Meta>
                 <Divider />
-                <List.Header as='h9'><b>{job.title}</b> {job.company}</List.Header>
                 <Statistic.Group
                     size='mini'
                     style={{
@@ -58,8 +57,21 @@ function JobDetails() {
                     </Statistic>
                 </Statistic.Group>
                 <Divider style={{ display: 'block' }} />
-                <Card.Header>Description</Card.Header>
-                <Card.Description style={{ wordWrap: "break-word" }}>{job.description}</Card.Description>
+                <List.Header>{job.title}</List.Header>
+                <List.Description>{job.company}</List.Description>
+                <Message style={{ background: 'white' }}>
+                    <Message.Header>Description</Message.Header>
+                    <p
+                        style={{
+                            wordWrap: "break-word",
+                            overflowY: 'scroll',
+                            height: '30vh',
+                            resize: 'none',
+                        }}
+                    >
+                        {job.description}
+                    </p>
+                </Message>
             </Card.Content>
             <Card.Content extra>
                 <Button.Group widths={2}>
