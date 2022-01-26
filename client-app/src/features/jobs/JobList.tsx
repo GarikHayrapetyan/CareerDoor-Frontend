@@ -1,5 +1,5 @@
 import React, { SyntheticEvent } from 'react'
-import { Button, Card, Image, Item, Label, List, Segment } from 'semantic-ui-react'
+import { Button, Card, Image, Item, Label, List, Message, Segment } from 'semantic-ui-react'
 import { useStore } from '../../app/store/store'
 import { observer } from 'mobx-react-lite';
 import { format } from 'date-fns';
@@ -8,12 +8,11 @@ import { Job } from '../../app/models/job';
 
 function JobList() {
     const { jobStore } = useStore();
-    const { jobsByDate, selectJob } = jobStore;
-
+    const { jobsByDate, selectJob, searchResults } = jobStore;
     return (
         <Segment>
             <List animated verticalAlign='middle' divided >
-                {jobsByDate.map(job => (
+                {(searchResults ? searchResults : jobsByDate).map(job => (
                     <List.Item onClick={() => selectJob(job.id)} key={job.id} style={{ margin: '20px 10px', cursor: 'pointer' }}>
                         <Image avatar src={job.employeer?.image || '/assets/user.png'} />
                         <List.Content>
@@ -39,7 +38,6 @@ function JobList() {
                             <List.Item icon="code branch" content={job.function} />
                             <List.Content floated='right'> <Card.Meta><span>{format(job.date!, 'dd-MM-yyyy')}</span></Card.Meta></List.Content>
                         </List>
-
                     </List.Item>
                 ))}
             </List>

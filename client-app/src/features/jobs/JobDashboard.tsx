@@ -11,7 +11,7 @@ import JobForm from './JobForm';
 
 function JobDashboard() {
     const { jobStore } = useStore();
-    const { selectedJob, editMode, loadJobs } = jobStore;
+    const { selectedJob, editMode, loadJobs, searchTerm } = jobStore;
 
     useEffect(() => {
         loadJobs();
@@ -28,7 +28,7 @@ function JobDashboard() {
             }}
         >
             <Grid.Column width='16'>
-                <SearchJob />
+                <SearchJob searchTerm={searchTerm}/>
             </Grid.Column>
             <Grid.Column width='8'>
                 <JobList />

@@ -1,27 +1,26 @@
 import React from 'react'
-import { Button, Container, Search, Segment } from 'semantic-ui-react'
+import { Button, Input, Segment } from 'semantic-ui-react'
 import { useStore } from '../../app/store/store';
 
-function SearchJob() {
+interface Props {
+    searchTerm: string;
+}
+
+
+function SearchJob({ searchTerm }: Props) {
     const { jobStore } = useStore();
-    const { openForm } = jobStore;
+    const { openForm, handleSearchTerm } = jobStore;
     return (
         <Segment style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <div style={{ display: 'flex', width: '47%', justifyContent: 'space-between' }}>
-                <Search />
-                <Button
-                    content="Search"
-
-                    type="button"
-                    color='blue'
-                />
-                <Button
-                    content="Reset"
-                    basic
-                    type="button"
-                    color='red'
-                />
-            </div>
+            <Input
+                style={{ paddingLeft: '10px', width: '50%' }}
+                type='text'
+                fluid
+                icon="search"
+                placeholder='Search...'
+                value={searchTerm}
+                onChange={handleSearchTerm}
+            />
             <Button
                 onClick={() => openForm("")}
                 positive

@@ -10,6 +10,8 @@ export default class JobStore {
 	loadingInitial = false;
 	loading = false;
 	editMode = false;
+	searchTerm: string = "";
+	searchResults: Job[] | undefined = undefined;
 
 	constructor() {
 		makeAutoObservable(this);
@@ -176,5 +178,27 @@ export default class JobStore {
 			runInAction(() => this.loading = false);
 		}
 
+	}
+
+	handleSearchTerm = (event:  React.ChangeEvent<HTMLInputElement>) => {
+		this.searchTerm = event.target.value;
+		this.searchResults = this.getSearchedJobs();
+	}
+
+	private getSearchedJobs() {
+		console.log(this.searchTerm)
+		if(this.searchTerm !== "") {
+			const newSearchedJobs = Array.from(this.jobRegistry.values())
+				.filter(job => {
+				return Object.values(job)
+						.join(' ')
+						.toLowerCase()
+						.includes(this.searchTerm.toLowerCase());
+				})
+		return newSearchedJobs;
+		} else {
+			return undefined;
+		}
+		
 	}
 }
