@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom';
 import { Segment, List, Label, Item, Image } from 'semantic-ui-react'
 import { GetTogether } from '../../../app/models/GetTogether';
+import { observer } from 'mobx-react-lite';
 
 interface Props {
     getTogether: GetTogether;
@@ -53,4 +54,4 @@ function GetTogetherDetailedSidebar({ getTogether: { attendees, host } }: Props)
     )
 }
 
-export default GetTogetherDetailedSidebar;
+export default observer(GetTogetherDetailedSidebar);

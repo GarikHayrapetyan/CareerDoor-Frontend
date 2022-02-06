@@ -1,5 +1,5 @@
-import { observer } from 'mobx-react-lite'
 import React, { Fragment } from 'react'
+import { observer } from 'mobx-react-lite'
 import { Header } from 'semantic-ui-react'
 import { useStore } from '../../../app/store/store'
 import GetTogetherListItem from './GetTogetherListItem'

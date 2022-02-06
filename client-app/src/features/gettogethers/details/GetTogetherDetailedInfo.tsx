@@ -1,6 +1,7 @@
 import React from 'react';
 import { Segment, Grid, Icon } from 'semantic-ui-react';
-import {GetTogether} from '../../../app/models/GetTogether';
+import { GetTogether } from '../../../app/models/GetTogether';
+import { observer } from 'mobx-react-lite';
 import { format } from 'date-fns'
 
 interface Props {
@@ -28,7 +29,7 @@ function GetTogetherDetailedInfo({ meeting }: Props) {
 					</Grid.Column>
 					<Grid.Column width={15}>
 						<span>
-						{format(meeting.date!, 'dd MMM yyyy h:mm aa')}
+							{format(meeting.date!, 'dd MMM yyyy h:mm aa')}
 						</span>
 					</Grid.Column>
 				</Grid>
@@ -57,4 +58,4 @@ function GetTogetherDetailedInfo({ meeting }: Props) {
 	);
 }
 
-export default GetTogetherDetailedInfo;
+export default observer(GetTogetherDetailedInfo);

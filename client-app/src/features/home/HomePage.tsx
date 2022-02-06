@@ -1,5 +1,5 @@
-import { observer } from 'mobx-react-lite';
 import React from 'react';
+import { observer } from 'mobx-react-lite';
 import { NavLink } from 'react-router-dom';
 import { Button, Container, Header, Segment } from 'semantic-ui-react';
 import { useStore } from '../../app/store/store';
