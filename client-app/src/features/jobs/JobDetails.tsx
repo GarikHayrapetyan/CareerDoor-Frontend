@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Card, Divider, Item, Label, List, Image, Statistic, Message } from 'semantic-ui-react'
+import { Button, Card, Divider, List, Image, Statistic, Message } from 'semantic-ui-react'
 import LoadingComponent from '../../app/layout/LoadingComponent';
 import { useStore } from '../../app/store/store'
 import { observer } from 'mobx-react-lite';

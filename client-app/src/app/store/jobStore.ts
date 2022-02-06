@@ -1,4 +1,4 @@
-import { makeAutoObservable, runInAction, reaction } from 'mobx';
+import { makeAutoObservable, runInAction } from 'mobx';
 import agent from '../api/agent';
 import { Job, JobFormValues } from '../models/job';
 import { Profile } from '../models/userProfile';

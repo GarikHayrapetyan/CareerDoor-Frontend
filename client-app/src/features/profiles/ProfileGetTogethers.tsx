@@ -16,7 +16,7 @@ const panes = [
 
 export default observer(function ProfileGetTogethers() {
     const { profileStore } = useStore();
-    var image:string | undefined=undefined;
+    var image:string | undefined = undefined;
     const {
         loadUserGetTogethers,
         profile,

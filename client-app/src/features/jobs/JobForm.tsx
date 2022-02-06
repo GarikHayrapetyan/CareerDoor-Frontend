@@ -1,4 +1,4 @@
-import React, { ChangeEvent, SyntheticEvent } from 'react'
+import React, { SyntheticEvent } from 'react'
 import { Button, Header, Segment } from 'semantic-ui-react'
 import { useStore } from '../../app/store/store'
 import { observer } from 'mobx-react-lite';

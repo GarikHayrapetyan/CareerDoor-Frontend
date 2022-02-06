@@ -1,5 +1,5 @@
-import { observer } from 'mobx-react-lite';
 import React from 'react';
+import { observer } from 'mobx-react-lite';
 import { Button, Header, Item, Segment, Image, Label } from 'semantic-ui-react';
 import {GetTogether} from '../../../app/models/GetTogether';
 import { format} from 'date-fns'

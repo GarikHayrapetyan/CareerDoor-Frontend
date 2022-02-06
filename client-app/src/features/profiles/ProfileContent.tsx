@@ -1,5 +1,5 @@
-import { observer } from 'mobx-react-lite';
 import React from 'react';
+import { observer } from 'mobx-react-lite';
 import { Tab } from 'semantic-ui-react';
 import { Profile } from '../../app/models/userProfile';
 import { useStore } from '../../app/store/store';

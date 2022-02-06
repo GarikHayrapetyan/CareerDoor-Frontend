@@ -1,6 +1,6 @@
+import React, { useEffect } from 'react';
 import { Field, FieldProps, Formik } from 'formik';
 import { observer } from 'mobx-react-lite';
-import React, { useEffect } from 'react';
 import { Segment, Header, Comment, Form, Button, Loader } from 'semantic-ui-react';
 import { useStore } from '../../../app/store/store';
 import * as Yup from 'yup';
@@ -23,7 +23,7 @@ export default observer(function GetTogetherDetailedChat({ getTogetherId }: Prop
             commentStore.clearComments();
         }
     }, [commentStore, getTogetherId]);
-    
+
     return (
         <>
             <Segment

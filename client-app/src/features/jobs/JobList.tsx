@@ -1,9 +1,8 @@
-import React, { SyntheticEvent } from 'react'
-import { Button, Card, Image, Item, Label, List, Message, Segment } from 'semantic-ui-react'
+import React from 'react'
+import { Card, Image, Label, List, Segment } from 'semantic-ui-react'
 import { useStore } from '../../app/store/store'
 import { observer } from 'mobx-react-lite';
 import { format } from 'date-fns';
-import { Job } from '../../app/models/job';
 
 
 function JobList() {
