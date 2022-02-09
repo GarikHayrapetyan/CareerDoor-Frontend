@@ -85,7 +85,6 @@ function JobDetails() {
                     <Button onClick={cancelSelectedJob} basic color='grey' floated='left' content="Cancel" />
                 </Button.Group>
             </Card.Content>
-
         </Card>
     )
 }

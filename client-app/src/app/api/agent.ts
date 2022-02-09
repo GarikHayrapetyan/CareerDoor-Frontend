@@ -90,9 +90,7 @@ const requests = {
 };
 
 const GetTogethers = {
-	list: (params: URLSearchParams) =>
-		axios
-			.get<PaginatedResult<GetTogether[]>>('/gettogether', { params })
+	list: (params: URLSearchParams) => axios.get<PaginatedResult<GetTogether[]>>('/gettogether', { params })
 			.then(responseBody),
 	details: (id: string) => requests.get<GetTogether>(`/gettogether/${id}`),
 	create: (meeting: GetTogetherFormValues) =>
@@ -141,7 +139,10 @@ const Profiles = {
 		)
 };
 const Jobs = {
-	list: () => requests.get<Job[]>('/job'),
+	list: (params: URLSearchParams) =>
+		axios
+			.get<PaginatedResult<Job[]>>('/job', { params })
+			.then(responseBody),
 	details: (id: string) => requests.get<Job>(`/job/${id}`),
 	create: (job: JobFormValues) => requests.post('/job', job),
 	update: (job: JobFormValues) => requests.put(`/job/${job.id}`, job),

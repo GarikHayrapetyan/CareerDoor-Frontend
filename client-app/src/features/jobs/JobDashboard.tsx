@@ -1,23 +1,32 @@
 import React, { useEffect } from 'react'
 import LoadingComponent from '../../app/layout/LoadingComponent'
 import { useStore } from '../../app/store/store'
-import { Grid } from 'semantic-ui-react'
+import { Grid, Loader } from 'semantic-ui-react'
 import { observer } from 'mobx-react-lite';
 import SearchJob from './SearchJob';
 import JobDetails from './JobDetails'
 import JobList from './JobList'
 import JobForm from './JobForm';
+import { PagingParams } from '../../app/models/pagination';
+import InfiniteScroll from 'react-infinite-scroller';
 
 
 function JobDashboard() {
     const { jobStore } = useStore();
-    const { selectedJob, editMode, loadJobs, searchTerm } = jobStore;
+    const { selectedJob, editMode, loadJobs, searchTerm, setPagingParams, pagination } = jobStore;
+    const [loadingNext, setLoadingNext] = React.useState(false);
+
+    function handleNext() {
+        setLoadingNext(true);
+        setPagingParams(new PagingParams(pagination!.currentPage + 1));
+        loadJobs().then(() => setLoadingNext(false));
+    }
 
     useEffect(() => {
         loadJobs();
     }, [loadJobs])
 
-    if (jobStore.loadingInitial) return <LoadingComponent content="Loading jobs" />
+    if (jobStore.loadingInitial && !loadingNext) return <LoadingComponent content="Loading jobs" />
     return (
         <Grid
             style={{
@@ -28,14 +37,24 @@ function JobDashboard() {
             }}
         >
             <Grid.Column width='16'>
-                <SearchJob searchTerm={searchTerm}/>
+                <SearchJob searchTerm={searchTerm} />
             </Grid.Column>
             <Grid.Column width='8'>
-                <JobList />
+                <InfiniteScroll
+                    pageStart={0}
+                    loadMore={handleNext}
+                    hasMore={!loadingNext && !!pagination && pagination.currentPage < pagination.totalPages}
+                    initialLoad={false}
+                >
+                    <JobList />
+                </InfiniteScroll>
             </Grid.Column>
-            <Grid.Column width="8" >
+            <Grid.Column width="8">
                 {selectedJob && !editMode && <JobDetails />}
                 {editMode && <JobForm />}
+            </Grid.Column>
+            <Grid.Column width={8}>
+                <Loader active={loadingNext} />
             </Grid.Column>
         </Grid>
     )
