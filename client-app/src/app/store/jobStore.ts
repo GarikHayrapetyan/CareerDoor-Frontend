@@ -1,6 +1,7 @@
 import { makeAutoObservable, runInAction } from 'mobx';
 import agent from '../api/agent';
 import { Job, JobFormValues } from '../models/job';
+import { Pagination, PagingParams } from '../models/pagination';
 import { Profile } from '../models/userProfile';
 import { store } from './store';
 
@@ -12,9 +13,22 @@ export default class JobStore {
 	editMode = false;
 	searchTerm: string = "";
 	searchResults: Job[] | undefined = undefined;
+	pagination: Pagination | null = null;
+	pagingParams = new PagingParams();
 
 	constructor() {
 		makeAutoObservable(this);
+	}
+
+	setPagingParams = (pagingParams: PagingParams) => {
+		this.pagingParams = pagingParams;
+	}
+
+	get axiosParams() {
+		const params = new URLSearchParams();
+		params.append('pageNumber', this.pagingParams.pageNumber.toString());
+		params.append('pageSize', this.pagingParams.pageSize.toString());
+		return params;
 	}
 
 	get jobsByDate() {
@@ -24,16 +38,21 @@ export default class JobStore {
 	loadJobs = async () => {
 		this.loadingInitial = true;
  		try {
-			const jobs = await agent.Jobs.list();
-			jobs.forEach((job) => {
+			const results = await agent.Jobs.list(this.axiosParams);
+			results.data.forEach((job) => {
 				this.setJob(job);
 			});
+			this.setPagination(results.pagination);
 			this.setLoadingInitial(false);
 		} catch (err) {
 			this.setLoadingInitial(false);
 			console.log(err);
 		}
 	};
+
+	setPagination = (pagination: Pagination) => {
+		this.pagination = pagination;
+	}
 
 	loadJob = async (id: string) => {
 		let job = this.getJob(id);
