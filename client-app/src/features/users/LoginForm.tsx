@@ -4,9 +4,10 @@ import React from "react";
 import { Button, Header, Label } from "semantic-ui-react";
 import MyTextInput from "../../app/common/form/MyTextInput";
 import { useStore } from "../../app/store/store";
+import ResetPasswordForm from "./ResetPasswordForm";
 
 export default observer(function LoginForm() {
-    const { userStore } = useStore();
+    const { userStore, modalStore } = useStore();
     return (
         <Formik
             initialValues={{ email: "", password: "", error: null }}
@@ -23,6 +24,7 @@ export default observer(function LoginForm() {
                         name="error" render={() => 
                         <Label style={{ marginBottom: 10 }} basic color="red" content={errors.error} />}/>
                     <Button loading={isSubmitting} positive content="Login" type="submit" fluid />
+                    <p style={{ marginTop: 12, textAlign: "center"}}>Forgot password? Reset it <a onClick={() => modalStore.openModal(<ResetPasswordForm/>)} style={{ textDecoration: "underline", cursor: "pointer"}}>here</a>!</p>
                 </Form>
             )}
 
