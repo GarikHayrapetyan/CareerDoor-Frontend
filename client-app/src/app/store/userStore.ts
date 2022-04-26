@@ -1,7 +1,7 @@
 import { makeAutoObservable, runInAction } from 'mobx';
 import { history } from '../..';
 import agent from '../api/agent';
-import { User, UserFormValues } from '../models/User';
+import { User, UserFormValues, UserResetPasswordValues } from '../models/User';
 import { store } from './store';
 
 export default class UserStore {
@@ -13,6 +13,10 @@ export default class UserStore {
 
 	get isLoggedIn() {
 		return !!this.user;
+	}
+
+	resetPassword = async (creds: UserResetPasswordValues) => {
+		
 	}
 
 	login = async (creds: UserFormValues) => {
