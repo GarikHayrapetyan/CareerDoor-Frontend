@@ -15,3 +15,7 @@ export interface UserFormValues{
     city?:string;
     country?:string;
 }
+
+export interface UserResetPasswordValues{
+    email: string;
+}

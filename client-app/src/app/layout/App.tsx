@@ -10,6 +10,7 @@ import HomePage from "../../features/home/HomePage";
 import JobDashboard from "../../features/jobs/JobDashboard";
 import ProfilePage from "../../features/profiles/ProfilePage";
 import LoginForm from "../../features/users/LoginForm";
+import ResetPasswordForm from "../../features/users/ResetPasswordForm";
 import ModalContainer from "../common/modals/ModalContainer";
 import { useStore } from "../store/store";
 import NavBar from "./NavBar";
@@ -47,6 +48,7 @@ function App() {
                 <Route exact path='/profiles/:username' component={ProfilePage} />
                 <Route exact path="/errors" component={TestErrors} />
                 <Route path="/login" component={LoginForm} />
+                <Route path="/resetpassword" component={ResetPasswordForm} />
               </Switch>
             </Container>
           </>
