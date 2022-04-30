@@ -5,6 +5,7 @@ import { Button, Header, Label } from "semantic-ui-react";
 import MyTextInput from "../../app/common/form/MyTextInput";
 import { useStore } from "../../app/store/store"; 
 import LoginForm from "./LoginForm"; 
+import RenewPassword from "./RenewPassword";
 
 export default observer(function ResetPasswordForm() {
     const { userStore, modalStore } = useStore();
@@ -16,10 +17,10 @@ export default observer(function ResetPasswordForm() {
 
             {({ handleSubmit}) => (
                 <Form className="ui form" onSubmit={handleSubmit} autoComplete='off'>
-                    <Header as="h2" content="Reset Password" color="teal" textAlign='center'/>
+                    <Header as="h2" content="Let's find your account" color="teal" textAlign='center'/>
                     <MyTextInput name="email" placeholder="Email address" />
                     <div className="reset-password-login-buttons">
-                        <Button positive content="Reset" type="submit" fluid />
+                        <Button onClick={() => modalStore.openModal(<RenewPassword/>)} positive content="Submit" type="submit" fluid />
                         <p style={{ marginTop: 12, textAlign: "center"}}><a onClick={() => modalStore.openModal(<LoginForm/>)} style={{ textDecoration: "underline", cursor: "pointer"}}> Log in</a></p>
                     </div>
                 </Form>

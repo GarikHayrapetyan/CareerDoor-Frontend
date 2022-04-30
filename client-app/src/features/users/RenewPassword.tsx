@@ -13,13 +13,14 @@ export default observer(function LoginForm() {
 
             {({ handleSubmit, isSubmitting, errors }) => (
                 <Form className="ui form" onSubmit={handleSubmit} autoComplete='off'>
-                    <Header as="h2" content="Enter your new Password" color="teal" textAlign='center' />
+                    <Header as="h2" content="We sent a code to your email" color="teal" textAlign='center' />
+                    <p style={{color: "black"}}>Enter the 6-digit verification code sent to your email</p>
                     <MyTextInput name="code" placeholder="Code" />
                     <MyTextInput name="newPassoord" placeholder="New password" type='password' />
                     <ErrorMessage
                         name="error" render={() =>
                             <Label style={{ marginBottom: 10 }} basic color="red" content={errors.error} />} />
-                    <Button loading={isSubmitting} positive content="Submit New Password" type="submit" fluid />
+                    <Button loading={isSubmitting} positive content="Submit" type="submit" fluid />
                 </Form>
             )}
 

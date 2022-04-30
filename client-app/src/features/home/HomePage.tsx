@@ -25,7 +25,7 @@ export default observer(function HomePage() {
 						</>
 					) : (
 						<>
-						<Button onClick={()=>modalStore.openModal(<LoginForm/>)} size="huge" inverted>
+						<Button onClick={()=>modalStore.openModal(<LoginForm/>)} size="huge" inverted style={{marginRight: 15}}>
 							Login
 						</Button>
 						<Button onClick={()=>modalStore.openModal(<RegisterForm/>)} size="huge" inverted>
