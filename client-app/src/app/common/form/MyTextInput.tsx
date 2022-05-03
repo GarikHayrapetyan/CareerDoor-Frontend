@@ -7,6 +7,8 @@ interface Props {
     name: string;
     type?:string;
     label?: string;
+    maxlength?:string;
+    pattern?:string;
 }
 
 export default function MyTextInput(props: Props) {

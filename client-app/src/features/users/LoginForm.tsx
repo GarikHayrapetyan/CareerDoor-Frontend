@@ -5,13 +5,21 @@ import { Button, Header, Label } from "semantic-ui-react";
 import MyTextInput from "../../app/common/form/MyTextInput";
 import { useStore } from "../../app/store/store";
 import ResetPasswordForm from "./ResetPasswordForm";
+import { toast } from 'react-toastify';
+
+
 
 export default observer(function LoginForm() {
     const { userStore, modalStore } = useStore();
+
+    if(userStore.isSuccessfullReset){
+        toast.success("Password reset successfully.");
+    }
+
     return (
         <Formik
             initialValues={{ email: "", password: "", error: null }}
-            onSubmit={(values, { setErrors }) => userStore.login(values).catch(error =>
+            onSubmit={(values, { setErrors }) => userStore.login(values).catch(() =>
                 setErrors({ error: "Invalid email or password" }))}
         >
 

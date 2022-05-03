@@ -11,7 +11,7 @@ import JobDashboard from "../../features/jobs/JobDashboard";
 import ProfilePage from "../../features/profiles/ProfilePage";
 import LoginForm from "../../features/users/LoginForm";
 import ResetPasswordForm from "../../features/users/ResetPasswordForm";
-import RenewPassword from "../../features/users/RenewPassword";
+import RenewPassword from "../../features/users/RenewPasswordForm";
 import ModalContainer from "../common/modals/ModalContainer";
 import { useStore } from "../store/store";
 import NavBar from "./NavBar";

@@ -3,6 +3,7 @@ import { toast } from 'react-toastify';
 import { GetTogetherFormValues, GetTogether } from '../models/GetTogether';
 import { Job, JobFormValues } from '../models/job';
 import { PaginatedResult } from '../models/pagination';
+import { EmailDto, ResetPasswordFormValues } from '../models/ResetPassword';
 import { User, UserFormValues } from '../models/User';
 import { Photo, Profile, Resume, UserGetTogether } from '../models/userProfile';
 import { store } from '../store/store';
@@ -42,6 +43,8 @@ axios.interceptors.response.use(
 		switch (status) {
 			case 400:
 				if (typeof data === 'string') {
+					console.log("data:"+data);
+					
 					toast.error('bad request');
 				}
 				if (
@@ -106,7 +109,11 @@ const Account = {
 	login: (user: UserFormValues) =>
 		requests.post<User>('/account/login', user),
 	register: (user: UserFormValues) =>
-		requests.post<User>('/account/register', user)
+		requests.post<User>('/account/register', user),
+	sendOTP:(email: EmailDto)=>	
+		requests.post<void>('account/sendResetPassword',email),
+	resetPassword:(resetPassword: ResetPasswordFormValues)=>	
+	    requests.post<void>('account/resetPassword',resetPassword)
 };
 const Profiles = {
 	get: (username: string) => requests.get<Profile>(`/profiles/${username}`),

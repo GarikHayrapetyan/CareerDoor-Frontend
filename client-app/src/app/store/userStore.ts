@@ -1,22 +1,50 @@
 import { makeAutoObservable, runInAction } from 'mobx';
 import { history } from '../..';
 import agent from '../api/agent';
-import { User, UserFormValues, UserResetPasswordValues } from '../models/User';
+import { User, UserFormValues} from '../models/User';
+import {EmailDto, ResetPasswordFormValues} from '../models/ResetPassword';
 import { store } from './store';
+
+
 
 export default class UserStore {
 	user: User | null = null;
+	emailDto:EmailDto | null = null;
+	isSuccessfullReset:boolean = false;
 
 	constructor() {
 		makeAutoObservable(this);
+		
 	}
 
 	get isLoggedIn() {
 		return !!this.user;
 	}
 
-	resetPassword = async (creds: UserResetPasswordValues) => {
-		
+	sendOTP = async (creds: EmailDto) => {		
+		try {
+			this.emailDto = creds; 
+			console.log("cred:"+creds.email);
+			await agent.Account.sendOTP(creds);		
+				
+			
+		} catch (error) {
+			console.log("error:"+error);
+			
+			throw error;
+		}
+	}
+
+	resetPassword = async (creds:ResetPasswordFormValues) => {
+		try {
+			console.log("Password:"+creds.newPassword);		
+			creds.email = this.emailDto?.email;
+			await agent.Account.resetPassword(creds);
+		} catch (error) {
+			console.log("errot:"+error);
+			
+			throw error;
+		}
 	}
 
 	login = async (creds: UserFormValues) => {

@@ -16,6 +16,3 @@ export interface UserFormValues{
     country?:string;
 }
 
-export interface UserResetPasswordValues{
-    email: string;
-}
