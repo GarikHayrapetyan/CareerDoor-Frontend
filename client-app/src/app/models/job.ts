@@ -5,7 +5,7 @@ export interface Job {
 	title: string;
 	type: string;
 	description: string;
-	function: string;
+	Function: string;
 	company: string;
 	industry: string;
 	location: string;
@@ -31,7 +31,7 @@ export class JobFormValues {
 	type: string = '';
 	description: string = '';
 	company: string = '';
-	function: string = '';
+	Function: string = '';
 	industry: string = '';
 	location: string = '';
 	date: Date | null = null;
@@ -44,7 +44,7 @@ export class JobFormValues {
 			this.type = job.type;
 			this.description = job.description;
 			this.company = job.company;
-			this.function = job.function;
+			this.Function = job.Function;
 			this.industry = job.industry;
 			this.location = job.location;
 			this.date = job.date;
