@@ -1,4 +1,5 @@
 import { makeAutoObservable, runInAction } from 'mobx';
+import { format } from 'date-fns';
 import agent from '../api/agent';
 import { Job, JobFormValues } from '../models/job';
 import { Pagination, PagingParams } from '../models/pagination';
@@ -35,6 +36,17 @@ export default class JobStore {
 		return Array.from(this.jobRegistry.values()).sort((a,b)=> 
 			a.date!.getTime() - b.date!.getTime());
 	}
+
+	get groupedJobs(){
+		return Object.entries(
+			this.jobsByDate.reduce((jobs, job) => {
+				const date = format(job.date!, 'dd MMM yyyy');
+				jobs[date] = jobs[date] ? [...jobs[date], job] : [job];
+				return jobs;
+			}, {} as {[key: string]: Job[]})
+		)
+	}
+ 
 	loadJobs = async () => {
 		this.loadingInitial = true;
  		try {

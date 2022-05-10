@@ -1,46 +1,34 @@
 import React from 'react'
-import { Card, Image, Label, List, Segment } from 'semantic-ui-react'
+import { List, Segment, Header, Divider } from 'semantic-ui-react'
 import { useStore } from '../../app/store/store'
 import { observer } from 'mobx-react-lite';
-import { format } from 'date-fns';
-
+import JobListItem from './JobListItem';
+import { Job } from '../../app/models/job';
 
 function JobList() {
     const { jobStore } = useStore();
-    const { jobsByDate, selectJob, searchResults } = jobStore;
+    const { groupedJobs, searchResults } = jobStore;
     return (
-        <Segment>
-            <List animated verticalAlign='middle' divided >
-                {(searchResults ? searchResults : jobsByDate).map(job => (
-                    <List.Item onClick={() => selectJob(job.id)} key={job.id} style={{ margin: '20px 10px', cursor: 'pointer' }}>
-                        <Image avatar src={job.employeer?.image || '/assets/user.png'} />
-                        <List.Content>
-                            <List.Header as="a">
-                                {job.title}
-                            </List.Header>
-                        </List.Content>
-                        <List.Content floated='right'>
-                            {job.isEmployeer && (
-                                <Label basic color='orange'>
-                                    You created
-                                </Label>
-                            )}
-                            {job.isGoing && !job.isEmployeer && (
-                                <Label basic color='green'>
-                                    Applied
-                                </Label>
-                            )}
-                        </List.Content>
-                        <List style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
-                            <List.Item icon="building outline" content={job.company} />
-                            <List.Item icon="marker" content={job.location} />
-                            <List.Item icon="code branch" content={job.Function} />
-                            <List.Content floated='right'> <Card.Meta><span>{format(job.date!, 'dd-MM-yyyy')}</span></Card.Meta></List.Content>
+        <>
+            {(searchResults ? searchResults : groupedJobs).map(([group, jobs]: any) => (
+                <React.Fragment key={group}>
+                    <Header sub color="teal">
+                        {group}
+                    </Header>
+                    <Segment>
+                        <List verticalAlign='middle' >
+                            {jobs.map((job: Job, idx: number) => (
+                                <>
+                                    <JobListItem key={job.id} job={job} />
+                                    {idx < jobs.length - 1 && <Divider />}
+                                </>
+                            ))}
                         </List>
-                    </List.Item>
-                ))}
-            </List>
-        </Segment>
+                    </Segment>
+                </React.Fragment>
+            ))}
+        </>
+
     )
 }
 
