@@ -17,12 +17,12 @@ function JobList() {
                     </Header>
                     <Segment>
                         <List verticalAlign='middle' >
-                            {jobs.map((job: Job, idx: number) => (
+                            {jobs.map((job: Job, idx: number) => (                              
                                 <>
                                     <JobListItem key={job.id} job={job} />
                                     {idx < jobs.length - 1 && <Divider />}
                                 </>
-                            ))}
+                    ))}
                         </List>
                     </Segment>
                 </React.Fragment>

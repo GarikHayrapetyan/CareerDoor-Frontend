@@ -23,7 +23,7 @@ function JobForm() {
         type: '',
         description: '',
         company: '',
-        Function: '',
+        functionality: '',
         industry: '',
         location: '',
         date: null,
@@ -36,7 +36,7 @@ function JobForm() {
         type: Yup.string().required(),
         description: Yup.string().required(),
         company: Yup.string().required(),
-        Function: Yup.string().required(),
+        functionality: Yup.string().required(),
         industry: Yup.string().required(),
         location: Yup.string().required(),
         date: Yup.string().required("Date is required!").nullable(),
@@ -55,7 +55,7 @@ function JobForm() {
                 type,
                 description,
                 company,
-                Function,
+                functionality,
                 industry,
                 location,
                 date,
@@ -66,7 +66,7 @@ function JobForm() {
                 type,
                 description,
                 company,
-                Function,
+                functionality,
                 industry,
                 location,
                 date,
@@ -92,7 +92,7 @@ function JobForm() {
                         <MySelectInput option={typeOptions} placeholder="Type" name='type' />
                         <MyTextArea rows={8} placeholder="Description" name='description' />
                         <MyTextInput placeholder="Company Name" name='company' />
-                        <MyTextInput placeholder="Function" name='Function' />
+                        <MyTextInput placeholder="Test" name='functionality' />
                         <MyTextInput placeholder="Industry" name='industry' />
                         <MyTextInput placeholder="Location" name='location' />
                         <MyDateInput

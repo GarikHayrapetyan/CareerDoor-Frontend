@@ -45,7 +45,7 @@ function JobDetails() {
                     </Statistic>
                     <Statistic>
                         <Statistic.Label>Function</Statistic.Label>
-                        <List.Description>{job.Function}</List.Description>
+                        <List.Description>{job.functionality}</List.Description>
                     </Statistic>
                     <Statistic >
                         <Statistic.Label>Industry</Statistic.Label>

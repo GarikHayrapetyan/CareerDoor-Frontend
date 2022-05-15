@@ -51,7 +51,7 @@ export default class JobStore {
 		this.loadingInitial = true;
  		try {
 			const results = await agent.Jobs.list(this.axiosParams);
-			results.data.forEach((job) => {
+			results.data.forEach((job) => {			
 				this.setJob(job);
 			});
 			this.setPagination(results.pagination);

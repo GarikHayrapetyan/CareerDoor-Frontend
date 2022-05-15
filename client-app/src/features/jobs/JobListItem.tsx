@@ -1,6 +1,6 @@
 import React from 'react'
 import { useStore } from '../../app/store/store'
-import { Card, Divider, Image, Label, List } from 'semantic-ui-react'
+import { Card, Image, Label, List } from 'semantic-ui-react'
 import { format } from 'date-fns';
 import { Job } from '../../app/models/job';
 
@@ -34,7 +34,7 @@ const JobListItem = ({ job }: Props) => {
             <List style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
                 <List.Item icon="building outline" content={job.company} />
                 <List.Item icon="marker" content={job.location} />
-                <List.Item icon="code branch" content={job.Function} />
+                <List.Item icon="code branch" content={job.functionality} />
                 <List.Content floated='right'> <Card.Meta><span>{format(job.date!, 'dd-MM-yyyy')}</span></Card.Meta></List.Content>
             </List>
         </List.Item>
