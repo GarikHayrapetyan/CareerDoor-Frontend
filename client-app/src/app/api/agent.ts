@@ -5,7 +5,7 @@ import { Job, JobFormValues } from '../models/job';
 import { PaginatedResult } from '../models/pagination';
 import { EmailDto, ResetPasswordFormValues } from '../models/ResetPassword';
 import { User, UserFormValues } from '../models/User';
-import { Photo, Profile, Resume, UserGetTogether } from '../models/userProfile';
+import { Photo, Profile, Resume, UserGetTogether, UserJob } from '../models/userProfile';
 import { store } from '../store/store';
 
 axios.defaults.baseURL = '/api';
@@ -143,6 +143,10 @@ const Profiles = {
 	listActivities: (username: string, predicate: string) =>
 		requests.get<UserGetTogether[]>(
 			`/profiles/${username}/gettogethers?predicate=${predicate}`
+		),
+	listJobs: (username: string, predicate: string) =>
+		requests.get<UserJob[]>(
+			`/profiles/${username}/jobs?predicate=${predicate}`
 		)
 };
 const Jobs = {

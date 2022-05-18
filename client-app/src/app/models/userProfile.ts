@@ -41,3 +41,9 @@ export interface UserGetTogether {
 	title: string;
 	date: Date;
 }
+
+export interface UserJob {
+	id: string;
+	title: string;
+	date: Date;
+}

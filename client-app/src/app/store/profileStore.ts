@@ -1,6 +1,6 @@
 import { makeAutoObservable, reaction, runInAction } from 'mobx';
 import agent from '../api/agent';
-import { Photo, Profile, Resume, UserGetTogether } from '../models/userProfile';
+import { Photo, Profile, Resume, UserGetTogether, UserJob } from '../models/userProfile';
 import { store } from './store';
 
 export default class ProfileStore {
@@ -13,6 +13,8 @@ export default class ProfileStore {
 	activeTab = 0;
 	userGetTogethers: UserGetTogether[] = [];
 	loadingGetTogethers = false;
+	userJobs: UserJob[] = [];
+	loadingJobs = false;
 
 
 	constructor() {
@@ -220,4 +222,21 @@ export default class ProfileStore {
 		}
 	}
 
+	loadJobs = async (username: string, predicate: string) => {
+		this.loadingJobs = true;
+		try {
+			const jobs = await agent.Profiles.listJobs(username, predicate!);
+			runInAction(()=> {
+				this.userJobs = jobs;
+				this.loadingJobs = false;
+			})
+
+		} catch(error) {
+			console.log(error);
+			runInAction(()=> {
+				this.loadingJobs = false;
+			})
+		}
+	}
 }
+
