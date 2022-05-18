@@ -8,29 +8,33 @@ import ProfileDocuments from './ProfileDocuments';
 import ProfileFollowings from './ProfileFollowings';
 import ProfileGetTogethers from './ProfileGetTogethers';
 import ProfilePhotos from './ProfilePhotos';
+import ProfileJobs from './ProfileJobs';
 interface Props {
 	profile: Profile;
 }
 export default observer(function ProfileContent({ profile }: Props) {
 
-	const {profileStore} = useStore();
+	const { profileStore } = useStore();
 
 	const panes = [
 		{ menuItem: 'About', render: () => <ProfileAbout /> },
 		{
-			menuItem: 'Documents', render: () => <ProfileDocuments profile={profile}/>
+			menuItem: 'Documents', render: () => <ProfileDocuments profile={profile} />
 		},
 		{
 			menuItem: 'Photos', render: () => <ProfilePhotos profile={profile} />
 		},
 		{
-			menuItem: 'Events', render: () => <ProfileGetTogethers/>
+			menuItem: 'Events', render: () => <ProfileGetTogethers />
 		},
 		{
 			menuItem: 'Followers', render: () => <ProfileFollowings />
 		},
 		{
 			menuItem: 'Following', render: () => <ProfileFollowings />
+		},
+		{
+			menuItem: 'Job', render: () => <ProfileJobs />
 		},
 	];
 	return (
