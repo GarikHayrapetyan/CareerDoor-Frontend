@@ -92,7 +92,7 @@ function JobForm() {
                         <MySelectInput option={typeOptions} placeholder="Type" name='type' />
                         <MyTextArea rows={8} placeholder="Description" name='description' />
                         <MyTextInput placeholder="Company Name" name='company' />
-                        <MyTextInput placeholder="Test" name='functionality' />
+                        <MyTextInput placeholder="Function" name='functionality' />
                         <MyTextInput placeholder="Industry" name='industry' />
                         <MyTextInput placeholder="Location" name='location' />
                         <MyDateInput

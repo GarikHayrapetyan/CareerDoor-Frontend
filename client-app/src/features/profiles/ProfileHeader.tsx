@@ -7,15 +7,34 @@ import {
 	Header,
 	Statistic,
 	Divider,
+	Button,
 } from 'semantic-ui-react';
 import { Profile } from '../../app/models/userProfile';
 import FollowButton from './FollowButton';
+import { useStore } from '../../app/store/store';
+import ProfileFollowingsModal from './ProfileFollowingsModal';
 
 interface Props {
 	profile: Profile;
 }
 
 export default observer(function ProfileHeader({ profile }: Props) {
+	const { profileStore, modalStore } = useStore();
+	const { setActiveTab } = profileStore;
+	const IsFollowersZero = profile.followersCount==0 ? true:false;
+	const IsFollowingsZero = profile.followingCount==0 ? true:false;
+
+	const handleFollowers = () => {
+		setActiveTab(4);
+		modalStore.openModal(<ProfileFollowingsModal />)
+	}
+	const handleFollowings = () => {
+		setActiveTab(5);
+		modalStore.openModal(<ProfileFollowingsModal />)
+	}
+
+
+
 	return (
 		<Segment>
 			<Grid>
@@ -36,9 +55,15 @@ export default observer(function ProfileHeader({ profile }: Props) {
 					</Item.Group>
 				</Grid.Column>
 				<Grid.Column width={4}>
-					<Statistic.Group widths={2}>
-						<Statistic label="Followers" value={profile.followersCount} />
-						<Statistic label="Following" value={profile.followingCount} />
+					<Statistic.Group>
+						<Statistic>
+							<Statistic.Value>{profile.followersCount}</Statistic.Value>
+							<Button style={{ border: 'none', background: 'none' }} onClick={handleFollowers} disabled={IsFollowersZero}>Followers</Button>
+						</Statistic>
+						<Statistic>
+							<Statistic.Value>{profile.followingCount}</Statistic.Value>
+							<Button style={{ border: 'none', background: 'none' }} onClick={handleFollowings} disabled={IsFollowingsZero}>Followings</Button>
+						</Statistic>
 					</Statistic.Group>
 					<Divider />
 					<FollowButton profile={profile} />

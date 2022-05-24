@@ -4,6 +4,7 @@ import { Link, NavLink } from 'react-router-dom';
 import { Button, Container, Dropdown, Image, Menu } from 'semantic-ui-react';
 import { useStore } from '../store/store';
 
+
 export default observer(function NavBar() {
 	const { userStore: { user, logout } } = useStore();
 	return (
@@ -35,7 +36,7 @@ export default observer(function NavBar() {
 					</Menu.Item>
 				</div>
 				<Menu.Item>
-					<Image src={user?.image || 'assets/user.png'} avatar spaced='right' />
+					<Image src={user?.image || '../assets/user.png'} avatar spaced='right' />
 					<Dropdown pointing='top left' text={user?.displayName}>
 						<Dropdown.Menu>
 							<Dropdown.Item as={Link} to={`/profiles/${user?.username}`} text='My profile' icon='user' />
