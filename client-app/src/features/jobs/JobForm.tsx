@@ -32,15 +32,15 @@ function JobForm() {
     const [job, setJob] = React.useState<JobFormValues>(initialState);
 
     const validationSchema = Yup.object({
-        title: Yup.string().required('The job title is required!'),
-        type: Yup.string().required(),
-        description: Yup.string().required(),
-        company: Yup.string().required(),
-        functionality: Yup.string().required(),
-        industry: Yup.string().required(),
-        location: Yup.string().required(),
+        title: Yup.string().required('Title is a required field'),
+        type: Yup.string().required('Type is a required field'),
+        description: Yup.string().required('Description is a required field'),
+        company: Yup.string().required('Company is a required field'),
+        functionality: Yup.string().required('Functionality is a required field'),
+        industry: Yup.string().required('Industry is a required field'),
+        location: Yup.string().required('Location is a required field'),
         date: Yup.string().required("Date is required!").nullable(),
-        employeeCount: Yup.string().required(),
+        employeeCount: Yup.string().required('Employee Count is a required field'),
     })
 
     function handleDelete(e: SyntheticEvent<HTMLButtonElement>, id: string) {
