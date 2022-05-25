@@ -37,7 +37,8 @@ function GetTogetherDetailedInfo({ meeting }: Props) {
 			<Segment attached>
 				<Grid verticalAlign="middle">
 					<Grid.Column width={1}>
-						<Icon name="at" size="large" color="teal" />
+						<Icon name="key" size="large" color="teal" />
+						
 					</Grid.Column>
 					<Grid.Column width={11}>
 						<span>PassCode: {meeting?.passCode}</span>
@@ -47,7 +48,7 @@ function GetTogetherDetailedInfo({ meeting }: Props) {
 			<Segment attached>
 				<Grid verticalAlign="middle">
 					<Grid.Column width={1}>
-						<Icon name="at" size="large" color="teal" />
+						<Icon className="linkify icon" size="large" color="teal"></Icon>
 					</Grid.Column>
 					<Grid.Column width={11}>
 						<span>Link: {meeting?.link}</span>
