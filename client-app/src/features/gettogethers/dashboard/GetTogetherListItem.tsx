@@ -21,7 +21,7 @@ export default function GetTogetherListItem({ meeting }: Props) {
 						style={{textAlign: 'center'}}
 					/>
 				}
-				<Item.Group as={Link} to={`/meetings/${meeting.id}`}>
+				<Item.Group as={Link} target={'_blank'} to={`/meetings/${meeting.id}`}>
 					<Item>
 						{/* <Icon
 							name="save outline"
@@ -41,8 +41,8 @@ export default function GetTogetherListItem({ meeting }: Props) {
 							size="tiny"
 						/>
 						<Item.Content>
-							<Item.Description content="User Name" />
-							<Item.Header content={meeting.title} />
+							{/* <Item.Description content="User Name" /> */}
+							<Item.Header content={meeting.title} style={{marginTop: 10}} />
 							<Item.Description>
 								Hosted by <Link to={`/profiles/${meeting.hostUsername}`}>{meeting.host?.displayName}</Link>
 							</Item.Description>
