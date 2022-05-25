@@ -23,11 +23,17 @@ export default function GetTogetherListItem({ meeting }: Props) {
 				}
 				<Item.Group as={Link} to={`/meetings/${meeting.id}`}>
 					<Item>
-						<Icon
+						{/* <Icon
 							name="save outline"
 							style={{ position: 'absolute', right: '30px' }}
 							size="large"
-						/>
+						/> */}
+						{meeting.isHost && (
+								<Item.Description
+								style={{ position: 'absolute', right: '20px' }}>
+									<Label basic color='orange'>Hosting</Label>
+								</Item.Description>
+							)}
 						<Item.Image
 							style={{marginBottom: 3}}
 							src={meeting.host?.image || "/assets/user.png"}
@@ -40,11 +46,6 @@ export default function GetTogetherListItem({ meeting }: Props) {
 							<Item.Description>
 								Hosted by <Link to={`/profiles/${meeting.hostUsername}`}>{meeting.host?.displayName}</Link>
 							</Item.Description>
-							{meeting.isHost && (
-								<Item.Description>
-									<Label basic color='orange'>You are hosting this meeting</Label>
-								</Item.Description>
-							)}
 							{meeting.isGoing && !meeting.isHost && (
 								<Item.Description>
 									<Label basic color='green'>You are going to this meeting</Label>
