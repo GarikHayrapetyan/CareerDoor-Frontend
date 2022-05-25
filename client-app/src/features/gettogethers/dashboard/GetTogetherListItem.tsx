@@ -14,12 +14,14 @@ export default function GetTogetherListItem({ meeting }: Props) {
 		<Segment.Group size="tiny">
 			<Segment>
 				{meeting.isCancelled && 
-					<Label 
+					<Segment style={{marginBottom: 20}}>
+						<Label 
 						attached='top' 
 						color='red' 
 						content="Cancelled" 
 						style={{textAlign: 'center'}}
-					/>
+						/>
+					</Segment>
 				}
 				<Item.Group as={Link} target={'_blank'} to={`/meetings/${meeting.id}`}>
 					<Item>
