@@ -39,9 +39,9 @@ function JobForm() {
     }, [selectedJob])
 
     const validationSchema = Yup.object({
-        title: Yup.string().required('Title is a required field').min(3, "Title must be 3 words at least").max(18, "Title cannot exceed 15 words"),
+        title: Yup.string().required('Title is a required field').min(3, "Title must be 3 words at least").max(18, "Title cannot exceed 18 words"),
         type: Yup.string().required('Type is a required field'),
-        description: Yup.string().required('Description is a required field').max(300, "Description cannot be less than 300 words"),
+        description: Yup.string().required('Description is a required field').min(110, "Description cannot be less than 110 words"),
         company: Yup.string().required('Company is a required field').max(40, "Company cannot exceed 40 words"),
         functionality: Yup.string().required('Functionality is a required field').max(20, "Functionality cannot exceed 20 words"),
         industry: Yup.string().required('Industry is a required field').max(30, "Industry cannot exceed 30 words"),
@@ -95,7 +95,7 @@ function JobForm() {
             <Formik validationSchema={validationSchema} enableReinitialize initialValues={job} onSubmit={values => handleFormSubmit(values)}>
                 {({ handleSubmit, isValid, isSubmitting, dirty }) => (
                     <Form className='ui form' onSubmit={handleSubmit} autoComplete='off'>
-                        <MyTextInput name='title' placeholder='Title' maxlength="30" />
+                        <MyTextInput name='title' placeholder='Title' maxlength="18" />
                         <MySelectInput option={typeOptions} placeholder="Type" name='type' />
                         <MyTextArea rows={8} placeholder="Description" name='description' minlength="300" />
                         <MyTextInput placeholder="Company Name" name='company' maxlength="40" />
