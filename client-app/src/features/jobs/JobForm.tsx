@@ -17,7 +17,7 @@ function JobForm() {
     const { selectedJob, closeForm, createJob, updateJob, loading, deleteJob } = jobStore;
     const [target, setTarget] = React.useState("");
 
-    const initialState = selectedJob ?? {
+    const initialState = {
         id: "",
         title: '',
         type: '',
@@ -30,6 +30,13 @@ function JobForm() {
         employeeCount: '',
     }
     const [job, setJob] = React.useState<JobFormValues>(initialState);
+    React.useEffect(() => {
+        if (selectedJob) {
+            setJob(selectedJob);
+        } else {
+            setJob(initialState);
+        }
+    }, [selectedJob])
 
     const validationSchema = Yup.object({
         title: Yup.string().required('Title is a required field'),
