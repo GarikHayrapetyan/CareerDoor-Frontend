@@ -15,7 +15,6 @@ export default observer(function ProfileFollowingsModal() {
   return (
     <Segment
       textAlign='left'
-      // style={{ padding: '0em', minHeight: 50, maxHeight: 100, width: "100%" }}
       vertical
       loading={loadingFollowings}>
       <List relaxed divided>
