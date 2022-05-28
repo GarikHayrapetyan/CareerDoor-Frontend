@@ -12,9 +12,9 @@ function SearchGetTogther({ searchTerm }: Props) {
     const { getTogetherStore } = useStore();
     const { openForm, handleGetTogetherSearchTerm } = getTogetherStore;
     return (
-        <Segment style={{ display: 'flex', width: '92%' }}>
+        <Segment style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
             <Input
-                style={{ paddingLeft: '10px', width: '53%'}}
+                style={{ paddingLeft: '10px', width: '55%'}}
                 type='text'
                 fluid
                 icon="search"
@@ -22,10 +22,8 @@ function SearchGetTogther({ searchTerm }: Props) {
                 value={searchTerm}
                 onChange={handleGetTogetherSearchTerm}
             />
-            <div style={{ flex: 2, display: 'flex', justifyContent: 'space-around' }}>
-                {/* <Dropdown clearable selection placeholder="Date Posted" options={datePosted} /> */}
-            </div>
             <Button
+            style={{float: 'right'}}
                 as={NavLink}
 				to="/createmeeting"
 				positive
