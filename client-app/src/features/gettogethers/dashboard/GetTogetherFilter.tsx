@@ -8,7 +8,7 @@ export default observer(function GetTogetherFilter() {
     const { getTogetherStore: { predicate, setPredicate } } = useStore();
     return (
         <Fragment >
-            <Menu vertical size='large' style={{ width: '100%', marginTop: 30 }}>
+            <Menu vertical size='large' style={{ width: '24%', marginTop: 30, top: "198px", position: "fixed" }}>
                 <Header icon='filter' attached content='Filters' color='teal' />
                 <Menu.Item
                     content='All meetings'
@@ -27,11 +27,12 @@ export default observer(function GetTogetherFilter() {
                 />
             </Menu>
             <Header />
-            <Calendar
+            <Menu style={{ width: '24%', marginTop: 30, top: "400px", position: "fixed" }}>
+                <Calendar
                 className='cal'
                 onChange={(date) => setPredicate('startDate', date as Date)}
                 value={predicate.get('startDate') || new Date()}
-            />
+            /></Menu>
         </Fragment>
     )
 })
