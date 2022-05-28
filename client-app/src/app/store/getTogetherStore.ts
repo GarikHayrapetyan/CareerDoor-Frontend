@@ -16,6 +16,8 @@ export default class GetTogetherStore {
 	pagination: Pagination | null = null;
 	pagingParams = new PagingParams();
 	predicate = new Map().set('all', true);
+	searchGetTogetherTerm: string = "";
+	searchGetTogetherResults: GetTogether[] | undefined = undefined;
 
 	constructor() {
 		makeAutoObservable(this);
@@ -72,6 +74,7 @@ export default class GetTogetherStore {
 		})
 		return params;
 	}
+
 	get getTogethersByDate() {
 		return Array.from(this.getTogetherRegistry.values()).sort(
 			(a, b) => a.date!.getTime() - b.date!.getTime()
@@ -255,4 +258,44 @@ export default class GetTogetherStore {
 	clearSelectedGetTogether = () => {
         this.selectedGetTogether = undefined;
     }
+
+	selectGetTogether = (id: string) => {
+		this.closeForm();
+		this.selectedGetTogether = this.getTogetherRegistry.get(id);
+	};
+
+	cancelSelectedGetTogether = () => {
+		this.selectedGetTogether = undefined;
+	};
+
+	openForm = (id?: string) => {
+		id ? this.selectGetTogether(id) : this.cancelSelectedGetTogether();
+		this.editMode = true;
+	};
+
+	closeForm = () => {
+		this.editMode = false;
+	};
+
+	handleGetTogetherSearchTerm = (event:  React.ChangeEvent<HTMLInputElement>) => {
+		this.searchGetTogetherTerm = event.target.value;
+		this.searchGetTogetherResults = this.getSearchedGetTogethers();
+	}
+
+	private getSearchedGetTogethers() {
+		console.log(this.searchGetTogetherTerm)
+		if(this.searchGetTogetherTerm !== "") {
+			const newSearchedGetTogethers = Array.from(this.getTogetherRegistry.values())
+				.filter(job => {
+				return Object.values(job)
+						.join(' ')
+						.toLowerCase()
+						.includes(this.searchGetTogetherTerm.toLowerCase());
+				})
+		return newSearchedGetTogethers;
+		} else {
+			return undefined;
+		}
+		
+	}
 }
