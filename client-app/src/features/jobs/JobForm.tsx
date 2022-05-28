@@ -17,7 +17,7 @@ function JobForm() {
     const { selectedJob, closeForm, createJob, updateJob, loading, deleteJob } = jobStore;
     const [target, setTarget] = React.useState("");
 
-    const initialState = selectedJob ?? {
+    const initialState = {
         id: "",
         title: '',
         type: '',
@@ -30,17 +30,24 @@ function JobForm() {
         employeeCount: '',
     }
     const [job, setJob] = React.useState<JobFormValues>(initialState);
+    React.useEffect(() => {
+        if (selectedJob) {
+            setJob(selectedJob);
+        } else {
+            setJob(initialState);
+        }
+    }, [selectedJob])
 
     const validationSchema = Yup.object({
-        title: Yup.string().required('Title is a required field'),
+        title: Yup.string().required('Title is a required field').min(3, "Title must be 3 words at least").max(18, "Title cannot exceed 18 words"),
         type: Yup.string().required('Type is a required field'),
-        description: Yup.string().required('Description is a required field'),
-        company: Yup.string().required('Company is a required field'),
-        functionality: Yup.string().required('Functionality is a required field'),
-        industry: Yup.string().required('Industry is a required field'),
-        location: Yup.string().required('Location is a required field'),
+        description: Yup.string().required('Description is a required field').min(110, "Description cannot be less than 110 words"),
+        company: Yup.string().required('Company is a required field').max(40, "Company cannot exceed 40 words"),
+        functionality: Yup.string().required('Functionality is a required field').max(20, "Functionality cannot exceed 20 words"),
+        industry: Yup.string().required('Industry is a required field').max(30, "Industry cannot exceed 30 words"),
+        location: Yup.string().required('Location is a required field').max(30, "Location cannot exceed 30 words"),
         date: Yup.string().required("Date is required!").nullable(),
-        employeeCount: Yup.string().required('Employee Count is a required field'),
+        employeeCount: Yup.string().required('Employee Count is a required field').max(30, "Employee cannot exceed 30 words"),
     })
 
     function handleDelete(e: SyntheticEvent<HTMLButtonElement>, id: string) {
@@ -88,21 +95,22 @@ function JobForm() {
             <Formik validationSchema={validationSchema} enableReinitialize initialValues={job} onSubmit={values => handleFormSubmit(values)}>
                 {({ handleSubmit, isValid, isSubmitting, dirty }) => (
                     <Form className='ui form' onSubmit={handleSubmit} autoComplete='off'>
-                        <MyTextInput name='title' placeholder='Title' />
+                        <MyTextInput name='title' placeholder='Title' maxlength="18" />
                         <MySelectInput option={typeOptions} placeholder="Type" name='type' />
-                        <MyTextArea rows={8} placeholder="Description" name='description' />
-                        <MyTextInput placeholder="Company Name" name='company' />
-                        <MyTextInput placeholder="Test" name='functionality' />
-                        <MyTextInput placeholder="Industry" name='industry' />
-                        <MyTextInput placeholder="Location" name='location' />
+                        <MyTextArea rows={8} placeholder="Description" name='description' minlength="300" />
+                        <MyTextInput placeholder="Company Name" name='company' maxlength="40" />
+                        <MyTextInput placeholder="Functionality" name='functionality' maxlength="20" />
+                        <MyTextInput placeholder="Industry" name='industry' maxlength="30" />
+                        <MyTextInput placeholder="Location" name='location' maxlength="30" />
                         <MyDateInput
+                            minDate={new Date()}
                             placeholderText="Date"
                             name="date"
                             showTimeSelect
                             timeCaption="Time"
                             dateFormat="MMMM d, yyyy h:mm aa"
                         />
-                        <MyTextInput placeholder="Employees" name='employeeCount' />
+                        <MyTextInput placeholder="Employees" name='employeeCount' maxlength="30" />
                         {selectedJob?.isEmployeer && <Button
                             name={job.id}
                             loading={loading && target === job.id}

@@ -23,9 +23,9 @@ export default class ProfileStore {
 		reaction(
 			() => this.activeTab,
 			activeTab => {
-				if (activeTab === 3 || activeTab === 4) {
-					const predicate = activeTab === 3 ? 'followers' : 'following';
-					this.loadFollowings(predicate);
+				if (activeTab === 4 || activeTab === 5) {
+					const predicate = activeTab === 4 ? 'followers' : 'following';
+					this.loadFollowings(predicate);				
 				} else {
 					this.followings = [];
 				}
@@ -34,7 +34,7 @@ export default class ProfileStore {
 	}
 
 	setActiveTab = (activeTab: any) => {
-		this.activeTab = activeTab;
+		this.activeTab = activeTab;		
 	}
 
 	get isCurrentUser() {
