@@ -44,7 +44,7 @@ export default function GetTogetherListItem({ meeting }: Props) {
 						/>
 						<Item.Content>
 							{/* <Item.Description content="User Name" /> */}
-							<Item.Header content={meeting.title} style={{marginTop: 10}} />
+							<Item.Header content={meeting.title} style={{marginTop: '10px', width: '75%'}} />
 							<Item.Description>
 								Hosted by <Link to={`/profiles/${meeting.hostUsername}`}>{meeting.host?.displayName}</Link>
 							</Item.Description>

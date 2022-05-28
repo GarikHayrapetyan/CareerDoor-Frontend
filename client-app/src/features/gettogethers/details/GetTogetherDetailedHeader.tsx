@@ -45,11 +45,11 @@ function GetTogetherDetailedHeader({ meeting }: Props) {
 				<Segment style={activityImageTextStyle} basic>
 					<Item.Group>
 						<Item>
-							<Item.Content>
+							<Item.Content style={{ flexDirection: 'row' }}>
 								<Header
 									size="huge"
 									content={meeting?.title}
-									style={{ color: 'white' }}
+									style={{ marginTop: '50px', color: 'white', width: '70%', flexWrap: 'wrap', wordWrap: 'break-word' }}
 								/>
 								<p>{format(meeting.date!, 'dd MMM yyyy')}</p>
 								<p>

@@ -79,7 +79,7 @@ export default function GetTogetherForm() {
 						onSubmit={handleSubmit}
 						autoComplete="off"
 					>
-						<MyTextInput name="title" placeholder="Title" maxlength='100'/>
+						<MyTextInput name="title" placeholder="Title" maxlength='60'/>
 						<MyTextArea
 							rows={3}
 							name="description"
@@ -92,7 +92,7 @@ export default function GetTogetherForm() {
 							timeCaption="Time"
 							dateFormat="MMMM d, yyyy h:mm aa"
 						/>
-						<MyTextInput name="link" placeholder="Link" maxlength='255'/>
+						<MyTextInput name="link" placeholder="Link" maxlength='160'/>
 						<MyTextInput name="passCode" placeholder="Passcode" maxlength='50' />
 						<Button
 							disabled={isSubmitting || !dirty || !isValid}
