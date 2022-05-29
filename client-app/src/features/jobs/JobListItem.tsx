@@ -21,7 +21,7 @@ const JobListItem = ({ job }: Props) => {
             </List.Content>
             <List.Content floated='right'>
                 {job.isEmployeer && (
-                    <Label basic color='orange'>
+                    <Label basic color='orange' >
                         You created
                     </Label>
                 )}
@@ -31,7 +31,7 @@ const JobListItem = ({ job }: Props) => {
                     </Label>
                 )}
             </List.Content>
-            <List style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+            <List style={{ display: 'flex', flexWrap: 'wrap', gap: "1rem", width: '100%' }}>
                 <List.Item icon="building outline" content={job.company} />
                 <List.Item icon="marker" content={job.location} />
                 <List.Item icon="code branch" content={job.functionality} />
