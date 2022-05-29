@@ -10,19 +10,19 @@ function JobList() {
     const { groupedJobs, searchResults } = jobStore;
     return (
         <>
-            {(searchResults ? searchResults : groupedJobs).map(([group, jobs]: any) => (
+            {groupedJobs.map(([group, jobs]: any) => (
                 <React.Fragment key={group}>
                     <Header sub color="teal">
                         {group}
                     </Header>
                     <Segment>
                         <List verticalAlign='middle' >
-                            {jobs.map((job: Job, idx: number) => (                              
+                            {jobs.map((job: Job, idx: number) => (
                                 <>
                                     <JobListItem key={job.id} job={job} />
                                     {idx < jobs.length - 1 && <Divider />}
                                 </>
-                    ))}
+                            ))}
                         </List>
                     </Segment>
                 </React.Fragment>

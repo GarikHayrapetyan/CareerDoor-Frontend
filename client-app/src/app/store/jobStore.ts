@@ -39,7 +39,7 @@ export default class JobStore {
 
 	get groupedJobs(){
 		return Object.entries(
-			this.jobsByDate.reduce((jobs, job) => {
+			(this.searchResults || this.jobsByDate).reduce((jobs, job) => {
 				const date = format(job.date!, 'dd MMM yyyy');
 				jobs[date] = jobs[date] ? [...jobs[date], job] : [job];
 				return jobs;
@@ -217,12 +217,10 @@ export default class JobStore {
 	}
 
 	private getSearchedJobs() {
-		console.log(this.searchTerm)
 		if(this.searchTerm !== "") {
-			const newSearchedJobs = Array.from(this.jobRegistry.values())
+			const newSearchedJobs = this.jobsByDate
 				.filter(job => {
-				return Object.values(job)
-						.join(' ')
+				return job.title
 						.toLowerCase()
 						.includes(this.searchTerm.toLowerCase());
 				})
