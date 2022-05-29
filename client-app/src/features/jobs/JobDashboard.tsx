@@ -36,10 +36,10 @@ function JobDashboard() {
 
             }}
         >
-            <Grid.Column width='16'>
+            <Grid.Column style={{ position: 'sticky', top: "50px", zIndex: '1000' }} width='16'>
                 <SearchJob searchTerm={searchTerm} />
             </Grid.Column>
-            <Grid.Column width='8'>
+            <Grid.Column width='8' style={{ overflowY: 'scroll', height: '540px' }}>
                 <InfiniteScroll
                     pageStart={0}
                     loadMore={handleNext}
