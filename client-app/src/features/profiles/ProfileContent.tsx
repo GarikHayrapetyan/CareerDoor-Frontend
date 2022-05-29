@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
-import { Tab } from 'semantic-ui-react';
+import { Button, Popup, Tab } from 'semantic-ui-react';
 import { Profile } from '../../app/models/userProfile';
 import { useStore } from '../../app/store/store';
 import ProfileAbout from './ProfileAbout';
@@ -9,6 +9,7 @@ import ProfileFollowings from './ProfileFollowings';
 import ProfileGetTogethers from './ProfileGetTogethers';
 import ProfilePhotos from './ProfilePhotos';
 import ProfileJobs from './ProfileJobs';
+import ModalExampleContentImage from './ProfileFollowingsModal';
 interface Props {
 	profile: Profile;
 }
@@ -17,7 +18,9 @@ export default observer(function ProfileContent({ profile }: Props) {
 	const { profileStore } = useStore();
 
 	const panes = [
-		{ menuItem: 'About', render: () => <ProfileAbout /> },
+		{ 
+			menuItem: 'About', render: () => <ProfileAbout /> 
+		},
 		{
 			menuItem: 'Documents', render: () => <ProfileDocuments profile={profile} />
 		},
@@ -35,6 +38,9 @@ export default observer(function ProfileContent({ profile }: Props) {
 		},
 		{
 			menuItem: 'Job', render: () => <ProfileJobs />
+		},
+		{
+			menuItem: 'PopUp', render: () => <ModalExampleContentImage/>
 		},
 	];
 	return (

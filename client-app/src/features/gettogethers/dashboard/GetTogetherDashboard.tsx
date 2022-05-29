@@ -7,10 +7,11 @@ import { useStore } from '../../../app/store/store';
 import { PagingParams } from '../../../app/models/pagination';
 import InfiniteScroll from 'react-infinite-scroller';
 import GetTogetherListItemPlaceHolder from './GetTogetherListItemPlaceHolder';
+import GetTogetherSearchForm from '../form/GetTogetherSearchForm';
 
 export default observer(function GetTogetherDashboard() {
 	const { getTogetherStore } = useStore();
-	const { loadingGetTogethers, getTogetherRegistry, setPagingParams, pagination } = getTogetherStore;
+	const { loadingGetTogethers, getTogetherRegistry, setPagingParams, pagination, searchGetTogetherTerm } = getTogetherStore;
 	const [loadingNext, setLoadingNext] = useState(false);
 
 	function handleGetNext() {
@@ -26,6 +27,9 @@ export default observer(function GetTogetherDashboard() {
 	);
 	return (
 		<Grid>
+			<Grid.Column width='16'>
+                <GetTogetherSearchForm searchTerm={searchGetTogetherTerm} />
+            </Grid.Column>
 			<GridColumn width={8} style={{ marginRight: '4em' }}>
 				{getTogetherStore.loadingInitial && !loadingNext ? (
 					<>

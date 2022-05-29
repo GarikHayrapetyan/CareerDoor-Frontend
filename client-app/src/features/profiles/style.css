@@ -1,0 +1,26 @@
+.ui.vertical.left.aligned.segment {
+    max-height: 300px;
+    min-height: 50px;
+    overflow-y: scroll; /* Add the ability to scroll */
+}
+
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.ui.vertical.left.aligned.segment::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.ui.vertical.left.aligned.segment {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+
+ .FollowingBtn {
+    position: absolute; 
+    right: 0px; 
+  }
+
+  .item {
+      display: block;
+  }

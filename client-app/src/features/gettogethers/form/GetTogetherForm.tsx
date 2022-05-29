@@ -28,11 +28,11 @@ export default function GetTogetherForm() {
 	);
 
 	const validationSchema = Yup.object({
-		title: Yup.string().required(),
-		description: Yup.string().required(),
-		date: Yup.string().required('date is a required field').nullable(),
-		link: Yup.string().required(),
-		passCode: Yup.string().required()
+		title: Yup.string().required('Title is a required field'),
+		description: Yup.string().required('Description is a required field'),
+		date: Yup.string().required('Date is a required field').nullable(),
+		link: Yup.string().required('Link is a required field'),
+		passCode: Yup.string().required('Passcode is a required field')
 	});
 
 	useEffect(
@@ -79,7 +79,7 @@ export default function GetTogetherForm() {
 						onSubmit={handleSubmit}
 						autoComplete="off"
 					>
-						<MyTextInput name="title" placeholder="Title" />
+						<MyTextInput name="title" placeholder="Title" maxlength='60'/>
 						<MyTextArea
 							rows={3}
 							name="description"
@@ -92,8 +92,8 @@ export default function GetTogetherForm() {
 							timeCaption="Time"
 							dateFormat="MMMM d, yyyy h:mm aa"
 						/>
-						<MyTextInput name="link" placeholder="Link" />
-						<MyTextInput name="passCode" placeholder="Passcode" />
+						<MyTextInput name="link" placeholder="Link" maxlength='160'/>
+						<MyTextInput name="passCode" placeholder="Passcode" maxlength='50' />
 						<Button
 							disabled={isSubmitting || !dirty || !isValid}
 							loading={isSubmitting}
@@ -104,7 +104,7 @@ export default function GetTogetherForm() {
 						/>
 						<Button
 							as={Link}
-							to={`/meetings/${meeting.id}`}
+							to={`/meetings/`}
 							floated="right"
 							type="button"
 							content="Cancel"
