@@ -83,7 +83,7 @@ export default class GetTogetherStore {
 
 	get groupedGetTogethers() {
 		return Object.entries(
-			this.getTogethersByDate.reduce(
+			(this.searchGetTogetherResults|| this.getTogethersByDate).reduce(
 				(getTogethers, getTogether) => {
 					const date = format(getTogether.date!, 'dd MMM yyyy');
 					getTogethers[date] = getTogethers[date]
@@ -283,12 +283,10 @@ export default class GetTogetherStore {
 	}
 
 	private getSearchedGetTogethers() {
-		console.log(this.searchGetTogetherTerm)
 		if(this.searchGetTogetherTerm !== "") {
-			const newSearchedGetTogethers = Array.from(this.getTogetherRegistry.values())
-				.filter(job => {
-				return Object.values(job)
-						.join(' ')
+			const newSearchedGetTogethers = this.getTogethersByDate
+				.filter(getTogether => {
+				return getTogether.title
 						.toLowerCase()
 						.includes(this.searchGetTogetherTerm.toLowerCase());
 				})
