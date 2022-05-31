@@ -24,17 +24,20 @@ export default function GetTogetherListItem({ meeting }: Props) {
 					</Segment>
 				}
 				<Item.Group as={Link} target={'_blank'} to={`/meetings/${meeting.id}`}>
-					<Item>
+					<Item style={{ position: 'relative'}}>
 						{/* <Icon
 							name="save outline"
 							style={{ position: 'absolute', right: '30px' }}
 							size="large"
 						/> */}
 						{meeting.isHost && (
-								<Item.Description
-								style={{ position: 'absolute', right: '20px' }}>
-									<Label basic color='orange'>Hosting</Label>
-								</Item.Description>
+							<Label
+								style={{ position: 'absolute' }}
+								color='orange'
+								ribbon='right'
+							>
+								Host
+							</Label>
 							)}
 						<Item.Image
 							style={{marginBottom: 3}}

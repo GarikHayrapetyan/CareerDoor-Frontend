@@ -27,10 +27,11 @@ export default observer(function GetTogetherDashboard() {
 	);
 	return (
 		<Grid>
-			<Grid.Column width='16'>
-                <GetTogetherSearchForm searchTerm={searchGetTogetherTerm} />
-            </Grid.Column>
-			<GridColumn width={8} style={{ marginRight: '4em' }}>
+			<Grid.Column style={{ position: 'sticky', top: "50px", zIndex: '1000' }} width={16}>
+				<GetTogetherSearchForm searchTerm={searchGetTogetherTerm} />
+			</Grid.Column>
+
+			<GridColumn width={9} style={{ overflowY: 'scroll', height: '75vh', paddingRight: '20px'}}>
 				{getTogetherStore.loadingInitial && !loadingNext ? (
 					<>
 						<GetTogetherListItemPlaceHolder />
@@ -46,9 +47,13 @@ export default observer(function GetTogetherDashboard() {
 						<GetTogetherList />
 					</InfiniteScroll>)}
 			</GridColumn>
-			<GridColumn width={6}>
+
+			<Grid.Column width={1} />
+
+			<Grid.Column style={{ position: 'sticky', top: "182px", zIndex: '1000' }} width={6}>
 				<GetTogetherFilter />
-			</GridColumn>
+			</Grid.Column>
+
 			<Grid.Column width={10}>
 				<Loader active={loadingNext} />
 			</Grid.Column>
