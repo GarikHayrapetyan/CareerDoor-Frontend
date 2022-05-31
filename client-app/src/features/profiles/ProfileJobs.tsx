@@ -14,7 +14,8 @@ const panes = [
 
 
 export default observer(function ProfileJob() {
-    const { profileStore } = useStore();
+    const { profileStore, jobStore } = useStore();
+    const {selectProfileJob,loadJob} = jobStore;
     var image: string | undefined = undefined;
     const {
         loadJobs,
@@ -32,6 +33,11 @@ export default observer(function ProfileJob() {
         loadJobs(profile!.username, panes[data.activeIndex as
             number].pane.key);
     };
+
+    const handleJobEdit = (id:string)=>{
+        loadJob(id);
+    }
+
     return (
         <Tab.Pane loading={loadingJobs}>
             <Grid>
@@ -52,6 +58,7 @@ export default observer(function ProfileJob() {
                                 as={Link}
                                 to={`/jobs/${job.id}`}
                                 key={job.id}
+                                onClick={()=>handleJobEdit(job.id)}
                             >
                                 <Image
                                     src={"/assets/meeting.jpeg"}

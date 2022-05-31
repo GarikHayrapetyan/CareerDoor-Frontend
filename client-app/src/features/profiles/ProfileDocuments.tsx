@@ -1,6 +1,6 @@
 import React, { SyntheticEvent, useState } from 'react';
 import { observer } from 'mobx-react-lite';
-import { Card, Header, Tab, Image, Grid, Button } from 'semantic-ui-react';
+import { Card, Header, Tab, Image, Grid, Button, List } from 'semantic-ui-react';
 import { Profile, Resume } from '../../app/models/userProfile';
 import { useStore } from '../../app/store/store';
 import DocumentUploadWidget from '../../app/common/documentUpload/DocumentUploadWidget';
@@ -27,6 +27,12 @@ export default observer(function ProfileDocuments({ profile }: Props) {
         link.href = downloadUrl;
         link.click();
     }
+    const onOpen = (url: string) => {
+        const link = document.createElement("a");
+        link.setAttribute('target', '_blank');
+        link.href = url;
+        link.click();
+    }
 
     const handleFileName = (fileName: string) => {
         var tmp = fileName;
@@ -42,14 +48,14 @@ export default observer(function ProfileDocuments({ profile }: Props) {
         deleteDocument(resume);
     }
 
-    function handleUploadDocument(file: Blob){
+    function handleUploadDocument(file: Blob) {
         uploadDocument(file).then(() => setAddDocumentMode(false));
     }
 
     return (
         <Tab.Pane>
             <Grid>
-                <Grid.Column width='16'>
+                <Grid.Column width={16}>
                     <Header floated='left' icon="file" content="Documents" />
                     {isCurrentUser && (
                         <Button floated='right' basic
@@ -60,32 +66,44 @@ export default observer(function ProfileDocuments({ profile }: Props) {
                 </Grid.Column>
                 <Grid.Column width={16}>
                     {addDocumentMode ? (
-                        <DocumentUploadWidget uploadDocument={handleUploadDocument} uploading={uploading}/>
+                        <DocumentUploadWidget uploadDocument={handleUploadDocument} uploading={uploading} />
                     ) : (
-                        <Card.Group itemsPerRow={5}>
+                        <List relaxed divided>
                             {profile.resumes?.map(resume => (
-                                <Card key={resume.id}>
-                                    <Image src={'/assets/file.jpg'} onClick={() => { onDownload(resume.url) }} title={resume.fileName} />
-                                    <Header as="h4" content={handleFileName(resume.fileName)} textAlign='center'/>
-                                    {isCurrentUser && (
-                                        <Button   
-                                            attached='bottom'                                        
+                                <List.Item key={resume.id} style={{padding:'10px'}} >
+                                    <Image avatar src={'/assets/file.jpg'} title={resume.fileName} onClick = {()=>{onOpen(resume.url)}}/>
+                                    <List.Content onClick = {()=>{onOpen(resume.url)}}>
+                                        <List.Header as="h4" content={handleFileName(resume.fileName)} textAlign='center'/>
+                                    </List.Content>
+                                    <Button.Group style={{ position: 'absolute', right: '30px'}}>
+                                    <Button                                          
+                                            basic
+                                            color="green"
+                                            icon='download'
+                                            loading={target === (resume.id+"1") && loading}
+                                            onClick={() => onDownload(resume.url)}
+                                            name={(resume.id+"1")}
+                                            floated="right"/>
+                                     {isCurrentUser && (
+                                        <Button                                         
                                             basic
                                             color="red"
                                             icon='trash'
                                             loading={target === resume.id && loading}
                                             onClick={e => handleDeleteDocument(resume, e)}
                                             name={resume.id}
+                                            floated="right"
                                         />
-                                    )}
-                                </Card>
+                                        
+                                    )} 
+                                   
+                                        </Button.Group>
+                                </List.Item>
                             ))}
-                        </Card.Group>
+                        </List>
                     )}
                 </Grid.Column>
             </Grid>
-
-
         </Tab.Pane>
     )
 

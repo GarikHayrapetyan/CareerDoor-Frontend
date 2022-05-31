@@ -15,6 +15,7 @@ import RenewPassword from "../../features/users/RenewPasswordForm";
 import ModalContainer from "../common/modals/ModalContainer";
 import { useStore } from "../store/store";
 import NavBar from "./NavBar";
+import JobDetails from "../../features/jobs/JobDetails";
 
 function App() {
   const location = useLocation();
@@ -43,6 +44,7 @@ function App() {
             <Container style={{ marginTop: "7em" }}>
               <Switch>
                 <Route exact path="/jobs" component={JobDashboard} />
+                <Route exact path="/jobs/:id" component={JobDetails}/>
                 <Route exact path="/meetings" component={GetTogetherDashboard} />
                 <Route exact path="/meetings/:id" component={GetTogetherDetails} />
                 <Route exact key={location.key} path={["/createmeeting", "/manage/:id"]} component={GetTogetherForm} />
@@ -50,7 +52,7 @@ function App() {
                 <Route exact path="/errors" component={TestErrors} />
                 <Route path="/login" component={LoginForm} />
                 <Route path="/resetpassword" component={ResetPasswordForm} />
-                <Route path="/renewpassword" component={RenewPassword} />
+                <Route path="/renewpassword" component={RenewPassword} />                
               </Switch>
             </Container>
           </>

@@ -1,5 +1,6 @@
 import { makeAutoObservable, reaction, runInAction } from 'mobx';
 import agent from '../api/agent';
+import { Pagination, PagingParams } from '../models/pagination';
 import { Photo, Profile, Resume, UserGetTogether, UserJob } from '../models/userProfile';
 import { store } from './store';
 
@@ -15,6 +16,9 @@ export default class ProfileStore {
 	loadingGetTogethers = false;
 	userJobs: UserJob[] = [];
 	loadingJobs = false;
+	pagination: Pagination | null = null;
+	pagingParams = new PagingParams();
+	predicate: string|null = null;
 
 
 	constructor() {
@@ -24,13 +28,18 @@ export default class ProfileStore {
 			() => this.activeTab,
 			activeTab => {
 				if (activeTab === 4 || activeTab === 5) {
-					const predicate = activeTab === 4 ? 'followers' : 'following';
+					const predicate = activeTab === 4 ? 'followers' : 'following';				
+					this.pagingParams = new PagingParams();
 					this.loadFollowings(predicate);				
 				} else {
 					this.followings = [];
 				}
 			}
 		)
+	}
+
+	setPagingParams = (pagingParams: PagingParams) => {
+		this.pagingParams = pagingParams;
 	}
 
 	setActiveTab = (activeTab: any) => {
@@ -159,17 +168,34 @@ export default class ProfileStore {
 		}
 	}
 
-	loadFollowings = async (predicate: string) => {
+	loadFollowings = async (predicate:string) => {
 		this.loadingFollowings = true;
 		try {
-			const followings = await agent.Profiles.listFollowings(this.profile!.username, predicate);
+			const result = await agent.Profiles.listFollowings(this.axiosParams(predicate));
 			runInAction(() => {
-				this.followings = followings;
-				this.loadingFollowings = false;
+				 this.followings = result.data;
+				 this.loadingFollowings = false;
+				 this.setPagination(result.pagination);
+				 console.log(this.followings);
+				
 			})
 		} catch (error) {
 			runInAction(() => this.loadingFollowings = false);
 		}
+	}
+
+	setPagination = (pagination:Pagination) =>{
+		this.pagination = pagination;
+	}
+
+	
+	axiosParams = (predicate:string) => {
+		const params = new URLSearchParams();
+		params.append("pageNumber", this.pagingParams.pageNumber.toString());
+		params.append("pageSize", this.pagingParams.pageSize.toString());
+		params.append("username",store.userStore.user!.username);
+		params.append("predicate",predicate);
+		return params;
 	}
 
 	loadUserGetTogethers = async (username: string, predicate?: string) => {
@@ -222,7 +248,7 @@ export default class ProfileStore {
 		}
 	}
 
-	loadJobs = async (username: string, predicate: string) => {
+	loadJobs = async (username: string, predicate: string) => {		
 		this.loadingJobs = true;
 		try {
 			const jobs = await agent.Profiles.listJobs(username, predicate!);

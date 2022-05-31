@@ -109,6 +109,12 @@ export default class JobStore {
 		this.selectedJob = this.jobRegistry.get(id);
 	};
 
+	selectProfileJob = (id: string) =>{
+		this.selectedJob = this.jobRegistry.get(id);
+		console.log("Profile:"+this.selectedJob);
+		
+	}
+
 	cancelSelectedJob = () => {
 		this.selectedJob = undefined;
 	};

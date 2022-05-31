@@ -92,7 +92,7 @@ export default class GetTogetherStore {
 			)
 		);
 	}
-
+//PaginatedResult {data: Array(2), pagination: {…}}
 	loadingGetTogethers = async () => {
 		this.loadingInitial = true;
 		try {
@@ -112,6 +112,7 @@ export default class GetTogetherStore {
 		this.pagination = pagination;
 	}
 
+	
 	loadGetTogether = async (id: string) => {
 		let getTogether = this.getGetTogether(id);
 		if (getTogether) {
