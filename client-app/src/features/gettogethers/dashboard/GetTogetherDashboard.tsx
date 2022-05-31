@@ -26,12 +26,12 @@ export default observer(function GetTogetherDashboard() {
 		}, [loadingGetTogethers, getTogetherRegistry]
 	);
 	return (
-		<Grid id='gettogetherdashboard'>
+		<Grid>
 			<Grid.Column style={{ position: 'sticky', top: "50px", zIndex: '1000' }} width={16}>
 				<GetTogetherSearchForm searchTerm={searchGetTogetherTerm} />
 			</Grid.Column>
 
-			<GridColumn width={9} style={{ overflowY: 'scroll', height: '75vh' }}>
+			<GridColumn width={9} style={{ overflowY: 'scroll', height: '75vh', paddingRight: '20px'}}>
 				{getTogetherStore.loadingInitial && !loadingNext ? (
 					<>
 						<GetTogetherListItemPlaceHolder />
