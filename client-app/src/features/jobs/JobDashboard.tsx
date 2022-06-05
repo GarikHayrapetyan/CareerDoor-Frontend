@@ -13,7 +13,7 @@ import InfiniteScroll from 'react-infinite-scroller';
 
 function JobDashboard() {
     const { jobStore } = useStore();
-    const { selectedJob, editMode, loadJobs, searchTerm, setPagingParams, pagination } = jobStore;
+    const { selectedJob, editMode, loadJobs, searchKeyWord, setPagingParams, pagination } = jobStore;
     const [loadingNext, setLoadingNext] = React.useState(false);
 
     function handleNext() {
@@ -30,14 +30,13 @@ function JobDashboard() {
     return (
         <Grid
             style={{
-                background: '#dbdbdb',
                 padding: '1px',
                 borderRadius: '4px'
 
             }}
         >
             <Grid.Column style={{ position: 'sticky', top: "50px", zIndex: '1000' }} width='16'>
-                <SearchJob searchTerm={searchTerm} />
+                <SearchJob searchKeyWord={searchKeyWord} />
             </Grid.Column>
             <Grid.Column width='8' style={{ overflowY: 'scroll', height: '540px' }}>
                 <InfiniteScroll

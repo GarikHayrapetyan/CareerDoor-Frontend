@@ -5,6 +5,8 @@ import { Job, JobFormValues } from '../models/job';
 import { Pagination, PagingParams } from '../models/pagination';
 import { Profile } from '../models/userProfile';
 import { store } from './store';
+import React, { SyntheticEvent } from 'react';
+import { DropdownProps } from 'semantic-ui-react';
 
 export default class JobStore {
 	jobRegistry = new Map<string, Job>();
@@ -12,10 +14,11 @@ export default class JobStore {
 	loadingInitial = false;
 	loading = false;
 	editMode = false;
-	searchTerm: string = "";
-	searchResults: Job[] | undefined = undefined;
 	pagination: Pagination | null = null;
 	pagingParams = new PagingParams();
+	searchKeyWord: string = "";
+	filterByTypeKeyWord: any = "";
+	filterByPostedDateKeyWord: any = ""
 
 	constructor() {
 		makeAutoObservable(this);
@@ -39,7 +42,7 @@ export default class JobStore {
 
 	get groupedJobs(){
 		return Object.entries(
-			(this.searchResults || this.jobsByDate).reduce((jobs, job) => {
+			this.jobsByDate.reduce((jobs, job) => {
 				const date = format(job.date!, 'dd MMM yyyy');
 				jobs[date] = jobs[date] ? [...jobs[date], job] : [job];
 				return jobs;
@@ -211,23 +214,15 @@ export default class JobStore {
 
 	}
 
-	handleSearchTerm = (event:  React.ChangeEvent<HTMLInputElement>) => {
-		this.searchTerm = event.target.value;
-		this.searchResults = this.getSearchedJobs();
+	setSearchTerm = (event: React.ChangeEvent<HTMLInputElement>) => {
+		this.searchKeyWord = event.target.value;
 	}
 
-	private getSearchedJobs() {
-		if(this.searchTerm !== "") {
-			const newSearchedJobs = this.jobsByDate
-				.filter(job => {
-				return job.title
-						.toLowerCase()
-						.includes(this.searchTerm.toLowerCase());
-				})
-		return newSearchedJobs;
-		} else {
-			return undefined;
-		}
-		
+	setFilterByJobType = (event: SyntheticEvent<HTMLElement, Event>, data: DropdownProps) => {
+		this.filterByTypeKeyWord = data.value; 
+	}
+
+	setFilterByPostedDate = (event: SyntheticEvent<HTMLElement, Event>, data: DropdownProps) => {
+		this.filterByPostedDateKeyWord = data.value; 
 	}
 }
