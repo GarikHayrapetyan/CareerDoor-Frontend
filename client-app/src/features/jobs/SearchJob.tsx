@@ -4,13 +4,12 @@ import { useStore } from '../../app/store/store';
 import { datePosted, experienceLevel, jobType } from './helpers'
 
 interface Props {
-    searchTerm: string;
+    searchKeyWord: string;
 }
 
-
-function SearchJob({ searchTerm }: Props) {
+function SearchJob({ searchKeyWord }: Props) {
     const { jobStore } = useStore();
-    const { openForm, handleSearchTerm } = jobStore;
+    const { openForm, setSearchTerm, setFilterByJobType, setFilterByPostedDate } = jobStore;
     return (
         <Segment style={{ display: 'flex', width: '100%', flexWrap: 'wrap', gap: '1rem' }}>
 
@@ -20,13 +19,13 @@ function SearchJob({ searchTerm }: Props) {
                 fluid
                 icon="search"
                 placeholder='Search...'
-                value={searchTerm}
-                onChange={handleSearchTerm}
+                value={searchKeyWord}
+                onChange={setSearchTerm}
             />
 
-            <Dropdown clearable selection placeholder="Date Posted" options={datePosted} />
+            <Dropdown onChange={setFilterByPostedDate} clearable selection placeholder="Date Posted" options={datePosted} />
             <Dropdown clearable selection placeholder="Experience" options={experienceLevel} />
-            <Dropdown style={{ marginRight: '6rem' }} clearable selection placeholder="Job Type" options={jobType} />
+            <Dropdown onChange={setFilterByJobType} style={{ marginRight: '6rem' }} clearable selection placeholder="Job Type" options={jobType} />
             <div>
                 <Button
                     onClick={() => openForm("")}

@@ -21,8 +21,8 @@ const JobListItem = ({ job }: Props) => {
             </List.Content>
             <List.Content floated='right'>
                 {job.isEmployeer && (
-                    <Label basic color='orange' >
-                        You created
+                    <Label basic color='orange'>
+                        Host
                     </Label>
                 )}
                 {job.isGoing && !job.isEmployeer && (

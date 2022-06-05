@@ -9,7 +9,7 @@ export interface Job {
 	company: string;
 	industry: string;
 	location: string;
-	date: Date | null;
+	date: Date;
 	employeeCount: string;
 	employeerUsername: string;
 	isCanceled: boolean;
