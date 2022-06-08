@@ -47,7 +47,7 @@ function JobForm() {
         industry: Yup.string().required('Industry is a required field').max(30, "Industry cannot exceed 30 words"),
         location: Yup.string().required('Location is a required field').max(30, "Location cannot exceed 30 words"),
         date: Yup.string().required("Date is required!").nullable(),
-        employeeCount: Yup.string().required('Employee Count is a required field').max(30, "Employee cannot exceed 30 words"),
+        employeeCount: Yup.string().required('Employee Count is a required field').max(30, "Employee cannot exceed 30 words").matches(/^[1-9]\d*$/, "Must be only positive numbers"),
     })
 
     function handleDelete(e: SyntheticEvent<HTMLButtonElement>, id: string) {

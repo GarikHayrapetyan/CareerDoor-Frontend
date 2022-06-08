@@ -23,17 +23,17 @@ export default observer(function NavBar() {
 							fontSize: '22px'
 						}}
 					/>
-					<Menu.Item exact as={NavLink} to='/jobs' name="Jobs" />
 					<Menu.Item exact as={NavLink} to='/meetings' name="Meetings" />
+					<Menu.Item exact as={NavLink} to='/jobs' name="Jobs" />
 					<Menu.Item exact as={NavLink} to='/errors' name='Errors' />
-					<Menu.Item>
+					{/* <Menu.Item>
 						<Button
 							as={NavLink}
 							to="/createmeeting"
 							positive
 							content="Create Meeting"
 						/>
-					</Menu.Item>
+					</Menu.Item> */}
 				</div>
 				<Menu.Item>
 					<Image src={user?.image || '../assets/user.png'} avatar spaced='right' />

@@ -14,7 +14,7 @@ function JobDetails() {
     if (!job) return <LoadingComponent content='Job details loading!' />
 
     return (
-        <Card fluid clearing>
+        <Card fluid clearing style={{ minWidth: '200px' }}>
             <Card.Content>
                 <List>
                     <List.Item>
@@ -35,7 +35,8 @@ function JobDetails() {
                     size='mini'
                     style={{
                         display: 'flex',
-                        justifyContent: 'space-between',
+                        gap: '1rem',
+                        flexWrap: 'wrap',
                         textAlign: 'center'
                     }}
                 >

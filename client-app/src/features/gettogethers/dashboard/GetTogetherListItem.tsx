@@ -14,20 +14,31 @@ export default function GetTogetherListItem({ meeting }: Props) {
 		<Segment.Group size="tiny">
 			<Segment>
 				{meeting.isCancelled && 
-					<Label 
+					<Segment style={{marginBottom: 20}}>
+						<Label 
 						attached='top' 
 						color='red' 
 						content="Cancelled" 
 						style={{textAlign: 'center'}}
-					/>
+						/>
+					</Segment>
 				}
-				<Item.Group as={Link} to={`/meetings/${meeting.id}`}>
-					<Item>
-						<Icon
+				<Item.Group as={Link} target={'_blank'} to={`/meetings/${meeting.id}`}>
+					<Item style={{ position: 'relative'}}>
+						{/* <Icon
 							name="save outline"
 							style={{ position: 'absolute', right: '30px' }}
 							size="large"
-						/>
+						/> */}
+						{meeting.isHost && (
+							<Label
+								style={{ position: 'absolute' }}
+								color='orange'
+								ribbon='right'
+							>
+								Host
+							</Label>
+							)}
 						<Item.Image
 							style={{marginBottom: 3}}
 							src={meeting.host?.image || "/assets/user.png"}
@@ -35,16 +46,11 @@ export default function GetTogetherListItem({ meeting }: Props) {
 							size="tiny"
 						/>
 						<Item.Content>
-							<Item.Description content="User Name" />
-							<Item.Header content={meeting.title} />
+							{/* <Item.Description content="User Name" /> */}
+							<Item.Header content={meeting.title} style={{marginTop: '10px', width: '75%'}} />
 							<Item.Description>
 								Hosted by <Link to={`/profiles/${meeting.hostUsername}`}>{meeting.host?.displayName}</Link>
 							</Item.Description>
-							{meeting.isHost && (
-								<Item.Description>
-									<Label basic color='orange'>You are hosting this meeting</Label>
-								</Item.Description>
-							)}
 							{meeting.isGoing && !meeting.isHost && (
 								<Item.Description>
 									<Label basic color='green'>You are going to this meeting</Label>

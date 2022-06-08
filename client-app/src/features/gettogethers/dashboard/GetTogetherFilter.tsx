@@ -27,11 +27,13 @@ export default observer(function GetTogetherFilter() {
                 />
             </Menu>
             <Header />
-            <Calendar
-                className='cal'
-                onChange={(date) => setPredicate('startDate', date as Date)}
-                value={predicate.get('startDate') || new Date()}
-            />
+            <Menu vertical size='large' style={{ width: '100%', marginTop: 30 }}>
+                <Calendar
+                    className='cal'
+                    onChange={(date) => setPredicate('startDate', date as Date)}
+                    value={predicate.get('startDate') || new Date()}
+                    minDate={new Date()}
+                /></Menu>
         </Fragment>
     )
 })
