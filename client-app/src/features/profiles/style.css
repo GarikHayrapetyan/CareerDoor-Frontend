@@ -1,5 +1,5 @@
 .ui.vertical.left.aligned.segment {
-    max-height: 300px;
+    max-height: 100px;
     min-height: 50px;
     overflow-y: scroll; /* Add the ability to scroll */
 }

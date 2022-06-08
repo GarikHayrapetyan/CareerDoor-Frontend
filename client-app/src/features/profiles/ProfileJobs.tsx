@@ -1,10 +1,12 @@
-import React, { SyntheticEvent, useEffect } from 'react';
+import React, { SyntheticEvent, useEffect, useState } from 'react';
 import { observer } from 'mobx-react-lite';
-import { Tab, Grid, Header, Card, Image, TabProps } from 'semantic-ui-react';
+import { Tab, Grid, Header, Card, Image, TabProps, Segment, Button } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
 import { UserJob } from '../../app/models/userProfile';
 import { useStore } from '../../app/store/store';
+import InfiniteScroll from 'react-infinite-scroller';
+import { PagingParams } from '../../app/models/pagination';
 
 
 const panes = [
@@ -15,31 +17,46 @@ const panes = [
 
 export default observer(function ProfileJob() {
     const { profileStore, jobStore } = useStore();
-    const {selectProfileJob,loadJob} = jobStore;
+    const { selectProfileJob, loadJob } = jobStore;
+    const [loadingNext, setLoadingNext] = useState(false);
+    const [tab, setTab] = useState('');
+
     var image: string | undefined = undefined;
     const {
-        loadJobs,
+        resetJobs,
+        loadUserJobs,
+        generalJobs,
         profile,
         loadingJobs,
-        userJobs
+        pagination,
+        setPagingParams
     } = profileStore;
 
     useEffect(() => {
+        resetJobs();
         image = profile?.image;
-        loadJobs(profile!.username, panes[0].pane.key);
-    }, [loadJobs, profile]);
+        loadUserJobs(panes[0].pane.key);
+    }, [loadUserJobs, profile]);
 
     const handleTabChange = (e: SyntheticEvent, data: TabProps) => {
-        loadJobs(profile!.username, panes[data.activeIndex as
-            number].pane.key);
+        resetJobs();
+        var tab = panes[data.activeIndex as number].pane.key;
+        setTab(tab);
+        loadUserJobs(tab);
     };
 
-    const handleJobEdit = (id:string)=>{
+    function handleGetNext() {
+        setLoadingNext(true);
+        setPagingParams(new PagingParams(pagination!.currentPage + 1));
+        loadUserJobs(tab).then(() => setLoadingNext(false));
+    }
+
+    const handleJobEdit = (id: string) => {
         loadJob(id);
     }
 
     return (
-        <Tab.Pane loading={loadingJobs}>
+        <Tab.Pane>
             <Grid>
                 <Grid.Column width={16}>
                     <Header floated='left' icon='calendar'
@@ -52,32 +69,46 @@ export default observer(function ProfileJob() {
                         onTabChange={(e, data) => handleTabChange(e, data)}
                     />
                     <br />
-                    <Card.Group itemsPerRow={4}>
-                        {userJobs.map((job: UserJob) => (
-                            <Card
-                                as={Link}
-                                to={`/jobs/${job.id}`}
-                                key={job.id}
-                                onClick={()=>handleJobEdit(job.id)}
-                            >
-                                <Image
-                                    src={"/assets/meeting.jpeg"}
-                                    style={{
-                                        minHeight: 100, objectFit:
-                                            'cover'
-                                    }}
-                                />
-                                <Card.Content>
-                                    <Card.Header
-                                        textAlign='center'>{job.title.substring(0, 17)}</Card.Header>
-                                    <Card.Meta textAlign='center'>
-                                        <div>{format(new Date(job.date), 'do LLL')}</div>
-                                        <div>{format(new Date(job.date), 'h:mm a')}</div>
-                                    </Card.Meta>
-                                </Card.Content>
-                            </Card>
-                        ))}
-                    </Card.Group>
+                    <Segment
+                        textAlign='center'
+                        style={{ overflowY: "scroll", height: '400px' }} loading={loadingJobs && !loadingNext}>
+
+                        <InfiniteScroll
+                            pageStart={0}
+                            loadMore={handleGetNext}
+                            hasMore={!loadingNext && !!pagination && pagination.currentPage < pagination.totalPages}
+                            initialLoad={false}
+                            useWindow={false}
+                        >
+                            <Card.Group itemsPerRow={5}>
+                                {generalJobs.map((job: UserJob) => (
+                                    <Card
+                                        as={Link}
+                                        to={`/jobs/${job.id}`}
+                                        key={job.id}
+                                        onClick={() => handleJobEdit(job.id)}
+                                    >
+                                        <Image
+                                            src={"/assets/meeting.jpeg"}
+                                            style={{
+                                                minHeight: 100, objectFit:
+                                                    'cover'
+                                            }}
+                                        />
+                                        <Card.Content>
+                                            <Card.Header
+                                                textAlign='center'>{job.title.substring(0, 17)}</Card.Header>
+                                            <Card.Meta textAlign='center'>
+                                                <div>{format(new Date(job.date), 'do LLL')}</div>
+                                                <div>{format(new Date(job.date), 'h:mm a')}</div>
+                                            </Card.Meta>
+                                        </Card.Content>
+                                    </Card>
+                                ))}
+                            </Card.Group>
+                        </InfiniteScroll>
+                        <Button loading={loadingNext} style={{ backgroundColor: 'transparent', border: 'none' }} />
+                    </Segment>
                 </Grid.Column>
             </Grid>
         </Tab.Pane>

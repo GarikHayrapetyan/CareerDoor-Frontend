@@ -35,7 +35,6 @@ axios.interceptors.response.use(
 				JSON.parse(pagination)
 			);
 
-			debugger
 			return response as AxiosResponse<PaginatedResult<any>>;
 		}
 		return response;
@@ -143,16 +142,13 @@ const Profiles = {
 		requests.post(`/follow/${username}`, {}),
 	listFollowings: (params: URLSearchParams) =>
 	 	axios.get<PaginatedResult<Profile[]>>(`/follow/${params.get('username')}`,{params})
-		 .then(responseBody),
-			 
-	listActivities: (username: string, predicate: string) =>
-		requests.get<UserGetTogether[]>(
-			`/profiles/${username}/gettogethers?predicate=${predicate}`
-		),
-	listJobs: (username: string, predicate: string) =>
-		requests.get<UserJob[]>(
-			`/profiles/${username}/jobs?predicate=${predicate}`
-		)
+		 .then(responseBody),			 
+	listActivities: (params: URLSearchParams) =>
+		axios.get<PaginatedResult<UserGetTogether[]>>('/profiles/usermeetings?',{params})
+		.then(responseBody),
+	listJobs: (params: URLSearchParams) =>
+		axios.get<PaginatedResult<UserJob[]>>('/profiles/userjobs?',{params})
+		.then(responseBody),
 };
 const Jobs = {
 	list: (params: URLSearchParams) =>

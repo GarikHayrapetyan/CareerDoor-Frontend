@@ -92,7 +92,7 @@ export default class GetTogetherStore {
 			)
 		);
 	}
-//PaginatedResult {data: Array(2), pagination: {…}}
+
 	loadingGetTogethers = async () => {
 		this.loadingInitial = true;
 		try {

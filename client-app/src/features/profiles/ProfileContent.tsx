@@ -10,6 +10,7 @@ import ProfileGetTogethers from './ProfileGetTogethers';
 import ProfilePhotos from './ProfilePhotos';
 import ProfileJobs from './ProfileJobs';
 import ModalExampleContentImage from './ProfileFollowingsModal';
+import ProfileFollowingsModal from './ProfileFollowingsModal';
 interface Props {
 	profile: Profile;
 }
@@ -23,25 +24,17 @@ export default observer(function ProfileContent({ profile }: Props) {
 		},
 		{
 			menuItem: 'Documents', render: () => <ProfileDocuments profile={profile} />
-		},
-		{
-			menuItem: 'Photos', render: () => <ProfilePhotos profile={profile} />
-		},
+		},	
 		{
 			menuItem: 'Events', render: () => <ProfileGetTogethers />
-		},
-		{
-			menuItem: 'Followers', render: () => <ProfileFollowings />
-		},
-		{
-			menuItem: 'Following', render: () => <ProfileFollowings />
 		},
 		{
 			menuItem: 'Job', render: () => <ProfileJobs />
 		},
 		{
-			menuItem: 'PopUp', render: () => <ModalExampleContentImage/>
+			menuItem: 'Photos', render: () => <ProfilePhotos profile={profile} />
 		},
+		
 	];
 	return (
 		<Tab
