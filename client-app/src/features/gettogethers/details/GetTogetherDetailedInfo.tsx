@@ -15,10 +15,19 @@ function GetTogetherDetailedInfo({ meeting }: Props) {
 			<Segment attached="top">
 				<Grid>
 					<Grid.Column width={1}>
-						<Icon size="large" color="teal" name="info" />
+						<Icon size="large" color="teal" name="info" style={{marginTop: '10px'}}/>
 					</Grid.Column>
 					<Grid.Column width={15}>
-						<p>{meeting?.description}</p>
+						<p
+							style={{
+								wordWrap: "break-word",
+								overflowY: 'scroll',
+								height: '20vh',
+								resize: 'none', 
+								marginTop: '5px', 
+								marginBottom: '5px'
+							}}
+						>{meeting?.description}</p>
 					</Grid.Column>
 				</Grid>
 			</Segment>

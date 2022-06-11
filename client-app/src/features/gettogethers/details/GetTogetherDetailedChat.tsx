@@ -81,7 +81,7 @@ export default observer(function GetTogetherDetailedChat({ getTogetherId }: Prop
                                 <Comment.Metadata>
                                     <div>{formatDistanceToNow(comment.createdAt)} ago</div>
                                 </Comment.Metadata>
-                                <Comment.Text style={{ whiteSpace: 'pre-wrap' }}>{comment.body}</Comment.Text>
+                                <Comment.Text style={{ whiteSpace: 'pre-wrap', marginRight: '1px'}}>{comment.body}</Comment.Text>
                             </Comment.Content>
                         </Comment>
                     ))}
