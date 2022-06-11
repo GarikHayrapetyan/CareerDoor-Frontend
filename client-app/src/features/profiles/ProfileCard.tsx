@@ -19,7 +19,7 @@ export default observer(function ProfileCard({ profile }: Props) {
 		<Card as={Link} to={`/profiles/${profile.username}`}>
 			<Image src={profile.image || '/assets/user.png'} />
 			<Card.Content>
-				<Card.Header>{profile.displayName}</Card.Header>
+				<Card.Header style={{ width: '100%', flexWrap: 'wrap', wordWrap: 'break-word' }}>{profile.displayName}</Card.Header>
 				<Card.Description>{truncate(profile.bio)}</Card.Description>
 			</Card.Content>
 			<Card.Content extra>

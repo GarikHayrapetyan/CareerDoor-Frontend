@@ -75,10 +75,11 @@ export default observer(function GetTogetherDetailedChat({ getTogetherId }: Prop
                         <Comment key={comment.id}>
                             <Comment.Avatar src={comment.image || '/assets/user.png'} />
                             <Comment.Content>
-                                <Comment.Author as={Link} to={`/profile/${comment.username}`}>
+                                <Comment.Author as={Link} to={`/profile/${comment.username}`} style={{ marginTop: '2px', width: '75%', flexWrap: 'wrap', wordWrap: 'break-word' }}>
                                     {comment.displayName}
                                 </Comment.Author>
-                                <Comment.Metadata>
+                                <br></br>
+                                <Comment.Metadata style={{ marginLeft: '0', paddingLeft: '0'}}>
                                     <div>{formatDistanceToNow(comment.createdAt)} ago</div>
                                 </Comment.Metadata>
                                 <Comment.Text style={{ whiteSpace: 'pre-wrap', marginRight: '1px'}}>{comment.body}</Comment.Text>
