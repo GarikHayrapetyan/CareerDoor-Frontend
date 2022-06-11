@@ -1,5 +1,8 @@
 body {
 	background-color: rgb(234, 234, 234) !important;
+	margin: 0;
+	height: 100%;
+	overflow: hidden
 }
 
 .ui.inverted.top.fixed.menu {
