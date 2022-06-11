@@ -49,7 +49,7 @@ function GetTogetherDetailedHeader({ meeting }: Props) {
 								<Header
 									size="huge"
 									content={meeting?.title}
-									style={{ marginTop: '50px', color: 'white', width: '70%', flexWrap: 'wrap', wordWrap: 'break-word' }}
+									style={{ marginTop: '50px', color: 'white', width: '90%', flexWrap: 'wrap', wordWrap: 'break-word' }}
 								/>
 								<p>{format(meeting.date!, 'dd MMM yyyy')}</p>
 								<p>

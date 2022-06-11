@@ -85,7 +85,15 @@ export default function GetTogetherForm() {
 							name="description"
 							placeholder="Description"
 						/>
+						{/* <MyDateInput
+							placeholderText="Date"
+							name="date"
+							showTimeSelect
+							timeCaption="Time"
+							dateFormat="MMMM d, yyyy h:mm aa"
+						/> */}
 						<MyDateInput
+							minDate={new Date()}
 							placeholderText="Date"
 							name="date"
 							showTimeSelect
