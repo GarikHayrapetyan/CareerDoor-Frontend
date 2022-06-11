@@ -47,6 +47,10 @@ function JobList() {
     const [jobs, setJobs] = useState(jobsByDate);
 
     useEffect(() => {
+        setJobs(jobsByDate);
+    }, [jobsByDate])
+
+    useEffect(() => {
         const postedDate = getJobPostedDate(filterByPostedDateKeyWord);
         console.log(postedDate);
         const filterByType = getJobType(filterByTypeKeyWord);
@@ -86,6 +90,7 @@ function JobList() {
             setJobs(jobsByDate);
         }
     }, [searchKeyWord, filterByTypeKeyWord, filterByPostedDateKeyWord])
+    console.log(jobs);
     return (
         <Segment>
             <List verticalAlign='middle' >
