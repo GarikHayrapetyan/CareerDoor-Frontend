@@ -52,7 +52,6 @@ function JobList() {
 
     useEffect(() => {
         const postedDate = getJobPostedDate(filterByPostedDateKeyWord);
-        console.log(postedDate);
         const filterByType = getJobType(filterByTypeKeyWord);
         let newFilteredJobs: Job[] = [];
         if (searchKeyWord.trim() !== "") {
@@ -90,7 +89,6 @@ function JobList() {
             setJobs(jobsByDate);
         }
     }, [searchKeyWord, filterByTypeKeyWord, filterByPostedDateKeyWord])
-    console.log(jobs);
     return (
         <Segment>
             <List verticalAlign='middle' >

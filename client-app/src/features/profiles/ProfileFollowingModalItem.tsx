@@ -1,25 +1,46 @@
+import React, { SyntheticEvent, useRef } from "react";
+import { useStore } from '../../app/store/store';
 import { observer } from "mobx-react-lite";
-import React from "react";
 import { Link } from "react-router-dom";
-import { List,Image, Label } from "semantic-ui-react";
+import { List, Image, Button } from "semantic-ui-react";
 import { Profile } from "../../app/models/userProfile";
-import { useStore } from "../../app/store/store";
-import FollowButtonModal from "./FollowButtonModal";
 import "./style.css"
 
 interface Props {
     profile: Profile
+    userId?: string
+    handleClick: (username: string) => void
 }
 
+export default observer(function ProfileFollowingsModalItme({ profile, userId, handleClick }: Props) {
+    const { profileStore, userStore, modalStore } = useStore();
+    const { updateFollowing, loading } = profileStore;
+    const buttonRef = useRef<any>({});
 
-export default observer(function ProfileFollowingsModalItme({ profile }: Props) {
-    
+    const bgColor = profile.following ? "white" : 'teal';
+    const textColor = profile.following ? "black" : "white";
+
+    function handleFollow(e: SyntheticEvent<HTMLButtonElement>, username: string) {
+        e.preventDefault();
+        handleClick(buttonRef.current.ref.current.name)
+        modalStore.modal.open = true;
+        profile.following ? updateFollowing(username, false) : updateFollowing(username, true);
+    }
+
     return (
-        <List.Item key={profile.username} as={Link} to={`/profiles/${profile.username}`}>            
-            <div className="FollowingBtn">
-                <FollowButtonModal profile={profile}/>
-            </div>
-    
+        <List.Item key={profile.username} as={Link} to={`/profiles/${profile.username}`}>
+            {userStore.user?.username === profile.username ? null :
+                <div className="FollowingBtn">
+                    <Button
+                        ref={buttonRef}
+                        fluid
+                        name={profile.username}
+                        content={profile.following ? 'Unfollow' : 'Follow'}
+                        loading={loading && userId === profile.username}
+                        onClick={(e) => handleFollow(e, profile.username)}
+                        style={{ backgroundColor: bgColor, color: textColor }}
+                    />
+                </div>}
             <Image avatar src={profile.image || '/assets/user.png'} />
             <List.Content >
                 <List.Header as='a'>{profile.displayName}</List.Header>
