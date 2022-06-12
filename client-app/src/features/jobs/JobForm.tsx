@@ -104,7 +104,7 @@ function JobForm() {
                         <MyTextInput placeholder="Location" name='location' maxlength="30" />
                         <MyDateInput
                             minDate={new Date()}
-                            placeholderText="Date"
+                            placeholderText="Expiry Date"
                             name="date"
                             showTimeSelect
                             timeCaption="Time"

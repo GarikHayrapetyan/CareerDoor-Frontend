@@ -137,7 +137,7 @@ export default class JobStore {
 				this.setJob(newJob);
 				runInAction(() => {
 					this.selectedJob = newJob;
-					//this.jobRegistry.set(newJob.id, newJob);
+					this.jobRegistry.set(newJob.id, newJob);
 					this.closeForm();
 					this.loading = false;
 				})
