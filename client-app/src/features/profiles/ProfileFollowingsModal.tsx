@@ -1,12 +1,9 @@
 import React from 'react'
 import { observer } from 'mobx-react-lite';
-import { List, Segment } from 'semantic-ui-react'
+import { Divider, List, Segment } from 'semantic-ui-react'
 import { useStore } from '../../app/store/store';
 import ProfileFollowingModalItem from './ProfileFollowingModalItem';
 import './style.css'
-
-
-
 
 export default observer(function ProfileFollowingsModal() {
   const { profileStore } = useStore();
@@ -22,10 +19,15 @@ export default observer(function ProfileFollowingsModal() {
       textAlign='left'
       vertical
       loading={loadingFollowings}>
-      <List relaxed divided>
-        {followings.map(profile => (
-          <ProfileFollowingModalItem userId={userId} handleClick={handleClick} profile={profile} key={profile.username} />
-        ))}
+      <List relaxed >
+        {followings.map((profile, index) => {
+          return (
+            <React.Fragment>
+              <ProfileFollowingModalItem userId={userId} handleClick={handleClick} profile={profile} key={profile.username} />
+              {index !== followings.length - 1 ? <Divider /> : null}
+            </React.Fragment>
+          )
+        })}
       </List>
     </Segment>
   )

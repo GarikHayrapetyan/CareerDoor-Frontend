@@ -6,15 +6,8 @@ import { format } from 'date-fns';
 import { UserJob } from '../../app/models/userProfile';
 import { useStore } from '../../app/store/store';
 
-
-const panes = [
-    { menuItem: 'Applied', pane: { key: 'applied' } },
-    { menuItem: 'Employer', pane: { key: 'employer' } }
-];
-
-
 export default observer(function ProfileJob() {
-    const { profileStore } = useStore();
+    const { profileStore, userStore } = useStore();
     var image: string | undefined = undefined;
     const {
         loadJobs,
@@ -22,6 +15,11 @@ export default observer(function ProfileJob() {
         loadingJobs,
         userJobs
     } = profileStore;
+    
+    const panes = userStore.user?.username === profile?.username ? [
+        { menuItem: 'Employer', pane: { key: 'employer' } },
+        { menuItem: 'Applied', pane: { key: 'applied' } }
+    ] : [{ menuItem: 'Employer', pane: { key: 'employer' } }]
 
     useEffect(() => {
         image = profile?.image;
