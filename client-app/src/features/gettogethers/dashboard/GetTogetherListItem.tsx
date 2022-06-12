@@ -24,7 +24,7 @@ export default function GetTogetherListItem({ meeting }: Props) {
 					</Segment>
 				}
 				<Item.Group as={Link} target={'_blank'} to={`/meetings/${meeting.id}`}>
-					<Item style={{ position: 'relative'}}>
+					<Item style={{ position: 'relative', right: '2px' }}>
 						{/* <Icon
 							name="save outline"
 							style={{ position: 'absolute', right: '30px' }}

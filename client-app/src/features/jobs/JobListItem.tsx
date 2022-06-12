@@ -19,15 +19,23 @@ const JobListItem = ({ job }: Props) => {
                     {job.title}
                 </List.Header>
             </List.Content>
-            <List.Content floated='right'>
+            <List.Content floated='right' style={{ position: 'relative', right: '-10px', top: '-15px' }}>
                 {job.isEmployeer && (
-                    <Label basic color='orange'>
-                        Host
+                    <Label
+                        style={{ position: 'absolute' }}
+                        color='orange'
+                        ribbon='right'
+                    >
+                        You posted
                     </Label>
                 )}
                 {job.isGoing && !job.isEmployeer && (
-                    <Label basic color='green'>
-                        Applied
+                    <Label
+                        style={{ position: 'absolute' }}
+                        color='green'
+                        ribbon='right'
+                    >
+                        Already applied
                     </Label>
                 )}
             </List.Content>
