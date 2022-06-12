@@ -28,10 +28,11 @@ export default observer(function ProfileFollowingsModalItme({ profile, userId, h
     }
 
     return (
-        <List.Item key={profile.username} as={Link} to={`/profiles/${profile.username}`}>
+        <React.Fragment >
             {userStore.user?.username === profile.username ? null :
                 <div className="FollowingBtn">
                     <Button
+                        disabled={loading && userId === profile.username}
                         ref={buttonRef}
                         fluid
                         name={profile.username}
@@ -41,11 +42,13 @@ export default observer(function ProfileFollowingsModalItme({ profile, userId, h
                         style={{ backgroundColor: bgColor, color: textColor }}
                     />
                 </div>}
-            <Image avatar src={profile.image || '/assets/user.png'} />
-            <List.Content >
-                <List.Header as='a'>{profile.displayName}</List.Header>
-                <List.Description as='a'>{profile.city}, {profile.country}</List.Description>
-            </List.Content>
-        </List.Item>
+            <List.Item as={Link} to={`/profiles/${profile.username}`}>
+                <Image avatar src={profile.image || '/assets/user.png'} />
+                <List.Content >
+                    <List.Header as='a'>{profile.displayName}</List.Header>
+                    <List.Description as='a'>{profile.city}, {profile.country}</List.Description>
+                </List.Content>
+            </List.Item>
+        </React.Fragment>
     )
 })
