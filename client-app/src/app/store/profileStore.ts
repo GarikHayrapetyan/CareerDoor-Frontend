@@ -27,6 +27,12 @@ export default class ProfileStore {
 	pagingParams = new PagingParams();
 	predicate: string = '';
 	once:boolean = false;
+	photoCount:number|undefined = 0;
+	isMoreThanMaxPhoto = false;
+	documentCount:number|undefined = 0;
+	isMoreThanMaxDoc = false;
+	maxPhoto = 2;
+	maxDoc = 10;
 
 
 	constructor() {
@@ -71,6 +77,10 @@ export default class ProfileStore {
 			runInAction(() => {
 				this.profile = profile;
 				this.loadingProfile = false;
+				this.photoCount=profile.photos?.length;
+				this.isMoreThanMaxPhoto=this.photoCount!>=this.maxPhoto;
+				this.documentCount=profile.resumes?.length;
+				this.isMoreThanMaxDoc=this.documentCount!>=this.maxDoc;
 			});
 		} catch (error) {
 			console.log(error);
@@ -81,6 +91,7 @@ export default class ProfileStore {
 	uploadPhoto = async (file: Blob) => {
 		this.uploading = true;
 		try {
+			if (this.photoCount!>=this.maxPhoto) return;
 			const response = await agent.Profiles.uploadPhoto(file);
 			const photo = response.data;
 			runInAction(() => {
@@ -91,6 +102,8 @@ export default class ProfileStore {
 						this.profile.image = photo.url
 					}
 				}
+				this.photoCount!++;				
+				this.isMoreThanMaxPhoto=this.photoCount!>=this.maxPhoto;		
 				this.uploading = false;
 			})
 		} catch (error) {
@@ -127,6 +140,8 @@ export default class ProfileStore {
 				if (this.profile) {
 					this.profile.photos = this.profile.photos?.filter(p => p.id !== photo.id);
 					this.loading = false;
+					this.photoCount!--;				
+					this.isMoreThanMaxPhoto=this.photoCount!>=this.maxPhoto;	
 				}
 			})
 		} catch (error) {
@@ -280,10 +295,12 @@ export default class ProfileStore {
 		this.uploading = true;
 		try {
 			const response = await agent.Profiles.uploadDocument(file);
-			const photo = response.data;
+			const document = response.data;
 			runInAction(() => {
 				if (this.profile) {
-					this.profile.resumes?.push(photo);
+					this.profile.resumes?.push(document);
+					this.documentCount!++;
+					this.isMoreThanMaxDoc=this.documentCount!>=this.maxDoc;
 				}
 				this.uploading = false;
 			})
@@ -301,6 +318,8 @@ export default class ProfileStore {
 				if (this.profile) {
 					this.profile.resumes = this.profile.resumes?.filter(p => p.id !== resume.id);
 					this.loading = false;
+					this.documentCount!--;
+					this.isMoreThanMaxDoc=this.documentCount!>=this.maxDoc;
 				}
 			})
 		} catch (error) {
