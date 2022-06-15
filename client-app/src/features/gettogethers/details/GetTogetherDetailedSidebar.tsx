@@ -35,7 +35,7 @@ function GetTogetherDetailedSidebar({ getTogether: { attendees, host } }: Props)
                                     Host
                                 </Label>
                             }
-                            <Image size='tiny' src={attendee.image || '/assets/user.png'} />
+                            <Image size='tiny' circular src={attendee.image || '/assets/user.png'} />
                             <Item.Content verticalAlign='middle' style={{ width: '60%', flexWrap: 'wrap', wordWrap: 'break-word' }}>
                                 <Item.Header as='h3' style={{marginLeft: '5px'}}>
                                     <Link to={`/profiles/${attendee.username}`}>{attendee.displayName}</Link >

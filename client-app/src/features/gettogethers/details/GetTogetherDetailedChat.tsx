@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Field, FieldProps, Formik } from 'formik';
 import { observer } from 'mobx-react-lite';
-import { Segment, Header, Comment, Form, Button, Loader } from 'semantic-ui-react';
+import { Segment, Header, Comment, Form, Button, Loader, Item } from 'semantic-ui-react';
 import { useStore } from '../../../app/store/store';
 import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
@@ -73,8 +73,14 @@ export default observer(function GetTogetherDetailedChat({ getTogetherId }: Prop
                 <Comment.Group style={{ overflowY: 'scroll', height: '44vh', paddingRight: '10px' }}>
                     {commentStore.comments.map(comment => (
                         <Comment key={comment.id}>
-                            <Comment.Avatar src={comment.image || '/assets/user.png'} />
-                            <Comment.Content>
+                            {/* <Comment.Avatar src={comment.image || '/assets/user.png'} /> */}
+                            <Item.Image 
+                                style={{ float: 'left', marginRight: '10px', width: '40px', height: '40px', }}
+                                src={comment.image || "/assets/user.png"}
+                                circular
+                                size='tiny'
+                            />
+                            <Comment.Content style={{ width: '82%', display: 'inline-block', flexWrap: 'wrap', wordWrap: 'break-word' }}>
                                 <Comment.Author as={Link} to={`/profile/${comment.username}`} style={{ marginTop: '2px', width: '75%', flexWrap: 'wrap', wordWrap: 'break-word' }}>
                                     {comment.displayName}
                                 </Comment.Author>
