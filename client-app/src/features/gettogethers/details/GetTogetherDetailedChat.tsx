@@ -70,7 +70,7 @@ export default observer(function GetTogetherDetailedChat({ getTogetherId }: Prop
                         </Form>
                     )}
                 </Formik>
-                <Comment.Group style={{ overflowY: 'scroll', height: '44vh', paddingRight: '10px' }}>
+                <Comment.Group style={{ overflowY: 'scroll', height: '32vh', paddingRight: '10px' }}>
                     {commentStore.comments.map(comment => (
                         <Comment key={comment.id}>
                             {/* <Comment.Avatar src={comment.image || '/assets/user.png'} /> */}
