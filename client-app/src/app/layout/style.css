@@ -54,3 +54,15 @@ body {
 }
 
 /*end home page styles*/
+
+.ui.fluid.image,
+.ui.fluid.image img,
+.ui.fluid.image svg,
+.ui.fluid.images,
+.ui.fluid.images img,
+.ui.fluid.images svg {
+	display: block;
+	
+	width: 100% !important;
+	height: 37vh !important;
+}
