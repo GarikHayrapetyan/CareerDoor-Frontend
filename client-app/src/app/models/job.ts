@@ -4,12 +4,14 @@ export interface Job {
 	id: string;
 	title: string;
 	type: string;
+	experience: string;
 	description: string;
 	functionality: string;
 	company: string;
 	industry: string;
 	location: string;
-	date: Date;
+	creation: Date;
+	expiration: Date;
 	employeeCount: string;
 	employeerUsername: string;
 	isCanceled: boolean;
@@ -29,12 +31,13 @@ export class JobFormValues {
 	id?: string = undefined;
 	title: string = '';
 	type: string = '';
+	experience: string = '';
 	description: string = '';
 	company: string = '';
 	functionality: string = '';
 	industry: string = '';
 	location: string = '';
-	date: Date | null = null;
+	expiration: Date | null = null;
 	employeeCount: string = '';
 
 	constructor(job?: JobFormValues) {
@@ -42,12 +45,13 @@ export class JobFormValues {
 			this.id = job.id;
 			this.title = job.title;
 			this.type = job.type;
+			this.experience = job.experience;
 			this.description = job.description;
 			this.company = job.company;
 			this.functionality = job.functionality;
 			this.industry = job.industry;
 			this.location = job.location;
-			this.date = job.date;
+			this.expiration = job.expiration;
 			this.employeeCount = job.employeeCount;
 		}
 	}

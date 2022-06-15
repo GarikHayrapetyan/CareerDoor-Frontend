@@ -8,7 +8,7 @@ import MyTextInput from '../../app/common/form/MyTextInput';
 import MyTextArea from '../../app/common/form/MyTextArea';
 import MySelectInput from '../../app/common/form/MySelectInput';
 import MyDateInput from '../../app/common/form/MyDateInput';
-import { typeOptions } from '../../app/common/options/typeOptions';
+import { typeOptions, experienceOptions } from '../../app/common/options/typeOptions';
 import { v4 as uuid } from 'uuid';
 import * as Yup from 'yup'
 
@@ -41,6 +41,7 @@ function JobForm() {
     const validationSchema = Yup.object({
         title: Yup.string().required('Title is a required field').min(3, "Title must be 3 words at least").max(18, "Title cannot exceed 18 words"),
         type: Yup.string().required('Type is a required field'),
+        experience: Yup.string().required('Experience is a required field'),
         description: Yup.string().required('Description is a required field').min(110, "Description cannot be less than 110 words"),
         company: Yup.string().required('Company is a required field').max(40, "Company cannot exceed 40 words"),
         functionality: Yup.string().required('Functionality is a required field').max(20, "Functionality cannot exceed 20 words"),
@@ -97,6 +98,7 @@ function JobForm() {
                     <Form className='ui form' onSubmit={handleSubmit} autoComplete='off'>
                         <MyTextInput name='title' placeholder='Title' maxlength="18" />
                         <MySelectInput option={typeOptions} placeholder="Type" name='type' />
+                        <MySelectInput option={experienceOptions} placeholder="Experience" name='experience' />
                         <MyTextArea rows={8} placeholder="Description" name='description' minlength="300" />
                         <MyTextInput placeholder="Company Name" name='company' maxlength="40" />
                         <MyTextInput placeholder="Functionality" name='functionality' maxlength="20" />
