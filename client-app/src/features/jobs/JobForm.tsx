@@ -21,12 +21,13 @@ function JobForm() {
         id: "",
         title: '',
         type: '',
+        experience: '',
         description: '',
         company: '',
         functionality: '',
         industry: '',
         location: '',
-        date: null,
+        expiration: null,
         employeeCount: '',
     }
     const [job, setJob] = React.useState<JobFormValues>(initialState);
@@ -61,23 +62,25 @@ function JobForm() {
             const { id,
                 title,
                 type,
+                experience,
                 description,
                 company,
                 functionality,
                 industry,
                 location,
-                date,
+                expiration,
                 employeeCount } = job;
             const editedJob = {
                 id,
                 title,
                 type,
+                experience,
                 description,
                 company,
                 functionality,
                 industry,
                 location,
-                date,
+                expiration,
                 employeeCount
             }
             updateJob(editedJob);
