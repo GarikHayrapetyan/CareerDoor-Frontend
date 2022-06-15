@@ -35,7 +35,7 @@ export default observer(function ActivityListItemAttendee({attendees}: Props) {
 						</List.Item>
 					}
 				>
-					<Popup.Content>
+					<Popup.Content style={{ width: '150px' }}>
 						<ProfileCard profile={attendee} />
 					</Popup.Content>
 				</Popup>
