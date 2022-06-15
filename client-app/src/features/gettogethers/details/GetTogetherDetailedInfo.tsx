@@ -60,7 +60,7 @@ function GetTogetherDetailedInfo({ meeting }: Props) {
 						<Icon className="linkify icon" size="large" color="teal"></Icon>
 					</Grid.Column>
 					<Grid.Column width={15}>
-						<span style={{width: '100%', flexWrap: 'wrap', wordWrap: 'break-word'}}>Link: {meeting?.link}</span>
+						<span style={{ width: '100%', flexWrap: 'wrap', wordWrap: 'break-word' }}>Link: <a href="{meeting?.link}">{meeting?.link}</a></span>
 					</Grid.Column>
 				</Grid>
 			</Segment>

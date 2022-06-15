@@ -27,7 +27,7 @@ export default observer(function GetTogetherDashboard() {
 	);
 	return (
 		<Grid>
-			<Grid.Column style={{ position: 'sticky', top: "50px", zIndex: '1000' }} width={16}>
+			<Grid.Column style={{ position: 'relative' }} width={16}>
 				<GetTogetherSearchForm searchTerm={searchGetTogetherTerm} />
 			</Grid.Column>
 
