@@ -26,7 +26,7 @@ export default observer(function ProfilePage() {
 		return <LoadingComponent content="Loading profile..." />;
 	}
 	return (
-		<Grid>
+		<Grid style={{overflow: 'hidden'}}>
 			<Grid.Column width={16}>
 				{profile &&
 					<>

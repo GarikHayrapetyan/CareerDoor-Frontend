@@ -13,6 +13,11 @@ interface Props {
 }
 
 export default observer(function ProfileFollowingsModalItme({ profile, userId, handleClick }: Props) {
+    function truncate(str: string | undefined, len: number) {
+        if (str) {
+            return str.length > len ? str.substring(0, len - 3) + '...' : str;
+        }
+    }
     const { profileStore, userStore, modalStore } = useStore();
     const { updateFollowing, loading } = profileStore;
     const buttonRef = useRef<any>({});
@@ -26,7 +31,6 @@ export default observer(function ProfileFollowingsModalItme({ profile, userId, h
         modalStore.modal.open = true;
         profile.following ? updateFollowing(username, false) : updateFollowing(username, true);
     }
-
     return (
         <React.Fragment >
             {userStore.user?.username === profile.username ? null :
@@ -45,8 +49,8 @@ export default observer(function ProfileFollowingsModalItme({ profile, userId, h
             <List.Item as={Link} to={`/profiles/${profile.username}`}>
                 <Image avatar src={profile.image || '/assets/user.png'} />
                 <List.Content >
-                    <List.Header as='a'>{profile.displayName}</List.Header>
-                    <List.Description as='a'>{profile.city}, {profile.country}</List.Description>
+                    <List.Header as='a'>{truncate(profile.displayName, 28)}</List.Header>
+                    <List.Description as='a'>{truncate(profile.city, 15)}, {truncate(profile.country, 14)}</List.Description>
                 </List.Content>
             </List.Item>
         </React.Fragment>

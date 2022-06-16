@@ -1,5 +1,6 @@
 import { makeAutoObservable, reaction, runInAction } from 'mobx';
 import agent from '../api/agent';
+import { Pagination, PagingParams } from '../models/pagination';
 import { Photo, Profile, Resume, UserGetTogether, UserJob } from '../models/userProfile';
 import { store } from './store';
 
@@ -9,12 +10,29 @@ export default class ProfileStore {
 	uploading = false;
 	loading = false;
 	followings: Profile[] = [];
+	followers: Profile[] = [];
+	hostings: UserGetTogether [] = [];
+	pasts: UserGetTogether [] = [];
+	futures: UserGetTogether [] = [];
+	generalMeetings: UserGetTogether [] = [];
+	applieds: UserJob [] = [];
+	employers: UserJob [] = [];
+	generalJobs: UserJob [] = [];
 	loadingFollowings = false;
 	activeTab = 0;
-	userGetTogethers: UserGetTogether[] = [];
 	loadingGetTogethers = false;
 	userJobs: UserJob[] = [];
 	loadingJobs = false;
+	pagination: Pagination | null = null;
+	pagingParams = new PagingParams();
+	predicate: string = '';
+	once:boolean = false;
+	photoCount:number|undefined = 0;
+	isMoreThanMaxPhoto = false;
+	documentCount:number|undefined = 0;
+	isMoreThanMaxDoc = false;
+	maxPhoto = 2;
+	maxDoc = 10;
 
 
 	constructor() {
@@ -22,19 +40,28 @@ export default class ProfileStore {
 
 		reaction(
 			() => this.activeTab,
-			activeTab => {
+			activeTab => {			
+				
 				if (activeTab === 4 || activeTab === 5) {
-					const predicate = activeTab === 4 ? 'followers' : 'following';
-					this.loadFollowings(predicate);				
-				} else {
-					this.followings = [];
-				}
+					this.predicate = activeTab === 4 ? 'followers' : 'following';
+					this.pagingParams = new PagingParams();
+					this.loadFollowings(this.predicate);
+				
+				} 
 			}
 		)
 	}
 
+	setOnce = (x:boolean) => {
+		this.once = x;
+	}
+
+	setPagingParams = (pagingParams: PagingParams) => {
+		this.pagingParams = pagingParams;
+	}
+
 	setActiveTab = (activeTab: any) => {
-		this.activeTab = activeTab;		
+		this.activeTab = activeTab;
 	}
 
 	get isCurrentUser() {
@@ -50,6 +77,10 @@ export default class ProfileStore {
 			runInAction(() => {
 				this.profile = profile;
 				this.loadingProfile = false;
+				this.photoCount=profile.photos?.length;
+				this.isMoreThanMaxPhoto=this.photoCount!>=this.maxPhoto;
+				this.documentCount=profile.resumes?.length;
+				this.isMoreThanMaxDoc=this.documentCount!>=this.maxDoc;
 			});
 		} catch (error) {
 			console.log(error);
@@ -60,6 +91,7 @@ export default class ProfileStore {
 	uploadPhoto = async (file: Blob) => {
 		this.uploading = true;
 		try {
+			if (this.photoCount!>=this.maxPhoto) return;
 			const response = await agent.Profiles.uploadPhoto(file);
 			const photo = response.data;
 			runInAction(() => {
@@ -70,6 +102,8 @@ export default class ProfileStore {
 						this.profile.image = photo.url
 					}
 				}
+				this.photoCount!++;				
+				this.isMoreThanMaxPhoto=this.photoCount!>=this.maxPhoto;		
 				this.uploading = false;
 			})
 		} catch (error) {
@@ -106,6 +140,8 @@ export default class ProfileStore {
 				if (this.profile) {
 					this.profile.photos = this.profile.photos?.filter(p => p.id !== photo.id);
 					this.loading = false;
+					this.photoCount!--;				
+					this.isMoreThanMaxPhoto=this.photoCount!>=this.maxPhoto;	
 				}
 			})
 		} catch (error) {
@@ -145,12 +181,24 @@ export default class ProfileStore {
 				if (this.profile && this.profile.username === store.userStore.user?.username) {
 					following ? this.profile.followingCount++ : this.profile.followingCount--;
 				}
-				this.followings.forEach(profile => {
-					if (profile.username === username) {
-						profile.following ? profile.followersCount-- : profile.followersCount++;
-						profile.following = !profile.following;
-					}
-				})
+
+
+				if(this.predicate=='followers'){
+					this.followers.forEach(profile => {
+						if (profile.username === username) {
+							profile.following ? profile.followersCount-- : profile.followersCount++;
+							profile.following = !profile.following;
+						}
+					})
+				}else if(this.predicate=='following'){
+					this.followings.forEach(profile => {
+						if (profile.username === username) {
+							profile.following ? profile.followersCount-- : profile.followersCount++;
+							profile.following = !profile.following;
+						}
+					})
+				}
+			
 				this.loading = false;
 			})
 		} catch (error) {
@@ -162,23 +210,59 @@ export default class ProfileStore {
 	loadFollowings = async (predicate: string) => {
 		this.loadingFollowings = true;
 		try {
-			const followings = await agent.Profiles.listFollowings(this.profile!.username, predicate);
+			const result = await agent.Profiles.listFollowings(this.axiosParams(predicate));
 			runInAction(() => {
-				this.followings = followings;
+				if (predicate == 'following') {
+					this.followings.push(...result.data);
+				} else if (predicate == 'followers') {
+					this.followers.push(...result.data);
+				}
 				this.loadingFollowings = false;
+				this.setPagination(result.pagination);
+				console.log(this.followings);
+
 			})
 		} catch (error) {
 			runInAction(() => this.loadingFollowings = false);
 		}
 	}
 
-	loadUserGetTogethers = async (username: string, predicate?: string) => {
+	setPagination = (pagination: Pagination) => {
+		this.pagination = pagination;
+	}
+
+	emptyFollowings = () =>{
+		this.followers = [];
+		this.followings = [];
+	}
+
+
+	axiosParams = (predicate: string) => {
+		if(this.profile!.followingCount <= this.pagingParams.pageSize && predicate=='following'){
+			this.pagingParams.pageNumber = 1;
+		}
+		const params = new URLSearchParams();
+		params.append("pageNumber", this.pagingParams.pageNumber.toString());
+		params.append("pageSize", this.pagingParams.pageSize.toString());
+		params.append("username", this.profile!.username);
+		params.append("predicate", predicate);
+		return params;
+	}
+
+	loadUserGetTogethers = async (predicate: string) => {
 		this.loadingGetTogethers = true;
 		try {
-			const activities = await agent.Profiles.listActivities(username,
-				predicate!);
+			const result = await agent.Profiles.listActivities(this.axiosParams(predicate));			
 			runInAction(() => {
-				this.userGetTogethers = activities;
+				if(predicate=="hosting"){
+					this.hostings.push(...result.data)
+				}else if(predicate=="past"){
+					this.pasts.push(...result.data)
+				}else{
+					this.futures.push(...result.data)
+				}			
+				this.setMeeting(predicate);
+				this.setPagination(result.pagination); 
 				this.loadingGetTogethers = false;
 			})
 		} catch (error) {
@@ -189,14 +273,34 @@ export default class ProfileStore {
 		}
 	}
 
+	setMeeting = (tab:string) =>{
+        if(tab=='future'){
+            this.generalMeetings=this.futures;
+        }else if (tab=='past'){
+         this.generalMeetings=this.pasts;
+        }else if (tab=='hosting'){
+            this.generalMeetings=this.hostings;
+        }
+    }
+
+	resetMeetings = () =>{
+		this.pasts = [];
+		this.futures = [];
+		this.hostings = [];
+		this.generalMeetings = [];
+		this.pagingParams.pageNumber = 1;
+	}
+
 	uploadDocument = async (file: Blob) => {
 		this.uploading = true;
 		try {
 			const response = await agent.Profiles.uploadDocument(file);
-			const photo = response.data;
+			const document = response.data;
 			runInAction(() => {
 				if (this.profile) {
-					this.profile.resumes?.push(photo);
+					this.profile.resumes?.push(document);
+					this.documentCount!++;
+					this.isMoreThanMaxDoc=this.documentCount!>=this.maxDoc;
 				}
 				this.uploading = false;
 			})
@@ -205,7 +309,7 @@ export default class ProfileStore {
 			runInAction(() => this.uploading = false);
 		}
 	}
-	
+
 	deleteDocument = async (resume: Resume) => {
 		this.loading = true;
 		try {
@@ -214,6 +318,8 @@ export default class ProfileStore {
 				if (this.profile) {
 					this.profile.resumes = this.profile.resumes?.filter(p => p.id !== resume.id);
 					this.loading = false;
+					this.documentCount!--;
+					this.isMoreThanMaxDoc=this.documentCount!>=this.maxDoc;
 				}
 			})
 		} catch (error) {
@@ -222,21 +328,44 @@ export default class ProfileStore {
 		}
 	}
 
-	loadJobs = async (username: string, predicate: string) => {
+	loadUserJobs = async (predicate: string) => {
 		this.loadingJobs = true;
 		try {
-			const jobs = await agent.Profiles.listJobs(username, predicate!);
-			runInAction(()=> {
-				this.userJobs = jobs;
+			const result = await agent.Profiles.listJobs(this.axiosParams(predicate));
+			runInAction(() => {
+				if(predicate=="applied"){
+					this.applieds.push(...result.data)
+				}else if(predicate=="employer"){
+					this.employers.push(...result.data)
+				}
+				this.setJob(predicate);
+				this.setPagination(result.pagination); 
 				this.loadingJobs = false;
 			})
 
-		} catch(error) {
+		} catch (error) {
 			console.log(error);
-			runInAction(()=> {
+			runInAction(() => {
 				this.loadingJobs = false;
 			})
 		}
 	}
+
+	
+	setJob = (tab:string) =>{
+        if(tab=='applied'){
+            this.generalJobs=this.applieds;
+        }else if (tab=='employer'){
+         this.generalJobs=this.employers;
+		}
+    } 
+
+	resetJobs = () =>{
+		this.applieds = [];
+		this.employers = [];
+		this.generalJobs = [];
+		this.pagingParams.pageNumber = 1;
+	}
+
 }
 
