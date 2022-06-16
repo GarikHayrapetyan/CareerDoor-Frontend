@@ -24,7 +24,7 @@ export default function GetTogetherListItem({ meeting }: Props) {
 					</Segment>
 				}
 				<Item.Group as={Link} target={'_blank'} to={`/meetings/${meeting.id}`}>
-					<Item style={{ position: 'relative'}}>
+					<Item style={{ position: 'relative', right: '2px' }}>
 						{/* <Icon
 							name="save outline"
 							style={{ position: 'absolute', right: '30px' }}
@@ -38,7 +38,16 @@ export default function GetTogetherListItem({ meeting }: Props) {
 							>
 								Host
 							</Label>
-							)}
+							)
+						}
+						{meeting.isGoing && !meeting.isHost && (
+								<Label 
+								style={{ position: 'absolute' }}
+								color='green'
+								ribbon='right'
+								>Going
+								</Label>
+						)}
 						<Item.Image
 							style={{marginBottom: 3}}
 							src={meeting.host?.image || "/assets/user.png"}
@@ -46,16 +55,10 @@ export default function GetTogetherListItem({ meeting }: Props) {
 							size="tiny"
 						/>
 						<Item.Content>
-							{/* <Item.Description content="User Name" /> */}
 							<Item.Header content={meeting.title} style={{marginTop: '10px', width: '75%'}} />
 							<Item.Description>
 								Hosted by <Link to={`/profiles/${meeting.hostUsername}`}>{meeting.host?.displayName}</Link>
 							</Item.Description>
-							{meeting.isGoing && !meeting.isHost && (
-								<Item.Description>
-									<Label basic color='green'>You are going to this meeting</Label>
-								</Item.Description>
-							)}
 						</Item.Content>
 					</Item>
 				</Item.Group>

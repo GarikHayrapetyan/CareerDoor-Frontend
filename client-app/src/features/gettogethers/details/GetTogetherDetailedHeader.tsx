@@ -38,7 +38,8 @@ function GetTogetherDetailedHeader({ meeting }: Props) {
 						ribbon color="red" content='Canceled' />
 				}
 				<Image
-					src={`/assets/meeting.jpeg`}
+					// src={`/assets/meeting.jpeg`}
+					src={'https://www.business2community.com/wp-content/uploads/2019/03/business_meeting_1551552630-900x525.jpg'}
 					fluid
 					style={activityImageStyle}
 				/>
@@ -49,7 +50,7 @@ function GetTogetherDetailedHeader({ meeting }: Props) {
 								<Header
 									size="huge"
 									content={meeting?.title}
-									style={{ marginTop: '50px', color: 'white', width: '70%', flexWrap: 'wrap', wordWrap: 'break-word' }}
+									style={{ color: 'white', width: '90%', flexWrap: 'wrap', wordWrap: 'break-word' }}
 								/>
 								<p>{format(meeting.date!, 'dd MMM yyyy')}</p>
 								<p>
