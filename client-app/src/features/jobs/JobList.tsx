@@ -60,11 +60,11 @@ function JobList() {
                 setJobs(newFilteredJobs);
             }
             if (filterByType && postedDate) {
-                newFilteredJobs = jobsByDate.filter(job => job.title.toLowerCase().includes(searchKeyWord.toLowerCase()) && job.type.toLowerCase() === filterByType && (getDays(job.date) < postedDate && getDays(job.date) >= 0))
+                newFilteredJobs = jobsByDate.filter(job => job.title.toLowerCase().includes(searchKeyWord.toLowerCase()) && job.type.toLowerCase() === filterByType && (getDays(job.creation) < postedDate && getDays(job.creation) >= 0))
                 setJobs(newFilteredJobs);
             }
             if (filterByType === "" && postedDate) {
-                newFilteredJobs = jobsByDate.filter(job => job.title.toLowerCase().includes(searchKeyWord.toLowerCase()) && (getDays(job.date) < postedDate && getDays(job.date) >= 0))
+                newFilteredJobs = jobsByDate.filter(job => job.title.toLowerCase().includes(searchKeyWord.toLowerCase()) && (getDays(job.creation) < postedDate && getDays(job.creation) >= 0))
                 setJobs(newFilteredJobs);
             }
             if (filterByType && postedDate === undefined) {
@@ -76,10 +76,10 @@ function JobList() {
                 newFilteredJobs = jobsByDate.filter(job => job.type.toLowerCase() === filterByType)
                 setJobs(newFilteredJobs);
             } else if (filterByType && postedDate) {
-                newFilteredJobs = jobsByDate.filter(job => job.type.toLowerCase() === filterByType && (getDays(job.date) < postedDate && getDays(job.date) >= 0))
+                newFilteredJobs = jobsByDate.filter(job => job.type.toLowerCase() === filterByType && (getDays(job.creation) < postedDate && getDays(job.creation) >= 0))
                 setJobs(newFilteredJobs);
             } else if (filterByType === "" && postedDate) {
-                newFilteredJobs = jobsByDate.filter(job => (getDays(job.date) < postedDate && getDays(job.date) >= 0))
+                newFilteredJobs = jobsByDate.filter(job => (getDays(job.creation) < postedDate && getDays(job.creation) >= 0))
                 setJobs(newFilteredJobs);
             } else {
                 setJobs(jobsByDate);
