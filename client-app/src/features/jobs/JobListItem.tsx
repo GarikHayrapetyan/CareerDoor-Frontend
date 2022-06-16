@@ -35,7 +35,7 @@ const JobListItem = ({ job }: Props) => {
                 <List.Item icon="building outline" content={job.company} />
                 <List.Item icon="marker" content={job.location} />
                 <List.Item icon="code branch" content={job.functionality} />
-                <List.Content floated='right'> <Card.Meta><span>{format(job.date!, 'dd-MM-yyyy')}</span></Card.Meta></List.Content>
+                <List.Content floated='right'> <Card.Meta><span>{format(job.expiration!, 'dd-MM-yyyy')}</span></Card.Meta></List.Content>
             </List>
         </List.Item>
     )
