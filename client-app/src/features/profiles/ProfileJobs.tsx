@@ -8,15 +8,8 @@ import { useStore } from '../../app/store/store';
 import InfiniteScroll from 'react-infinite-scroller';
 import { PagingParams } from '../../app/models/pagination';
 
-
-const panes = [
-    { menuItem: 'Applied', pane: { key: 'applied' } },
-    { menuItem: 'Employer', pane: { key: 'employer' } }
-];
-
-
 export default observer(function ProfileJob() {
-    const { profileStore, jobStore } = useStore();
+    const { profileStore, jobStore, userStore } = useStore();
     const { selectProfileJob, loadJob } = jobStore;
     const [loadingNext, setLoadingNext] = useState(false);
     const [tab, setTab] = useState('');
@@ -31,6 +24,11 @@ export default observer(function ProfileJob() {
         pagination,
         setPagingParams
     } = profileStore;
+
+    const panes = userStore.user?.username === profile?.username ? [
+        { menuItem: 'Employer', pane: { key: 'employer' } },
+        { menuItem: 'Applied', pane: { key: 'applied' } }
+    ] : [{ menuItem: 'Employer', pane: { key: 'employer' } }]
 
     useEffect(() => {
         resetJobs();

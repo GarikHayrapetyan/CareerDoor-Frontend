@@ -24,7 +24,7 @@ function JobDetails() {
                             <List.Description>Recruiter</List.Description>
                         </List.Content>
                         <List.Content floated='right'>
-                            <Card.Meta><span>{format(job.date!, 'dd-MM-yyyy')}</span></Card.Meta>
+                            <Card.Meta><span>{format(job.expiration!, 'dd-MM-yyyy')}</span></Card.Meta>
                         </List.Content>
                     </List.Item>
                 </List>

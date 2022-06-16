@@ -13,7 +13,7 @@ interface Props {
 
 export default observer(function ProfileDocuments({ profile }: Props) {
 
-    const { profileStore: { isCurrentUser, loading, deleteDocument, uploadDocument, uploading } } = useStore();
+    const { profileStore: { isCurrentUser, loading, deleteDocument, uploadDocument, uploading,isMoreThanMaxDoc } } = useStore();
     const [addDocumentMode, setAddDocumentMode] = useState(false);
     const [target, setTarget] = useState('');
 
@@ -61,6 +61,7 @@ export default observer(function ProfileDocuments({ profile }: Props) {
                         <Button floated='right' basic
                             content={addDocumentMode ? "Cancel" : 'Add Document'}
                             onClick={() => setAddDocumentMode(!addDocumentMode)}
+                            disabled={isMoreThanMaxDoc}
                         />
                     )}
                 </Grid.Column>

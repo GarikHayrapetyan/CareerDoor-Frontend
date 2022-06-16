@@ -1,4 +1,4 @@
-import React, {SyntheticEvent, useState} from 'react';
+import React, {SyntheticEvent, useEffect, useState} from 'react';
 import { observer } from 'mobx-react-lite';
 import { Button, Card, Grid, Header, Image, Tab } from 'semantic-ui-react';
 import { Photo, Profile } from '../../app/models/userProfile';
@@ -15,10 +15,14 @@ export default observer(function ProfilePhotos({ profile }: Props) {
         uploading, 
         loading, 
         setMainPhoto,
-        deletePhoto
+        deletePhoto,
+        isMoreThanMaxPhoto
     }} = useStore();
+
     const [addPhotoMode, setAddPhotoMode] = useState(false);
     const [target, setTarget] = useState('');
+
+
 
     function handlePhotoUpload(file: Blob) {
         uploadPhoto(file).then(() => setAddPhotoMode(false));
@@ -38,12 +42,13 @@ export default observer(function ProfilePhotos({ profile }: Props) {
 	return (
 		<Tab.Pane>
             <Grid>
-                <Grid.Column width={16}>
+                <Grid.Column width={16}>                    
 			        <Header floated='left' icon="image" content="Photos" />
                     {isCurrentUser && (
                         <Button floated='right' basic
                             content={addPhotoMode ? "Cancel" : 'Add Photo'}
                             onClick={() => setAddPhotoMode(!addPhotoMode)}
+                            disabled={isMoreThanMaxPhoto}
                         />
                     )}
                 </Grid.Column>

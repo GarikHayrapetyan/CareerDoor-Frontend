@@ -37,13 +37,13 @@ export default class JobStore {
 
 	get jobsByDate() {
 		return Array.from(this.jobRegistry.values()).sort((a,b)=> 
-			a.date!.getTime() - b.date!.getTime());
+			a.creation!.getTime() - b.creation!.getTime());
 	}
 
 	get groupedJobs(){
 		return Object.entries(
 			this.jobsByDate.reduce((jobs, job) => {
-				const date = format(job.date!, 'dd MMM yyyy');
+				const date = format(job.creation!, 'dd MMM yyyy');
 				jobs[date] = jobs[date] ? [...jobs[date], job] : [job];
 				return jobs;
 			}, {} as {[key: string]: Job[]})
@@ -96,7 +96,7 @@ export default class JobStore {
 			job.isEmployeer = job.employeerUsername === user.username;
 			job.employeer = job.candidates?.find(x => x.username === job.employeerUsername);
 		}
-		job.date = new Date(job.date!);
+		job.expiration = new Date(job.expiration!);
 		this.jobRegistry.set(job.id, job)
 	}
 
@@ -143,7 +143,7 @@ export default class JobStore {
 				this.setJob(newJob);
 				runInAction(() => {
 					this.selectedJob = newJob;
-					//this.jobRegistry.set(newJob.id, newJob);
+					this.jobRegistry.set(newJob.id, newJob);
 					this.closeForm();
 					this.loading = false;
 				})
