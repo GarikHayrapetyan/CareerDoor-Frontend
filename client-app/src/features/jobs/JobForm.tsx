@@ -48,7 +48,7 @@ function JobForm() {
         functionality: Yup.string().required('Functionality is a required field').max(20, "Functionality cannot exceed 20 words"),
         industry: Yup.string().required('Industry is a required field').max(30, "Industry cannot exceed 30 words"),
         location: Yup.string().required('Location is a required field').max(30, "Location cannot exceed 30 words"),
-        date: Yup.string().required("Date is required!").nullable(),
+        expiration: Yup.string().required("Date is required!"),
         employeeCount: Yup.string().required('Employee Count is a required field').max(30, "Employee cannot exceed 30 words").matches(/^[1-9]\d*$/, "Must be only positive numbers"),
     })
 
@@ -110,7 +110,7 @@ function JobForm() {
                         <MyDateInput
                             minDate={new Date()}
                             placeholderText="Expiry Date"
-                            name="date"
+                            name="expiration"
                             showTimeSelect
                             timeCaption="Time"
                             dateFormat="MMMM d, yyyy h:mm aa"
