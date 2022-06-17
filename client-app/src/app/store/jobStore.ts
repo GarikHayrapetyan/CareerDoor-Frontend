@@ -36,8 +36,7 @@ export default class JobStore {
 	}
 
 	get jobsByDate() {
-		return Array.from(this.jobRegistry.values()).sort((a,b)=> 
-			a.creation!.getTime() - b.creation!.getTime());
+		return Array.from(this.jobRegistry.values()).sort((a,b) => new Date(a.creation).getTime() - new Date(b.creation).getTime());
 	}
 
 	get groupedJobs(){
@@ -137,16 +136,16 @@ export default class JobStore {
 		const candidate = new Profile(user!);
 		try {
 			await agent.Jobs.create(job);
-				const newJob = new Job(job);
-				newJob.employeerUsername = user!.username;
-				newJob.candidates = [candidate]
-				this.setJob(newJob);
-				runInAction(() => {
-					this.selectedJob = newJob;
-					this.jobRegistry.set(newJob.id, newJob);
-					this.closeForm();
-					this.loading = false;
-				})
+			const newJob = new Job(job);
+			newJob.employeerUsername = user!.username;
+			newJob.candidates = [candidate]
+			this.setJob(newJob);
+			runInAction(() => {
+				this.selectedJob = newJob;
+				this.jobRegistry.set(newJob.id, newJob);
+				this.closeForm();
+				this.loading = false;
+			})
 		} catch (err) {
 			console.log(err);
 			runInAction(() => {

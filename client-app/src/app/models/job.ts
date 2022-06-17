@@ -4,14 +4,14 @@ export interface Job {
 	id: string;
 	title: string;
 	type: string;
-	experience: string;
 	description: string;
 	functionality: string;
 	company: string;
 	industry: string;
 	location: string;
-	creation: Date;
+	experience: string;
 	expiration: Date;
+	creation: Date;
 	employeeCount: string;
 	employeerUsername: string;
 	isCanceled: boolean;
