@@ -39,7 +39,7 @@ const getJobPostedDate = (value: any) => {
 
 function getDays(date: Date) {
     const oned = 24 * 60 * 60 * 1000;
-    return Math.ceil((new Date().getTime() - date.getTime()) / oned);
+    return Math.ceil((new Date().getTime() - new Date(date).getTime()) / oned);
 }
 function JobList() {
     const { jobStore } = useStore();

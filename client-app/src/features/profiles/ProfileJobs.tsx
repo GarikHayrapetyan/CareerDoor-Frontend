@@ -10,7 +10,7 @@ import { PagingParams } from '../../app/models/pagination';
 
 export default observer(function ProfileJob() {
     const { profileStore, jobStore, userStore } = useStore();
-    const { selectProfileJob, loadJob } = jobStore;
+    const { loadJob } = jobStore;
     const [loadingNext, setLoadingNext] = useState(false);
     const [tab, setTab] = useState('');
 
@@ -28,7 +28,7 @@ export default observer(function ProfileJob() {
     const panes = userStore.user?.username === profile?.username ? [
         { menuItem: 'Employer', pane: { key: 'employer' } },
         { menuItem: 'Applied', pane: { key: 'applied' } }
-    ] : [{ menuItem: 'Employer', pane: { key: 'employer' } }]
+    ] : [{ menuItem: 'Offers', pane: { key: 'employer' } }]
 
     useEffect(() => {
         resetJobs();

@@ -13,11 +13,7 @@ import { v4 as uuid } from 'uuid';
 import { useHistory } from "react-router-dom";
 import * as Yup from 'yup'
 
-interface Props {
-    isItFromJopPage?: boolean;
-}
-
-function JobForm({ isItFromJopPage = false }: Props) {
+function EditJobForm() {
     const { jobStore } = useStore();
     const { selectedJob, closeForm, createJob, updateJob, loading, deleteJob } = jobStore;
     const [target, setTarget] = React.useState("");
@@ -61,9 +57,7 @@ function JobForm({ isItFromJopPage = false }: Props) {
     function handleDelete(e: SyntheticEvent<HTMLButtonElement>, id: string) {
         setTarget(e.currentTarget.name);
         deleteJob(id);
-        if (isItFromJopPage && !loading) {
-            history.goBack();
-        }
+        history.goBack();
     }
 
     function handleFormSubmit(job: JobFormValues) {
@@ -141,4 +135,4 @@ function JobForm({ isItFromJopPage = false }: Props) {
         </Segment>
     )
 }
-export default observer(JobForm);
+export default observer(EditJobForm);
