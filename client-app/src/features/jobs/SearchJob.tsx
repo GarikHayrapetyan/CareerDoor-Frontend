@@ -9,7 +9,7 @@ interface Props {
 
 function SearchJob({ searchKeyWord }: Props) {
     const { jobStore } = useStore();
-    const { openForm, setSearchTerm, setFilterByJobType, setFilterByPostedDate } = jobStore;
+    const { openForm, setSearchTerm, setFilterByJobType, setFilterByPostedDate, setFilterByExperience } = jobStore;
     return (
         <Segment style={{ display: 'flex', width: '100%', flexWrap: 'wrap', gap: '1rem' }}>
 
@@ -24,7 +24,7 @@ function SearchJob({ searchKeyWord }: Props) {
             />
 
             <Dropdown onChange={setFilterByPostedDate} clearable selection placeholder="Date Posted" options={datePosted} />
-            <Dropdown clearable selection placeholder="Experience" options={experienceLevel} />
+            <Dropdown onChange={setFilterByExperience} clearable selection placeholder="Experience" options={experienceLevel} />
             <Dropdown onChange={setFilterByJobType} style={{ marginRight: '6rem' }} clearable selection placeholder="Job Type" options={jobType} />
             <div>
                 <Button

@@ -18,7 +18,8 @@ export default class JobStore {
 	pagingParams = new PagingParams();
 	searchKeyWord: string = "";
 	filterByTypeKeyWord: any = "";
-	filterByPostedDateKeyWord: any = ""
+	filterByPostedDateKeyWord: any = "";
+	filterByExperienceKeyWord: any = "";
 
 	constructor() {
 		makeAutoObservable(this);
@@ -229,5 +230,8 @@ export default class JobStore {
 
 	setFilterByPostedDate = (event: SyntheticEvent<HTMLElement, Event>, data: DropdownProps) => {
 		this.filterByPostedDateKeyWord = data.value; 
+	}
+	setFilterByExperience = (event: SyntheticEvent<HTMLElement, Event>, data: DropdownProps) => {
+		this.filterByExperienceKeyWord = data.value; 
 	}
 }
