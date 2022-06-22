@@ -1,9 +1,9 @@
 export const typeOptions = [
-	{ text: 'Full-time', value: 'full-time' },
-	{ text: 'Part-time', value: 'part-time' }
+	{ text: 'Full-time', value: 'Full-time' },
+	{ text: 'Part-time', value: 'Part-time' }
 ];
 
 export const experienceOptions = [
-	{ text: 'Intern', value: 'intern' },
-	{ text: 'Junior', value: 'junior' }
+	{ text: 'Intern', value: 'Intern' },
+	{ text: 'Junior', value: 'Junior' }
 ];

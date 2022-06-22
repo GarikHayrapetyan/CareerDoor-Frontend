@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { List, Segment, Divider } from 'semantic-ui-react'
+import { List, Segment, Divider, Message } from 'semantic-ui-react'
 import { useStore } from '../../app/store/store'
 import { observer } from 'mobx-react-lite';
 import JobListItem from './JobListItem';
@@ -15,11 +15,15 @@ const getJobType = (value: any) => {
             return ""
     }
 }
-
-function getLastWeeksDate() {
-    const now = new Date();
-
-    return new Date(now.getFullYear(), now.getMonth(), now.getDate() - 7);
+const getExperience = (value: any) => {
+    switch (value) {
+        case 1:
+            return 'intern';
+        case 2:
+            return 'Junior';
+        default:
+            return ""
+    }
 }
 
 const getJobPostedDate = (value: any) => {
@@ -43,7 +47,7 @@ function getDays(date: Date) {
 }
 function JobList() {
     const { jobStore } = useStore();
-    const { filterByTypeKeyWord, filterByPostedDateKeyWord, jobsByDate, searchKeyWord } = jobStore;
+    const { filterByTypeKeyWord, filterByPostedDateKeyWord, filterByExperienceKeyWord, jobsByDate, searchKeyWord } = jobStore;
     const [jobs, setJobs] = useState(jobsByDate);
 
     useEffect(() => {
@@ -53,42 +57,80 @@ function JobList() {
     useEffect(() => {
         const postedDate = getJobPostedDate(filterByPostedDateKeyWord);
         const filterByType = getJobType(filterByTypeKeyWord);
+        const filterByExperience = getExperience(filterByExperienceKeyWord);
+
         let newFilteredJobs: Job[] = [];
+
         if (searchKeyWord.trim() !== "") {
-            if (filterByType === "" && postedDate === undefined) {
+            if (filterByType === "" && postedDate === undefined && filterByExperience === "") {
                 newFilteredJobs = jobsByDate.filter(job => job.title.toLowerCase().includes(searchKeyWord.toLowerCase()))
                 setJobs(newFilteredJobs);
             }
-            if (filterByType && postedDate) {
-                newFilteredJobs = jobsByDate.filter(job => job.title.toLowerCase().includes(searchKeyWord.toLowerCase()) && job.type.toLowerCase() === filterByType && (getDays(job.creation) < postedDate && getDays(job.creation) >= 0))
+            if (filterByType && postedDate && filterByExperience) {
+                newFilteredJobs = jobsByDate.filter(job => job.title.toLowerCase().includes(searchKeyWord.toLowerCase()) && job.type.toLowerCase() === filterByType.toLowerCase() && (getDays(job.creation) < postedDate && getDays(job.creation) >= 0) && job.experience.toLowerCase() === filterByExperience.toLowerCase())
                 setJobs(newFilteredJobs);
             }
-            if (filterByType === "" && postedDate) {
+            if (filterByType === "" && filterByExperience === "" && postedDate) {
                 newFilteredJobs = jobsByDate.filter(job => job.title.toLowerCase().includes(searchKeyWord.toLowerCase()) && (getDays(job.creation) < postedDate && getDays(job.creation) >= 0))
                 setJobs(newFilteredJobs);
             }
-            if (filterByType && postedDate === undefined) {
-                newFilteredJobs = jobsByDate.filter(job => job.title.toLowerCase().includes(searchKeyWord.toLowerCase()) && job.type.toLowerCase() === filterByType)
+            if (filterByType === "" && filterByExperience && postedDate) {
+                newFilteredJobs = jobsByDate.filter(job => job.title.toLowerCase().includes(searchKeyWord.toLowerCase()) && (getDays(job.creation) < postedDate && getDays(job.creation) >= 0) && job.experience.toLowerCase() === filterByExperience.toLowerCase())
+                setJobs(newFilteredJobs);
+            }
+            if (filterByType && filterByExperience === "" && postedDate === undefined) {
+                newFilteredJobs = jobsByDate.filter(job => job.title.toLowerCase().includes(searchKeyWord.toLowerCase()) && job.type.toLowerCase() === filterByType.toLowerCase())
+                setJobs(newFilteredJobs);
+            }
+            if (filterByType && filterByExperience && postedDate === undefined) {
+                newFilteredJobs = jobsByDate.filter(job => job.title.toLowerCase().includes(searchKeyWord.toLowerCase()) && job.type.toLowerCase() === filterByType.toLowerCase() && job.experience.toLowerCase() === filterByExperience.toLowerCase())
+                setJobs(newFilteredJobs);
+            }
+            if (filterByType === "" && filterByExperience && postedDate === undefined) {
+                newFilteredJobs = jobsByDate.filter(job => job.title.toLowerCase().includes(searchKeyWord.toLowerCase()) && job.experience.toLowerCase() === filterByExperience.toLowerCase())
                 setJobs(newFilteredJobs);
             }
         } else if (searchKeyWord.trim() === "") {
-            if (filterByType && postedDate === undefined) {
-                newFilteredJobs = jobsByDate.filter(job => job.type.toLowerCase() === filterByType)
+            if (filterByType === "" && postedDate === undefined && filterByExperience === "") {
+                setJobs(jobsByDate);
+            }
+            if (filterByType && postedDate && filterByExperience) {
+                newFilteredJobs = jobsByDate.filter(job => job.type.toLowerCase() === filterByType.toLowerCase() && (getDays(job.creation) < postedDate && getDays(job.creation) >= 0) && job.experience.toLowerCase() === filterByExperience.toLowerCase())
                 setJobs(newFilteredJobs);
-            } else if (filterByType && postedDate) {
-                newFilteredJobs = jobsByDate.filter(job => job.type.toLowerCase() === filterByType && (getDays(job.creation) < postedDate && getDays(job.creation) >= 0))
-                setJobs(newFilteredJobs);
-            } else if (filterByType === "" && postedDate) {
+            }
+            if (filterByType === "" && filterByExperience === "" && postedDate) {
                 newFilteredJobs = jobsByDate.filter(job => (getDays(job.creation) < postedDate && getDays(job.creation) >= 0))
                 setJobs(newFilteredJobs);
-            } else {
-                setJobs(jobsByDate);
+            }
+            if (filterByType === "" && filterByExperience && postedDate) {
+                newFilteredJobs = jobsByDate.filter(job => (getDays(job.creation) < postedDate && getDays(job.creation) >= 0) && job.experience.toLowerCase() === filterByExperience.toLowerCase())
+                setJobs(newFilteredJobs);
+            }
+            if (filterByType && filterByExperience === "" && postedDate === undefined) {
+                newFilteredJobs = jobsByDate.filter(job => job.type.toLowerCase() === filterByType.toLowerCase())
+                setJobs(newFilteredJobs);
+            }
+            if (filterByType && filterByExperience && postedDate === undefined) {
+                newFilteredJobs = jobsByDate.filter(job => job.type.toLowerCase() === filterByType.toLowerCase() && job.experience.toLowerCase() === filterByExperience.toLowerCase())
+                setJobs(newFilteredJobs);
+            }
+            if (filterByType === "" && filterByExperience && postedDate === undefined) {
+                newFilteredJobs = jobsByDate.filter(job => job.experience.toLowerCase() === filterByExperience.toLowerCase())
+                setJobs(newFilteredJobs);
             }
         }
         else {
             setJobs(jobsByDate);
         }
-    }, [searchKeyWord, filterByTypeKeyWord, filterByPostedDateKeyWord])
+    }, [searchKeyWord, filterByTypeKeyWord, filterByPostedDateKeyWord, filterByExperienceKeyWord])
+
+    if (jobs.length === 0) {
+        return (
+            <Message warning>
+                <Message.Header>There is no a job!</Message.Header>
+                <p>Something went wrong, please add a job which you want to have.</p>
+            </Message >)
+    }
     return (
         <Segment>
             <List verticalAlign='middle' >
