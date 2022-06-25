@@ -61,7 +61,7 @@ function GetTogetherDetailedHeader({ meeting }: Props) {
 					</Item.Group>
 				</Segment>
 			</Segment>
-			<Segment clearing attached="bottom">
+			<Segment clearing attached="bottom" style={{ height: '4.8em' }}>
 				{meeting.isHost ? (
 					<>
 						<Button 
