@@ -22,7 +22,7 @@ function GetTogetherDetailedInfo({ meeting }: Props) {
 							style={{
 								wordWrap: "break-word",
 								overflowY: 'scroll',
-								height: '20vh',
+								maxHeight: '20vh',
 								resize: 'none', 
 								marginTop: '5px', 
 								marginBottom: '5px'
