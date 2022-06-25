@@ -66,7 +66,7 @@ function JobDetails() {
                         style={{
                             wordWrap: "break-word",
                             overflowY: 'scroll',
-                            height: '30vh',
+                            maxHeight: '30vh',
                             resize: 'none',
                         }}
                     >

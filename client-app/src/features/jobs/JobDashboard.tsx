@@ -35,7 +35,7 @@ function JobDashboard() {
 
             }}
         >
-            <Grid.Column style={{ position: 'sticky', top: "50px", zIndex: '1000' }} width='16'>
+            <Grid.Column style={{ position: 'sticky', top: "50px" }} width='16'>
                 <SearchJob searchKeyWord={searchKeyWord} />
             </Grid.Column>
             <Grid.Column width='8' style={{ overflowY: 'scroll', height: '767px', paddingRight: '20px' }}>
