@@ -34,8 +34,6 @@ const getJobPostedDate = (value: any) => {
             return 30;
         case 3:
             return 7;
-        case 4:
-            return 1;
         default:
             return undefined;
     }
@@ -67,15 +65,15 @@ function JobList() {
                 setJobs(newFilteredJobs);
             }
             if (filterByType && postedDate && filterByExperience) {
-                newFilteredJobs = jobsByDate.filter(job => job.title.toLowerCase().includes(searchKeyWord.toLowerCase()) && job.type.toLowerCase() === filterByType.toLowerCase() && (getDays(job.creation) < postedDate && getDays(job.creation) >= 0) && job.experience.toLowerCase() === filterByExperience.toLowerCase())
+                newFilteredJobs = jobsByDate.filter(job => job.title.toLowerCase().includes(searchKeyWord.toLowerCase()) && job.type.toLowerCase() === filterByType.toLowerCase() && (getDays(job.creation) <= postedDate && getDays(job.creation) >= 0) && job.experience.toLowerCase() === filterByExperience.toLowerCase())
                 setJobs(newFilteredJobs);
             }
             if (filterByType === "" && filterByExperience === "" && postedDate) {
-                newFilteredJobs = jobsByDate.filter(job => job.title.toLowerCase().includes(searchKeyWord.toLowerCase()) && (getDays(job.creation) < postedDate && getDays(job.creation) >= 0))
+                newFilteredJobs = jobsByDate.filter(job => job.title.toLowerCase().includes(searchKeyWord.toLowerCase()) && (getDays(job.creation) <= postedDate && getDays(job.creation) >= 0))
                 setJobs(newFilteredJobs);
             }
             if (filterByType === "" && filterByExperience && postedDate) {
-                newFilteredJobs = jobsByDate.filter(job => job.title.toLowerCase().includes(searchKeyWord.toLowerCase()) && (getDays(job.creation) < postedDate && getDays(job.creation) >= 0) && job.experience.toLowerCase() === filterByExperience.toLowerCase())
+                newFilteredJobs = jobsByDate.filter(job => job.title.toLowerCase().includes(searchKeyWord.toLowerCase()) && (getDays(job.creation) <= postedDate && getDays(job.creation) >= 0) && job.experience.toLowerCase() === filterByExperience.toLowerCase())
                 setJobs(newFilteredJobs);
             }
             if (filterByType && filterByExperience === "" && postedDate === undefined) {
@@ -95,15 +93,15 @@ function JobList() {
                 setJobs(jobsByDate);
             }
             if (filterByType && postedDate && filterByExperience) {
-                newFilteredJobs = jobsByDate.filter(job => job.type.toLowerCase() === filterByType.toLowerCase() && (getDays(job.creation) < postedDate && getDays(job.creation) >= 0) && job.experience.toLowerCase() === filterByExperience.toLowerCase())
+                newFilteredJobs = jobsByDate.filter(job => job.type.toLowerCase() === filterByType.toLowerCase() && (getDays(job.creation) <= postedDate && getDays(job.creation) >= 0) && job.experience.toLowerCase() === filterByExperience.toLowerCase())
                 setJobs(newFilteredJobs);
             }
             if (filterByType === "" && filterByExperience === "" && postedDate) {
-                newFilteredJobs = jobsByDate.filter(job => (getDays(job.creation) < postedDate && getDays(job.creation) >= 0))
+                newFilteredJobs = jobsByDate.filter(job => (getDays(job.creation) <= postedDate && getDays(job.creation) >= 0))
                 setJobs(newFilteredJobs);
             }
             if (filterByType === "" && filterByExperience && postedDate) {
-                newFilteredJobs = jobsByDate.filter(job => (getDays(job.creation) < postedDate && getDays(job.creation) >= 0) && job.experience.toLowerCase() === filterByExperience.toLowerCase())
+                newFilteredJobs = jobsByDate.filter(job => (getDays(job.creation) <= postedDate && getDays(job.creation) >= 0) && job.experience.toLowerCase() === filterByExperience.toLowerCase())
                 setJobs(newFilteredJobs);
             }
             if (filterByType && filterByExperience === "" && postedDate === undefined) {
